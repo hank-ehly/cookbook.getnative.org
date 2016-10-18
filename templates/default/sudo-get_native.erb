@@ -1,0 +1,14 @@
+# User rules for get_native
+
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl start
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl stop
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl restart
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl graceful
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl graceful-stop
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl configtest
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl status
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl fullstatus
+get_native ALL=(root) NOPASSWD: /usr/sbin/apachectl help
+
+get_native ALL=(root) NOPASSWD: /usr/sbin/apache2
+get_native ALL=(root) NOPASSWD: /usr/local/bin/node
