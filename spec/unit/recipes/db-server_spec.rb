@@ -2,11 +2,11 @@
 # Cookbook Name:: get-native.com-cookbook
 # Spec:: default
 #
-# Copyright (c) 2016 The Authors, All Rights Reserved.
+# Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::mysql' do
+describe 'get-native.com-cookbook::db-server' do
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new

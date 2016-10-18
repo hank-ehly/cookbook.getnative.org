@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: get-native.com-cookbook
-# Recipe:: mysql
+# Recipe:: db-server
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
