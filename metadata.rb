@@ -1,0 +1,7 @@
+name 'get-native.com-cookbook'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures get-native.com-cookbook'
+long_description 'Installs/Configures get-native.com-cookbook'
+version '0.1.0'
