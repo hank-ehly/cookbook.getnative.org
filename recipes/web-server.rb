@@ -45,6 +45,12 @@ include_recipe 'apache2::mod_rewrite'
 include_recipe 'apache2::mod_http2'
 package 'libnghttp2-dev'
 
+directory '/var/www' do
+    user 'root'
+    group 'root'
+    mode 0755
+end
+
 extract_path = "#{Chef::Config[:file_cache_path]}/apache2"
 
 bash 'mod_http2.so' do
