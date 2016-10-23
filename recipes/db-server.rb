@@ -29,3 +29,12 @@ mysql_service 'get-native' do
     notifies :run, 'execute[upgrade]', :before
     action [:create, :start]
 end
+
+bash 'init-db' do
+    code <<-EOH
+        mysql -u root \
+              --password=ilikerandompasswords \
+              -S /var/run/mysql-get-native/mysqld.sock \
+              -e 'CREATE DATABASE IF NOT EXISTS get_native DEFAULT CHARACTER SET UTF8;'
+    EOH
+end
