@@ -12,7 +12,7 @@ default['apache']['contact'] = 'henry.ehly@gmail.com'
 
 default['nodejs']['bin_path'] = '/usr/local/nodejs-binary/bin'
 default['nodejs']['install_method'] = 'binary'
-default['nodejs']['version'] = '6.8.1'
-default['nodejs']['binary']['checksum'] = '8d004e6990926508460495450a4083d40836e81710afca303d6a298e032c6b18'
+default['nodejs']['version'] = '6.9.1'
+default['nodejs']['binary']['checksum'] = 'a9d9e6308931fa2a2b0cada070516d45b76d752430c31c9198933c78f8d54b17'
 
 default['authorization']['sudo']['include_sudoers_d'] = true
