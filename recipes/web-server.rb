@@ -60,11 +60,19 @@ bash 'mod_http2.so' do
     not_if { ::File.exists?('/usr/lib/apache2/modules/mod_http2.so') }
 end
 
+if node['get-native']['environment'] == 'production'
+    app_docroot = '/var/www/get-native.com/production/current/dist/prod'
+elsif node['get-native']['environment'] == 'staging'
+    app_docroot = '/var/www/get-native.com/staging/current/dist/prod'
+else
+    app_docroot = '/var/www/get-native.com/development/current'
+end
+
 web_app 'get-native.com' do
     template "get-native.com-#{node['get-native']['environment']}.conf.erb"
     server_port '80' # TODO
     server_name 'get-native.com'
-    docroot "/var/www/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
+    docroot app_docroot
 end
 
 mysql_client 'get-native' do
