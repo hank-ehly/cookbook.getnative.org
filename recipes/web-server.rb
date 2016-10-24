@@ -4,18 +4,13 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
+return if node['platform_family'] != 'debian'
+
 apt_update do
     action :update
 end
 
-execute 'upgrade' do
-    command 'sudo apt-get -y upgrade'
-    action :nothing
-end
-
-group node['get-native']['user']['primary_group'] do
-    notifies :run, 'execute[upgrade]', :before
-end
+group node['get-native']['user']['primary_group']
 
 user node['get-native']['user']['name'] do
     group node['get-native']['user']['primary_group']

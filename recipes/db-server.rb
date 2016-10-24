@@ -4,18 +4,37 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-execute 'update' do
-    command 'sudo apt-get update -y'
-    action :nothing
+return if node['platform_family'] != 'debian'
+
+apt_update do
+    action :update
 end
 
-execute 'upgrade' do
-    command 'sudo apt-get -y upgrade'
-    action :nothing
+group node['get-native']['user']['primary_group']
+
+user node['get-native']['user']['name'] do
+    group node['get-native']['user']['primary_group']
+    home node['get-native']['user']['home']
+    manage_home true
+    password node['get-native']['user']['initial_password']
+end
+
+include_recipe 'sudo::default'
+
+sudo node['get-native']['user']['primary_group'] do
+    group node['get-native']['user']['primary_group']
+    nopasswd true
+    commands node['get-native']['user']['sudo_commands']
 end
 
 include_recipe 'build-essential::default'
-package 'psmisc'
+include_recipe 'locale::default'
+
+%w(psmisc tree).each do |pkg|
+    apt_package pkg
+end
+
+include_recipe 'build-essential::default'
 
 mysql_service 'get-native' do
     version node['get-native']['mysql-version']
@@ -25,7 +44,6 @@ mysql_service 'get-native' do
     run_group 'mysql'
     run_user 'mysql'
     port 3306
-    notifies :run, 'execute[update]', :before
     notifies :run, 'execute[upgrade]', :before
     action [:create, :start]
 end
