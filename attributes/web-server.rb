@@ -1,10 +1,23 @@
 default['get-native']['environment'] = 'staging'
 
-default['get-native']['user']['name'] = 'get_native'
-default['get-native']['user']['primary_group'] = 'get_native'
-default['get-native']['user']['initial_password'] = 'get_native'
+default['get-native']['user']['name'] = 'get-native'
+default['get-native']['user']['primary_group'] = 'get-native'
+default['get-native']['user']['initial_password'] = 'get-native'
 default['get-native']['user']['home'] = "/home/#{node['get-native']['user']['name']}"
 default['get-native']['mysql-version'] = '5.7'
+default['get-native']['user']['sudo_commands'] = [
+        '/usr/sbin/apachectl start',
+        '/usr/sbin/apachectl stop',
+        '/usr/sbin/apachectl restart',
+        '/usr/sbin/apachectl graceful',
+        '/usr/sbin/apachectl graceful-stop',
+        '/usr/sbin/apachectl configtest',
+        '/usr/sbin/apachectl status',
+        '/usr/sbin/apachectl fullstatus',
+        '/usr/sbin/apachectl help',
+        '/usr/sbin/apache2',
+        '/usr/local/bin/node'
+]
 
 default['apache']['listen'] = %w(*:80 *:443)
 default['apache']['version'] = '2.4'

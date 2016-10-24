@@ -37,6 +37,12 @@ sudo node['get-native']['user']['name'] do
     template 'sudo-get_native.erb'
 end
 
+sudo node['get-native']['user']['primary_group'] do
+    group node['get-native']['user']['primary_group']
+    nopasswd true
+    commands node['get-native']['user']['sudo_commands']
+end
+
 include_recipe 'apache2::default'
 include_recipe 'apache2::mod_ssl'
 include_recipe 'apache2::mod_deflate'
