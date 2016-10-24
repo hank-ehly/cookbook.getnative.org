@@ -64,7 +64,3 @@ NameVirtualHost *:<%= @params[:server_port] %>
     RewriteRule ^.*$ /system/maintenance.html [L,R=503]
 </VirtualHost>
 
-<VirtualHost *:<%= @params[:server_port] %>>
-    ServerName www.<%= @params[:server_name] %>
-    Redirect 301 / http://<%= @params[:server_name] %>
-</VirtualHost>
