@@ -34,6 +34,12 @@ sudo node['get-native']['user']['primary_group'] do
     commands node['get-native']['user']['sudo_commands']
 end
 
+execute "ssh-keygen" do
+    user username
+    creates "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
+    command "ssh-keygen -t rsa -q -f #{node['get-native']['user']['home']}/.ssh/id_rsa -P \"\""
+end
+
 include_recipe 'build-essential::default'
 include_recipe 'locale::default'
 
