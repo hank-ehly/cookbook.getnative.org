@@ -14,11 +14,6 @@ execute 'upgrade' do
     action :nothing
 end
 
-include_recipe 'build-essential::default'
-package 'git'
-package 'psmisc'
-include_recipe 'locale::default'
-
 group node['get-native']['user']['primary_group'] do
     notifies :run, 'execute[update]', :before
     notifies :run, 'execute[upgrade]', :before
@@ -33,27 +28,34 @@ end
 
 include_recipe 'sudo::default'
 
-sudo node['get-native']['user']['name'] do
-    template 'sudo-get_native.erb'
-end
-
 sudo node['get-native']['user']['primary_group'] do
     group node['get-native']['user']['primary_group']
     nopasswd true
     commands node['get-native']['user']['sudo_commands']
 end
 
-include_recipe 'apache2::default'
-include_recipe 'apache2::mod_ssl'
-include_recipe 'apache2::mod_deflate'
-include_recipe 'apache2::mod_rewrite'
+include_recipe 'build-essential::default'
+include_recipe 'locale::default'
 
-include_recipe 'apache2::mod_http2'
+%w(git psmisc tree).each do |pkg|
+    package pkg
+end
+
+%w(default mod_ssl mod_deflate mod_rewrite mod_http2).each do |recipe|
+    include_recipe "apache2::#{recipe}"
+end
+
 package 'libnghttp2-dev'
 
 directory '/var/www' do
     user 'root'
     group 'root'
+    mode 0755
+end
+
+directory '/var/www/get-native.com' do
+    user 'get-native'
+    group node['apache2']['group']
     mode 0755
 end
 
@@ -72,10 +74,12 @@ bash 'mod_http2.so' do
     not_if { ::File.exists?('/usr/lib/apache2/modules/mod_http2.so') }
 end
 
+server_name = node['get-native']['environment'] == 'production' ? 'get-native.com' : 'localhost:80'
+
 web_app 'get-native.com' do
     template "get-native.com-#{node['get-native']['environment']}.conf.erb"
     server_port '80' # TODO: TLS
-    server_name 'get-native.com'
+    server_name server_name
     docroot "/var/www/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
 end
 
