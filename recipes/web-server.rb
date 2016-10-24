@@ -78,6 +78,7 @@ end
 server_name = node['get-native']['environment'] == 'production' ? 'get-native.com' : 'localhost:80'
 server_port = node['get-native']['environment'] == 'production' ? 443 : 80
 
+# TODO: Not desired state - Must add SSL Cert information to VHOST template
 web_app 'get-native.com' do
     template "get-native.com-#{node['get-native']['environment']}.conf.erb"
     server_port server_port
