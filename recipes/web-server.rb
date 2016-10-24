@@ -32,7 +32,7 @@ private_key 'id_rsa' do
     path "#{node['get-native']['user']['home']}/.ssh/id_rsa"
     public_key_path "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
     pass_phrase ''
-    type 'rsa'
+    type :rsa
 end
 
 include_recipe 'build-essential::default'
