@@ -27,12 +27,11 @@ sudo node['get-native']['user']['primary_group'] do
     commands node['get-native']['user']['sudo_commands']
 end
 
-private_key 'id_rsa' do
-    format :pem
-    path "#{node['get-native']['user']['home']}/.ssh/id_rsa"
-    public_key_path "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
-    pass_phrase ''
-    type :rsa
+execute 'ssh-keygen' do
+    user node['get-native']['user']['name']
+    group node['get-native']['user']['primary_group']
+    creates "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
+    command "ssh-keygen -t rsa -q -f #{node['get-native']['user']['home']}/.ssh/id_rsa -P \"\""
 end
 
 include_recipe 'build-essential::default'
@@ -75,8 +74,8 @@ bash 'mod_http2.so' do
     not_if { ::File.exists?('/usr/lib/apache2/modules/mod_http2.so') }
 end
 
-server_name = node['get-native']['environment'] == 'production' ? 'get-native.com' : 'localhost:80'
 server_port = node['get-native']['environment'] == 'production' ? 443 : 80
+server_name = node['get-native']['environment'] == 'production' ? 'get-native.com' : "localhost:#{server_port}"
 
 # TODO: Not desired state - Must add SSL Cert information to VHOST template
 web_app 'get-native.com' do
