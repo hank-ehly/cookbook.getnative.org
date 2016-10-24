@@ -6,7 +6,7 @@
 
 return if node['platform_family'] != 'debian'
 
-apt_update do
+apt_update 'update-packages' do
     action :update
 end
 
