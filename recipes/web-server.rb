@@ -35,7 +35,8 @@ sudo node['get-native']['user']['primary_group'] do
 end
 
 execute 'ssh-keygen' do
-    user username
+    user node['get-native']['user']['name']
+    group node['get-native']['user']['primary_group']
     creates "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
     command "ssh-keygen -t rsa -q -f #{node['get-native']['user']['home']}/.ssh/id_rsa -P \"\""
 end
