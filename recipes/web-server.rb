@@ -76,10 +76,11 @@ bash 'mod_http2.so' do
 end
 
 server_name = node['get-native']['environment'] == 'production' ? 'get-native.com' : 'localhost:80'
+server_port = node['get-native']['environment'] == 'production' ? 443 : 80
 
 web_app 'get-native.com' do
     template "get-native.com-#{node['get-native']['environment']}.conf.erb"
-    server_port '80' # TODO: TLS
+    server_port server_port
     server_name server_name
     docroot "/var/www/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
 end
