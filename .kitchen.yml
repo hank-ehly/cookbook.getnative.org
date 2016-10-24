@@ -13,13 +13,13 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[get-native.com::default]
+      - recipe[get-native.com-cookbook::default]
     attributes:
   - name: web
     run_list:
-      - recipe[get-native.com::web-server]
+      - recipe[get-native.com-cookbook::web-server]
     attributes:
   - name: db
     run_list:
-      - recipe[get-native.com::db-server]
+      - recipe[get-native.com-cookbook::db-server]
     attributes:
