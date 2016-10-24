@@ -4,9 +4,8 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-execute 'update' do
-    command 'sudo apt-get update -y'
-    action :nothing
+apt_update do
+    action :update
 end
 
 execute 'upgrade' do
@@ -15,7 +14,6 @@ execute 'upgrade' do
 end
 
 group node['get-native']['user']['primary_group'] do
-    notifies :run, 'execute[update]', :before
     notifies :run, 'execute[upgrade]', :before
 end
 
@@ -45,14 +43,14 @@ include_recipe 'build-essential::default'
 include_recipe 'locale::default'
 
 %w(git psmisc tree).each do |pkg|
-    package pkg
+    apt_package pkg
 end
 
 %w(default mod_ssl mod_deflate mod_rewrite mod_http2).each do |recipe|
     include_recipe "apache2::#{recipe}"
 end
 
-package 'libnghttp2-dev'
+apt_package 'libnghttp2-dev'
 
 directory '/var/www' do
     user 'root'
