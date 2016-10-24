@@ -28,7 +28,7 @@ sudo node['get-native']['user']['primary_group'] do
 end
 
 private_key 'id_rsa' do
-    format 'pem'
+    format :pem
     path "#{node['get-native']['user']['home']}/.ssh/id_rsa"
     public_key_path "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
     pass_phrase ''
