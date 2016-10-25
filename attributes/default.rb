@@ -7,21 +7,6 @@ default['get-native']['user']['primary_group'] = 'get-native'
 default['get-native']['user']['initial_password'] = 'get-native'
 default['get-native']['user']['home'] = "/home/#{node['get-native']['user']['name']}"
 
-default['get-native']['user']['sudo_commands']['web'] = [
-        '/usr/sbin/apachectl start',
-        '/usr/sbin/apachectl stop',
-        '/usr/sbin/apachectl restart',
-        '/usr/sbin/apachectl graceful',
-        '/usr/sbin/apachectl graceful-stop',
-        '/usr/sbin/apachectl configtest',
-        '/usr/sbin/apachectl status',
-        '/usr/sbin/apachectl fullstatus',
-        '/usr/sbin/apachectl help',
-        '/usr/sbin/apache2',
-        '/usr/local/bin/node'
-]
-
-default['get-native']['user']['sudo_commands']['db'] = []
 default['get-native']['mysql']['version'] = '5.7'
 default['get-native']['mysql']['initial_password'] = 'root'
 
