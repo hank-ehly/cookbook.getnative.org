@@ -15,9 +15,10 @@ end
 
 include_recipe 'sudo::default'
 
-# TODO: commands should differ between web & db server
+role = node['get-native']['role']
+
 sudo node['get-native']['user']['primary_group'] do
     group node['get-native']['user']['primary_group']
     nopasswd true
-    commands node['get-native']['user']['sudo_commands']['web']
+    commands node['get-native']['user']['sudo_commands'][role]
 end
