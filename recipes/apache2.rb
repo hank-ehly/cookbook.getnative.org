@@ -37,13 +37,10 @@ directory '/var/www/get-native.com' do
     mode 0755
 end
 
-server_port = node['get-native']['environment']['short'] == 'pro' ? 443 : 80
-server_name = node['get-native']['environment']['short'] == 'pro' ? 'get-native.com' : "localhost:#{server_port}"
-
 # TODO: Not desired state - Must add SSL Cert information to VHOST template
 web_app 'get-native.com' do
     template "#{node['get-native']['environment']['short']}-get-native.com.conf.erb"
-    server_port server_port
-    server_name server_name
+    server_port node['get-native']['server_port']
+    server_name node['get-native']['server_name']
     docroot "/var/www/get-native.com/#{node['get-native']['environment']['long']}/current/dist/prod"
 end

@@ -21,6 +21,10 @@ suites:
     run_list:
       - role[web-server]
     environment: 'dev'
+    attributes:
+      get-native:
+        server_port: 80
+        server_name: 'localhost:80'
   - name: db
     run_list:
       - role[db-server]
