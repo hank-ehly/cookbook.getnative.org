@@ -1,10 +1,10 @@
 default['get-native']['environment'] = 'staging'
-default['get-native']['data_bag'] = (recipe_name) == 'web-server' ? 'stg.web.get-native.com' : 'stg.db.get-native.com'
 
 default['get-native']['user']['name'] = 'get-native'
 default['get-native']['user']['primary_group'] = 'get-native'
 default['get-native']['user']['initial_password'] = 'get-native'
 default['get-native']['user']['home'] = "/home/#{node['get-native']['user']['name']}"
+
 default['get-native']['user']['sudo_commands'] = [
         '/usr/sbin/apachectl start',
         '/usr/sbin/apachectl stop',

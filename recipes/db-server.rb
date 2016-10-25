@@ -6,6 +6,8 @@
 
 return if node['platform_family'] != 'debian'
 
+default['get-native']['data_bag'] = 'stg.db.get-native.com' if node['get-native']['data_bag'].nil? || node['get-native']['data_bag'].empty?
+
 apt_update 'update-packages' do
     action :update
 end
@@ -20,12 +22,6 @@ user node['get-native']['user']['name'] do
 end
 
 include_recipe 'sudo::default'
-
-sudo node['get-native']['user']['primary_group'] do
-    group node['get-native']['user']['primary_group']
-    nopasswd true
-    commands node['get-native']['user']['sudo_commands']
-end
 
 directory "#{node['get-native']['user']['home']}/.ssh" do
     mode '0700'
