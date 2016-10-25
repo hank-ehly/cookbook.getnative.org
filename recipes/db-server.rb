@@ -4,8 +4,6 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-return if node['platform_family'] != 'debian'
-
 node.default['get-native']['data_bag'] = 'stg-db-get-native-com' if node['get-native']['data_bag'].nil? || node['get-native']['data_bag'].empty?
 
 apt_update 'update-packages' do

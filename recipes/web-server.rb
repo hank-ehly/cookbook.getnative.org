@@ -4,36 +4,19 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-return if node['platform_family'] != 'debian'
-
-node.default['get-native']['data_bag'] = 'stg-web-get-native-com' if node['get-native']['data_bag'].nil? || node['get-native']['data_bag'].empty?
-
 apt_update 'update-packages' do
     action :update
 end
 
-group node['get-native']['user']['primary_group']
-
-user node['get-native']['user']['name'] do
-    group node['get-native']['user']['primary_group']
-    home node['get-native']['user']['home']
-    manage_home true
-    password node['get-native']['user']['initial_password']
-end
-
-include_recipe 'sudo::default'
-
-sudo node['get-native']['user']['primary_group'] do
-    group node['get-native']['user']['primary_group']
-    nopasswd true
-    commands node['get-native']['user']['sudo_commands']['web']
-end
+# run add-user
 
 directory "#{node['get-native']['user']['home']}/.ssh" do
     mode '0700'
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
 end
+
+node.default['get-native']['data_bag'] = 'stg-web-get-native-com' if node['get-native']['data_bag'].nil? || node['get-native']['data_bag'].empty?
 
 file 'authorized_keys' do
     path "#{node['get-native']['user']['home']}/.ssh/authorized_keys"
@@ -49,6 +32,8 @@ execute 'ssh-keygen' do
     creates "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
     command "ssh-keygen -t rsa -q -f #{node['get-native']['user']['home']}/.ssh/id_rsa -P \"\""
 end
+
+# curl https://api.github.com/repos/hank-ehly/get-native.com/keys/19767268 -H "Accept: application/vnd.github.v3+json" -i -u "hank-ehly:KQX(D5_zRXijWsYq" -X DELETE
 
 include_recipe 'build-essential::default'
 include_recipe 'locale::default'
