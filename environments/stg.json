@@ -1,0 +1,9 @@
+{
+  "name": "stg",
+  "default_attributes": {
+
+  },
+  "json_class": "Chef::Environment",
+  "description": "The staging environment",
+  "chef_type": "environment"
+}
