@@ -1,0 +1,11 @@
+{
+  "name": "dbserver",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The role used to configure the get-native.com dbserver",
+  "run_list": [
+    "recipe[get-native.com-cookbook::bootstrap]",
+    "recipe[get-native.com-cookbook::add-user]",
+    "recipe[get-native.com-cookbook::authorized-keys]"
+  ]
+}

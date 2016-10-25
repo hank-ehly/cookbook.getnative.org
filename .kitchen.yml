@@ -16,14 +16,7 @@ suites:
       - recipe[get-native.com-cookbook::default]
   - name: web
     run_list:
-      - recipe[get-native.com-cookbook::bootstrap]
-      - recipe[get-native.com-cookbook::add-user]
-      - recipe[get-native.com-cookbook::authorized-keys]
-      - recipe[get-native.com-cookbook::deploy-key]
-      - recipe[get-native.com-cookbook::apache2]
-      - recipe[get-native.com-cookbook::mysql-client]
-      - recipe[get-native.com-cookbook::nodejs]
-      - recipe[get-native.com-cookbook::letsencrypt]
+      - role[web]
     data_bags_path: './data_bags'
     roles_path: './roles'
   - name: db
