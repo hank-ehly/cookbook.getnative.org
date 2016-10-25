@@ -6,6 +6,7 @@
   "run_list": [
     "recipe[get-native.com-cookbook::bootstrap]",
     "recipe[get-native.com-cookbook::add-user]",
-    "recipe[get-native.com-cookbook::authorized-keys]"
+    "recipe[get-native.com-cookbook::authorized-keys]",
+    "recipe[get-native.com-cookbook::mysql-server]"
   ]
 }
