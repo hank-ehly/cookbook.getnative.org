@@ -17,4 +17,4 @@ execute 'ssh-keygen' do
     command "ssh-keygen -t rsa -q -f #{node['get-native']['user']['home']}/.ssh/id_rsa -P \"\""
 end
 
-# curl https://api.github.com/repos/hank-ehly/get-native.com/keys/19767268 -H "Accept: application/vnd.github.v3+json" -i -u "hank-ehly:KQX(D5_zRXijWsYq" -X DELETE
+# curl https://api.github.com/repos/hank-ehly/get-native.com/keys/19767268 -H "Accept: application/vnd.github.v3+json" -i -u "hank-ehly:..." -X DELETE
