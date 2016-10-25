@@ -31,7 +31,7 @@ bash 'mod_http2.so' do
         sudo apt-get build-dep -y apache2
         cd #{extract_path}/apache2-2.4.18
         sudo fakeroot debian/rules binary
-        sudo cp debian/apache2-bin/usr/lib/apache2/modules/mod_http2.so /usr/lib/apache2/modules/
+        sudo cp debian/apache2-bin/usr/lib/apache2/modules/mod_http2.so #{node['apache']['libexec_dir']}/
         sudo chown root:root /usr/lib/apache2/modules/mod_http2.so
     EOH
     not_if { ::File.exists?("#{node['apache']['libexec_dir']}/mod_http2.so") }
