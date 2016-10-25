@@ -2,7 +2,7 @@
 # Cookbook Name:: get-native.com-cookbook
 # Recipe:: deploy-key
 #
-# Copyright (c) 2016 The Authors, All Rights Reserved.
+# Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
 directory "#{node['get-native']['user']['home']}/.ssh" do
     mode '0700'
