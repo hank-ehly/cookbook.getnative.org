@@ -10,18 +10,6 @@ end
 
 apt_package 'libnghttp2-dev'
 
-directory '/var/www' do
-    user 'root'
-    group 'root'
-    mode 0755
-end
-
-directory '/var/www/get-native.com' do
-    user 'get-native'
-    group node['apache2']['group']
-    mode 0755
-end
-
 extract_path = "#{Chef::Config[:file_cache_path]}/apache2"
 
 bash 'mod_http2.so' do
@@ -35,6 +23,18 @@ bash 'mod_http2.so' do
         sudo chown root:root /usr/lib/apache2/modules/mod_http2.so
     EOH
     not_if { ::File.exists?("#{node['apache']['libexec_dir']}/mod_http2.so") }
+end
+
+directory '/var/www' do
+    user 'root'
+    group 'root'
+    mode 0755
+end
+
+directory '/var/www/get-native.com' do
+    user 'get-native'
+    group node['apache2']['group']
+    mode 0755
 end
 
 server_port = node['get-native']['environment']['short'] == 'pro' ? 443 : 80
