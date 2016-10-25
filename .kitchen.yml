@@ -14,12 +14,11 @@ suites:
   - name: default
     run_list:
       - recipe[get-native.com-cookbook::default]
-    attributes:
   - name: web
     run_list:
       - recipe[get-native.com-cookbook::web-server]
-    attributes:
+    data_bags_path: './data_bags'
   - name: db
     run_list:
       - recipe[get-native.com-cookbook::db-server]
-    attributes:
+    data_bags_path: './data_bags'

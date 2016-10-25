@@ -27,6 +27,20 @@ sudo node['get-native']['user']['primary_group'] do
     commands node['get-native']['user']['sudo_commands']
 end
 
+directory "#{node['get-native']['user']['home']}/.ssh" do
+    mode '0700'
+    owner node['get-native']['user']['name']
+    group node['get-native']['user']['primary_group']
+end
+
+file 'authorized_keys' do
+    path "#{node['get-native']['user']['home']}/.ssh/authorized_keys"
+    content data_bag_item(node['get-native']['user']['name'], 'public_key')
+    mode '0644'
+    owner node['get-native']['user']['name']
+    group node['get-native']['user']['primary_group']
+end
+
 include_recipe 'build-essential::default'
 include_recipe 'locale::default'
 
