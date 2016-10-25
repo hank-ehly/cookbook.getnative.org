@@ -12,9 +12,6 @@ end
 
 data_bag = "#{node['get-native']['environment']['short']}-#{node['get-native']['role']}"
 
-# TODO: DB or WEB
-# node.default['get-native']['data_bag'] = 'stg-web-get-native-com' if node['get-native']['data_bag'].nil? || node['get-native']['data_bag'].empty?
-
 file 'authorized_keys' do
     path "#{node['get-native']['user']['home']}/.ssh/authorized_keys"
     content data_bag_item(data_bag, 'public_key')['public_key']
