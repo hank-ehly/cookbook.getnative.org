@@ -1,3 +1,4 @@
+default['get-native']['role'] = 'web'
 default['get-native']['user']['sudo_commands'] = [
         '/usr/sbin/apachectl start',
         '/usr/sbin/apachectl stop',

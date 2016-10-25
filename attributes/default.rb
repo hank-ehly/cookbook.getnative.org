@@ -1,6 +1,5 @@
 default['get-native']['environment']['long'] = 'staging'
 default['get-native']['environment']['short'] = 'stg'
-default['get-native']['role'] = 'web'
 
 default['get-native']['user']['name'] = 'get-native'
 default['get-native']['user']['primary_group'] = 'get-native'
