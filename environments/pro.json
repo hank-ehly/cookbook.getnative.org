@@ -1,7 +1,12 @@
 {
   "name": "pro",
   "default_attributes": {
-
+    "get-native": {
+      "environment": {
+        "short": "pro",
+        "long": "production"
+      }
+    }
   },
   "json_class": "Chef::Environment",
   "description": "The production environment",

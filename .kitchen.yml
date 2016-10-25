@@ -20,6 +20,8 @@ suites:
   - name: web
     run_list:
       - role[web-server]
+    environment: 'dev'
   - name: db
     run_list:
       - role[db-server]
+    environment: 'dev'

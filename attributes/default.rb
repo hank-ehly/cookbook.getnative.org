@@ -1,5 +1,3 @@
-default['get-native']['environment']['long'] = 'development'
-default['get-native']['environment']['short'] = 'dev'
 default['get-native']['user']['name'] = 'get-native'
 default['get-native']['user']['primary_group'] = 'get-native'
 default['get-native']['user']['initial_password'] = 'get-native'

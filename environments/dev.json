@@ -1,7 +1,12 @@
 {
   "name": "dev",
   "default_attributes": {
-
+    "get-native": {
+      "environment": {
+        "short": "dev",
+        "long": "development"
+      }
+    }
   },
   "json_class": "Chef::Environment",
   "description": "The development environment",
