@@ -26,7 +26,7 @@ include_recipe 'sudo::default'
 sudo node['get-native']['user']['primary_group'] do
     group node['get-native']['user']['primary_group']
     nopasswd true
-    commands node['get-native']['user']['sudo_commands']
+    commands node['get-native']['user']['sudo_commands']['web']
 end
 
 directory "#{node['get-native']['user']['home']}/.ssh" do

@@ -23,6 +23,12 @@ end
 
 include_recipe 'sudo::default'
 
+sudo node['get-native']['user']['primary_group'] do
+    group node['get-native']['user']['primary_group']
+    nopasswd true
+    commands node['get-native']['user']['sudo_commands']['db']
+end
+
 directory "#{node['get-native']['user']['home']}/.ssh" do
     mode '0700'
     owner node['get-native']['user']['name']
