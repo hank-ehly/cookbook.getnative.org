@@ -6,7 +6,7 @@
 
 return if node['platform_family'] != 'debian'
 
-default['get-native']['data_bag'] = 'stg-db-get-native-com' if node['get-native']['data_bag'].nil? || node['get-native']['data_bag'].empty?
+node.default['get-native']['data_bag'] = 'stg-db-get-native-com' if node['get-native']['data_bag'].nil? || node['get-native']['data_bag'].empty?
 
 apt_update 'update-packages' do
     action :update
