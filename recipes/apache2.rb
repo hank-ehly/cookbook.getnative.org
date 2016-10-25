@@ -34,7 +34,7 @@ bash 'mod_http2.so' do
         sudo cp debian/apache2-bin/usr/lib/apache2/modules/mod_http2.so /usr/lib/apache2/modules/
         sudo chown root:root /usr/lib/apache2/modules/mod_http2.so
     EOH
-    not_if { ::File.exists?('/usr/lib/apache2/modules/mod_http2.so') }
+    not_if { ::File.exists?("#{node['apache']['libexec_dir']}/mod_http2.so") }
 end
 
 server_port = node['get-native']['environment']['short'] == 'pro' ? 443 : 80
