@@ -24,3 +24,5 @@ bash 'init-db' do
               -e 'CREATE DATABASE IF NOT EXISTS get_native DEFAULT CHARACTER SET UTF8;'
     EOH
 end
+
+# TODO: Change root password
