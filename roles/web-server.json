@@ -16,6 +16,6 @@
     "recipe[get-native.com-cookbook::apache2]",
     "recipe[get-native.com-cookbook::mysql-client]",
     "recipe[get-native.com-cookbook::nodejs]",
-    "recipe[get-native.com-cookbook::letsencrypt"
+    "recipe[get-native.com-cookbook::letsencrypt]"
   ]
 }
