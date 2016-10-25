@@ -15,6 +15,7 @@ end
 
 include_recipe 'sudo::default'
 
+# TODO: commands should differ between web & db server
 sudo node['get-native']['user']['primary_group'] do
     group node['get-native']['user']['primary_group']
     nopasswd true

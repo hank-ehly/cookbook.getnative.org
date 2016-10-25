@@ -20,8 +20,8 @@ default['get-native']['user']['sudo_commands']['web'] = [
 ]
 
 default['get-native']['user']['sudo_commands']['db'] = []
-
-default['get-native']['mysql-version'] = '5.7'
+default['get-native']['mysql']['version'] = '5.7'
+default['get-native']['mysql']['initial_password'] = 'ilikerandompasswords'
 
 default['apache']['listen'] = %w(*:80 *:443)
 default['apache']['version'] = '2.4'
