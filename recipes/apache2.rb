@@ -37,12 +37,12 @@ bash 'mod_http2.so' do
     not_if { ::File.exists?('/usr/lib/apache2/modules/mod_http2.so') }
 end
 
-server_port = node['get-native']['environment']['long'] == 'production' ? 443 : 80
-server_name = node['get-native']['environment']['long'] == 'production' ? 'get-native.com' : "localhost:#{server_port}"
+server_port = node['get-native']['environment']['short'] == 'pro' ? 443 : 80
+server_name = node['get-native']['environment']['short'] == 'pro' ? 'get-native.com' : "localhost:#{server_port}"
 
 # TODO: Not desired state - Must add SSL Cert information to VHOST template
 web_app 'get-native.com' do
-    template "get-native.com-#{node['get-native']['environment']['long']}.conf.erb"
+    template "#{node['get-native']['environment']['short']}-get-native.com.conf.erb"
     server_port server_port
     server_name server_name
     docroot "/var/www/get-native.com/#{node['get-native']['environment']['long']}/current/dist/prod"
