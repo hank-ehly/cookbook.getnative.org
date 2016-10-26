@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-if node['get-native']['environment']['short'] == 'pro'
+if node['get-native']['environment'] == 'production'
     # apt_package 'python-letsencrypt-apache'
 
     # TODO: Not desired state

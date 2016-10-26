@@ -1,11 +1,8 @@
 {
-  "name": "stg",
+  "name": "staging",
   "default_attributes": {
     "get-native": {
-      "environment": {
-        "short": "stg",
-        "long": "staging"
-      }
+      "environment": "staging"
     }
   },
   "json_class": "Chef::Environment",

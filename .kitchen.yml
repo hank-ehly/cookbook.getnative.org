@@ -4,11 +4,10 @@ driver:
 
 provisioner:
   name: chef_zero
-  data_bags_path: './data_bags'
   roles_path: './roles'
   environments_path: './environments'
   client_rb:
-    environment: 'dev'
+    environment: 'development'
 
 platforms:
   - name: ubuntu-16.04

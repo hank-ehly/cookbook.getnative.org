@@ -39,8 +39,8 @@ end
 
 # TODO: Not desired state - Must add SSL Cert information to VHOST template
 web_app 'get-native.com' do
-    template "#{node['get-native']['environment']['short']}-get-native.com.conf.erb"
+    template "#{node['get-native']['environment']}-get-native.com.conf.erb"
     server_port node['get-native']['server_port']
     server_name node['get-native']['server_name']
-    docroot "/var/www/get-native.com/#{node['get-native']['environment']['long']}/current/dist/prod"
+    docroot "/var/www/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
 end

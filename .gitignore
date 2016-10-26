@@ -16,3 +16,4 @@ bin/*
 .kitchen.local.yml
 .idea/
 vendor/
+files/default/authorized_keys
