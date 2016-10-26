@@ -7,6 +7,7 @@ provisioner:
   data_bags_path: './data_bags'
   roles_path: './roles'
   environments_path: './environments'
+  nodes_path: './nodes'
   client_rb:
     environment: 'dev'
 
@@ -20,12 +21,13 @@ suites:
     run_list:
       - recipe[get-native.com-cookbook::default]
   - name: web
-    run_list:
-      - role[web-server]
-    attributes:
-      get-native:
-        server_port: 80
-        server_name: 'localhost:80'
+#    run_list:
+#      - role[web-server]
+#    attributes:
+#      get-native:
+#        server_port: 80
+#        server_name: 'localhost:80'
+    node: 'dev.web.get-native.com'
   - name: db
     run_list:
       - role[db-server]
