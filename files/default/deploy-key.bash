@@ -7,3 +7,5 @@
         # curl https://api.github.com/...
         # -H "Accept: application/vnd.github.v3+json"
         # -u "{github name}:{cat secret-password.txt}"
+        # parse response with 'jr'
+                # curl ... | jr '.[0] | .title" << gets you the title of the first object in the array response
