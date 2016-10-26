@@ -22,7 +22,7 @@ default['nodejs']['version'] = '6.9.1'
 default['nodejs']['binary']['checksum'] = 'a9d9e6308931fa2a2b0cada070516d45b76d752430c31c9198933c78f8d54b17'
 
 # TODO: Consider script instead
-default['github']['headers'] = {
-        Accept: 'application/vnd.github.v3+json',
-        Authorization: "Basic #{Base64.encode64('username:password')}"
-}
+# default['github']['headers'] = {
+#         Accept: 'application/vnd.github.v3+json',
+#         Authorization: "Basic #{Base64.encode64('username:password')}"
+# }
