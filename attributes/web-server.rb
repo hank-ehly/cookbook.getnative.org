@@ -1,15 +1,13 @@
 if node['get-native']['environment'] == 'production'
-    default['get-native']['domain'] = 'get-native.com'
     default['acme']['endpoint'] = 'https://acme-v01.api.letsencrypt.org'
 elsif node['get-native']['environment'] == 'staging'
-    default['get-native']['domain'] = 'stg.get-native.com'
     default['acme']['endpoint'] = 'https://acme-staging.api.letsencrypt.org'
 end
 
 default['acme']['contact'] = ['mailto:henry.ehly@gmail.com']
 default['acme']['renew'] = 30
 
-default['apache']['listen'] = %w(*:80 *:443)
+default['apache']['listen'] =  %w(*:80 *:443)
 default['apache']['version'] = '2.4'
 default['apache']['contact'] = 'henry.ehly@gmail.com'
 

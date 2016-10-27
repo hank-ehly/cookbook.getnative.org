@@ -7,10 +7,10 @@
 if node['get-native']['environment'] == 'production' || 'staging'
     include_recipe 'acme'
 
-    site = node['get-native']['domain']
+    site = node['get-native']['server_name']
     sans = Array["www.#{site}"]
 
-    acme_certificate node['get-native']['domain'] do
+    acme_certificate node['get-native']['server_name'] do
         crt "#{node['apache']['dir']}/ssl/#{site}.crt"
         key "#{node['apache']['dir']}/ssl/#{site}.key"
         chain "#{node['apache']['dir']}/ssl/#{site}.pem"

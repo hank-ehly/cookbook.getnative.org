@@ -38,10 +38,7 @@ directory '/var/www/get-native.com' do
 end
 
 web_app 'get-native.com' do
-    template "get-native.com.conf.erb"
-    server_port node['get-native']['server_port']
-
-    # TODO: You have both 'server_name' and 'domain.' Can you combine them somehow?
+    template 'get-native.com.conf.erb'
     server_name node['get-native']['server_name']
     docroot node['get-native']['docroot']
 end

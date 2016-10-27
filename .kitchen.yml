@@ -24,7 +24,6 @@ suites:
       - role[web-server]
     attributes:
       get-native:
-        server_port: 80
         server_name: 'localhost:80'
   - name: db
     run_list:
