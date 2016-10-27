@@ -17,3 +17,4 @@ bin/*
 .idea/
 vendor/
 files/default/authorized_keys
+data_bags/github/credentials.json

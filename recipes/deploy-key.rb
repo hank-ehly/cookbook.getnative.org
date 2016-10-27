@@ -10,23 +10,16 @@ directory "#{node['get-native']['user']['home']}/.ssh" do
     group node['get-native']['user']['primary_group']
 end
 
-execute 'ssh-keygen' do
-    user node['get-native']['user']['name']
+deploy_key 'github-deploy-key' do
+    provider Chef::Provider::DeployKeyGithub
+    label "#{node['get-native']['environment']}-#{node['platform']}"
+    path "#{node['get-native']['user']['home']}/.ssh"
+    credentials({
+            user: data_bag_item('github', 'credentials')['username'],
+            password: data_bag_item('github', 'credentials')['password']
+    })
+    repo node['get-native']['github']['repo']
+    owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
-    creates "#{node['get-native']['user']['home']}/.ssh/id_rsa.pub"
-    command "ssh-keygen -t rsa -q -f #{node['get-native']['user']['home']}/.ssh/id_rsa -P \"\""
-end
-
-# 1. GET /repos/:owner/:repo/keys
-# 2. Check if title=... key exists
-# 3. If exists, exit 0
-# 4. Else, POST /repos/:owner/:repo/keys
-    # curl https://api.github.com/...
-    # -H "Accept: application/vnd.github.v3+json"
-    # -u "{github name}:{cat secret-password.txt}"
-    # parse response with 'jr'
-    # curl ... | jr '.[0] | .title" << gets you the title of the first object in the array response
-
-ruby_block 'deploy-key' do
-
+    action :add
 end
