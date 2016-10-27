@@ -19,7 +19,7 @@ if node['get-native']['environment'] == 'production' || 'staging'
         group 'root'
         wwwroot node['get-native']['docroot']
         alt_names sans
-        notifies :restart, 'service[apache2]'
+        notifies :restart, 'service[apache2]', :delayed
         not_if { ::File.exists?("#{node['apache']['dir']}/ssl/#{site}.crt") }
     end
 end
