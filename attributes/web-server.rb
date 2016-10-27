@@ -1,4 +1,4 @@
-default['get-native']['github']['repo'] = 'get-native.com'
+default['get-native']['github']['repo'] = 'hank-ehly/get-native.com'
 default['get-native']['user']['sudo_commands'] = [
         '/usr/sbin/apachectl start',
         '/usr/sbin/apachectl stop',
