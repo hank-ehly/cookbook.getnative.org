@@ -11,6 +11,6 @@ end
 include_recipe 'build-essential::default'
 include_recipe 'locale::default'
 
-%w(git psmisc tree screen jq).each do |pkg|
+%w(git psmisc tree screen).each do |pkg|
     apt_package pkg
 end
