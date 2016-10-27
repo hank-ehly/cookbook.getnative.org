@@ -4,24 +4,14 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-if node['get-native']['environment'] == 'production'
-    # apt_package 'python-letsencrypt-apache'
-
-    # TODO: Not desired state
-    # execute 'letsencrypt --apache'
-
-    # TODO: Not desired state
-    # execute 'letsencrypt renew --dry-run --agree-tos'
-
-    # TODO: Not desired state
-    # TODO: Use systemd_unit recipe
-    # cron 'certbot-auto-renew' do
-    #     minute '0'
-    #     hour '0,12'
-    #     day '*'
-    #     month '*'
-    #     weekday '*'
-    #     user node['get-native']['user']['name']
-    #     command "/usr/bin/env bash /path/to/certbot-auto renew --non-interactive --quiet"
-    # end
+if node['get-native']['environment'] == 'production' || 'staging'
+    acme_certificate node['get-native']['domain'] do
+        crt "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}.crt"
+        key "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}.key"
+        chain "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}.pem"
+        method 'http'
+        wwwroot node['get-native']['docroot']
+        notifies :restart, 'service[apache2]'
+        not_if { ::File.exists?("#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}.crt") }
+    end
 end

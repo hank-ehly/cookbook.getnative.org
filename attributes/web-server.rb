@@ -1,3 +1,10 @@
+if node['get-native']['environment'] == 'production'
+    default['get-native']['domain'] = 'get-native.com'
+elsif node['get-native']['environment'] == 'staging'
+    default['get-native']['domain'] = 'stg.get-native.com'
+end
+
+default['get-native']['docroot'] = "/var/www/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
 default['get-native']['github']['repo'] = 'hank-ehly/get-native.com'
 default['get-native']['user']['sudo_commands'] = [
         '/usr/sbin/apachectl start',
