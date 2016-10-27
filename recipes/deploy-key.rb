@@ -10,9 +10,8 @@ directory "#{node['get-native']['user']['home']}/.ssh" do
     group node['get-native']['user']['primary_group']
 end
 
-deploy_key 'github-deploy-key' do
+deploy_key node['get-native']['environment'] do
     provider Chef::Provider::DeployKeyGithub
-    label "#{node['get-native']['environment']}-#{node['platform']}"
     path "#{node['get-native']['user']['home']}/.ssh"
     credentials({
             user: data_bag_item('github', 'credentials')['username'],
