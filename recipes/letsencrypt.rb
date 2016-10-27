@@ -10,6 +10,8 @@ if node['get-native']['environment'] == 'production' || 'staging'
         key "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}.key"
         chain "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}.pem"
         method 'http'
+        owner 'root'
+        group 'root'
         wwwroot node['get-native']['docroot']
         notifies :restart, 'service[apache2]'
         not_if { ::File.exists?("#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}.crt") }
