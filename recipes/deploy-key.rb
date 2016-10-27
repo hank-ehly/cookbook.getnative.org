@@ -21,5 +21,5 @@ deploy_key 'github-deploy-key' do
     repo node['get-native']['github']['repo']
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
-    action [:create, :add]
+    action :add
 end
