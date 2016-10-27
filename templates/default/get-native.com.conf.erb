@@ -1,14 +1,29 @@
-# TODO: Add 80, 443 VHOSTS
-
-<VirtualHost *:<%= @params[:server_port] %>>
+<VirtualHost *:80>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
+    RedirectPermanent / https://<%= @params[:server_name] %>
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    RedirectPermanent / https://<%= @params[:server_name] %>
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    RedirectPermanent / https://<%= @params[:server_name] %>
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName <%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    DocumentRoot <%= @params[:docroot] %>
 
     <% if @params[:server_aliases] -%>
-          ServerAlias <%= @params[:server_aliases].join " " %>
+    ServerAlias <%= @params[:server_aliases].join " " %>
     <% end -%>
-
-    DocumentRoot <%= @params[:docroot] %>
 
     <Directory <%= @params[:docroot] %>>
         Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
@@ -26,11 +41,8 @@
         Require local
     </Location>
 
-    <% if node['get-native']['environment'] != 'development' %>
     RewriteEngine On
     LogLevel info rewrite:trace1
-    <% end -%>
-
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
 
@@ -42,7 +54,15 @@
         SetOutputFilter DEFLATE
     </IfModule>
 
-    <% if node['get-native']['environment'] != 'development' -%>
+    <IfModule mod_ssl.c>
+        SSLEngine On
+        SSLCertificateFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.crt
+        SSLCertificateKeyFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.key
+        SSLCertificateChainFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.pem
+    </IfModule>
+
+    UseCanonicalName Off
+
     RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
     RewriteCond %{HTTP_HOST}   !^$
     RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
@@ -50,28 +70,4 @@
     RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
     RewriteCond %{SCRIPT_FILENAME} !maintenance.html
     RewriteRule ^.*$ /system/maintenance.html [L,R=503]
-    <% end -%>
 </VirtualHost>
-
-<% if node['get-native']['environment'] != 'development' -%>
-<VirtualHost *:<%= @params[:server_port] %>>
-    ServerName www.<%= @params[:server_name] %>
-    Redirect 301 / http://<%= @params[:server_name] %>
-</VirtualHost>
-
-<VirtualHost *:443>
-  <IfModule mod_ssl.c>
-      SSLEngine On
-      SSLCertificateFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.crt
-      SSLCertificateKeyFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.key
-      SSLCertificateChainFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.pem
-  </IfModule>
-  ServerAdmin <%= node[:apache][:contact] %>
-  ServerName <%= @params[:server_name] %>
-  UseCanonicalName Off
-
-  <% if @params[:server_aliases] -%>
-  ServerAlias <%= @params[:server_aliases].join " " %>
-  <% end -%>
-</VirtualHost>
-<% end -%>
