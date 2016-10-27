@@ -1,9 +1,7 @@
-<% if node['apache']['version'] != '2.4' -%>
-NameVirtualHost *:<%= @params[:server_port] %>
-<% end -%>
-
+# TODO: Add 80, 443 VHOSTS
 <VirtualHost *:<%= @params[:server_port] %>>
     ServerName <%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
 
     <% if @params[:server_aliases] -%>
           ServerAlias <%= @params[:server_aliases].join " " %>
@@ -14,12 +12,7 @@ NameVirtualHost *:<%= @params[:server_port] %>
     <Directory <%= @params[:docroot] %>>
         Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
         AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
-        <% if node['apache']['version'] == '2.4' -%>
         Require all granted
-        <% else -%>
-        Order allow,deny
-        Allow from all
-        <% end -%>
     </Directory>
 
     <Directory />
@@ -29,23 +22,13 @@ NameVirtualHost *:<%= @params[:server_port] %>
 
     <Location /server-status>
         SetHandler server-status
-        <% if node['apache']['version'] == '2.4' -%>
         Require local
-        <% else -%>
-        Order Deny,Allow
-        Deny from all
-        Allow from 127.0.0.1
-        <% end -%>
     </Location>
 
+    <% if node['get-native']['environment'] == 'production' %>
     RewriteEngine On
-    <%- if node['apache']['version'] == '2.4' -%>
     LogLevel info rewrite:trace1
-    <%- else -%>
-    LogLevel info
-    RewriteLog <%= node['apache']['log_dir'] %>/<%= @application_name %>-rewrite.log
-    RewriteLogLevel 0
-    <%- end -%>
+    <% end -%>
 
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
@@ -54,7 +37,7 @@ NameVirtualHost *:<%= @params[:server_port] %>
     DirectoryIndex <%= [@params[:directory_index]].flatten.join " " %>
     <% end -%>
 
-    # Canonical host, <%= @params[:server_name] %>
+    <% if node['get-native']['environment'] == 'production' -%>
     RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
     RewriteCond %{HTTP_HOST}   !^$
     RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
@@ -62,9 +45,12 @@ NameVirtualHost *:<%= @params[:server_port] %>
     RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
     RewriteCond %{SCRIPT_FILENAME} !maintenance.html
     RewriteRule ^.*$ /system/maintenance.html [L,R=503]
+    <% end -%>
 </VirtualHost>
 
+<% if node['get-native']['environment'] == 'production' -%>
 <VirtualHost *:<%= @params[:server_port] %>>
-  ServerName www.<%= @params[:server_name] %>
-  Redirect 301 / http://<%= @params[:server_name] %>
+    ServerName www.<%= @params[:server_name] %>
+    Redirect 301 / http://<%= @params[:server_name] %>
 </VirtualHost>
+<% end -%>

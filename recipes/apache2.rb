@@ -38,7 +38,7 @@ directory '/var/www/get-native.com' do
 end
 
 web_app 'get-native.com' do
-    template "#{node['get-native']['environment']}-get-native.com.conf.erb"
+    template "get-native.com.conf.erb"
     server_port node['get-native']['server_port']
     server_name node['get-native']['server_name']
     docroot node['get-native']['docroot']
