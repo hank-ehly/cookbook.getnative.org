@@ -17,14 +17,16 @@ execute 'ssh-keygen' do
     command "ssh-keygen -t rsa -q -f #{node['get-native']['user']['home']}/.ssh/id_rsa -P \"\""
 end
 
-cookbook_file 'deploy-key.bash' do
-    path '/tmp/deploy-key.bash'
-    source 'deploy-key.bash'
-    owner node['get-native']['user']['name']
-    group node['get-native']['user']['primary_group']
-    mode '0755'
-end
+# 1. GET /repos/:owner/:repo/keys
+# 2. Check if title=... key exists
+# 3. If exists, exit 0
+# 4. Else, POST /repos/:owner/:repo/keys
+    # curl https://api.github.com/...
+    # -H "Accept: application/vnd.github.v3+json"
+    # -u "{github name}:{cat secret-password.txt}"
+    # parse response with 'jr'
+    # curl ... | jr '.[0] | .title" << gets you the title of the first object in the array response
 
-execute 'upload deploy-key' do
-    command '/usr/bin/env bash /tmp/deploy-key.bash'
+ruby_block 'deploy-key' do
+
 end
