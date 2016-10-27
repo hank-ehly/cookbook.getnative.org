@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-if node['get-native']['environment'] == 'production' || 'staging'
+if node['get-native']['environment'] != 'development'
     include_recipe 'acme'
 
     site = node['get-native']['server_name']
