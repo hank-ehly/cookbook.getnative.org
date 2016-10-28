@@ -1,1 +1,3 @@
-default['get-native']['user']['sudo_commands'] = []
+default['get-native']['user']['sudo_commands'] = [
+        '/sbin/iptables'
+]
