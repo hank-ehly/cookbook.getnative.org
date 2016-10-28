@@ -8,7 +8,6 @@ if node['get-native']['environment'] != 'development'
     include_recipe 'acme'
 
     site = node['get-native']['server_name']
-    sans = Array["www.#{site}"]
 
     acme_certificate node['get-native']['server_name'] do
         crt "#{node['apache']['dir']}/ssl/#{site}.crt"
@@ -18,7 +17,6 @@ if node['get-native']['environment'] != 'development'
         owner 'root'
         group 'root'
         wwwroot node['get-native']['docroot']
-        alt_names sans
         not_if { ::File.exists?("#{node['apache']['dir']}/ssl/#{site}.crt") }
     end
 end
