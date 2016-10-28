@@ -18,3 +18,4 @@ bin/*
 vendor/
 files/default/authorized_keys
 data_bags/github/credentials.json
+data_bags/*/ssh.json

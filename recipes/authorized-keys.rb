@@ -10,10 +10,12 @@ directory "#{node['get-native']['user']['home']}/.ssh" do
     group node['get-native']['user']['primary_group']
 end
 
-cookbook_file 'authorized_keys' do
+data_bag = "#{node['get-native']['environment']}-#{node['get-native']['role']}"
+
+file 'authorized_keys' do
     path "#{node['get-native']['user']['home']}/.ssh/authorized_keys"
-    source 'authorized_keys'
+    content data_bag_item(data_bag, 'public_key')['public_key']
+    mode '0644'
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
-    mode '0644'
 end

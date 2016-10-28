@@ -12,5 +12,10 @@
     "recipe[get-native.com-cookbook::mysql-client]",
     "recipe[get-native.com-cookbook::nodejs]",
     "recipe[get-native.com-cookbook::letsencrypt]"
-  ]
+  ],
+  "default_attributes": {
+    "get-native": {
+      "role": "web"
+    }
+  }
 }
