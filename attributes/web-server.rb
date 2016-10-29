@@ -17,6 +17,7 @@ default['get-native']['user']['sudo_commands'] = [
         '/usr/sbin/apachectl',
         '/usr/sbin/apache2',
         '/usr/local/bin/node',
+        '/usr/local/bin/npm',
         '/sbin/iptables'
 ]
 
