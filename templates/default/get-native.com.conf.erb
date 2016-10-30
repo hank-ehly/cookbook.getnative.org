@@ -1,22 +1,23 @@
+#<VirtualHost *:80>
+#    ServerName <%= @params[:server_name] %>
+#    ServerAdmin <%= node[:apache][:contact] %>
+#    RedirectPermanent / https://<%= @params[:server_name] %>
+#</VirtualHost>
+#
+#<VirtualHost *:80>
+#    ServerName www.<%= @params[:server_name] %>
+#    ServerAdmin <%= node[:apache][:contact] %>
+#    RedirectPermanent / https://<%= @params[:server_name] %>
+#</VirtualHost>
+#
+#<VirtualHost *:443>
+#    ServerName www.<%= @params[:server_name] %>
+#    ServerAdmin <%= node[:apache][:contact] %>
+#    RedirectPermanent / https://<%= @params[:server_name] %>
+#</VirtualHost>
+#
+#<VirtualHost *:443>
 <VirtualHost *:80>
-    ServerName <%= @params[:server_name] %>
-    ServerAdmin <%= node[:apache][:contact] %>
-    RedirectPermanent / https://<%= @params[:server_name] %>
-</VirtualHost>
-
-<VirtualHost *:80>
-    ServerName www.<%= @params[:server_name] %>
-    ServerAdmin <%= node[:apache][:contact] %>
-    RedirectPermanent / https://<%= @params[:server_name] %>
-</VirtualHost>
-
-<VirtualHost *:443>
-    ServerName www.<%= @params[:server_name] %>
-    ServerAdmin <%= node[:apache][:contact] %>
-    RedirectPermanent / https://<%= @params[:server_name] %>
-</VirtualHost>
-
-<VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
     DocumentRoot <%= @params[:docroot] %>
@@ -54,12 +55,12 @@
         SetOutputFilter DEFLATE
     </IfModule>
 
-    <IfModule mod_ssl.c>
-        SSLEngine On
-        SSLCertificateFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.crt
-        SSLCertificateKeyFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.key
-        SSLCertificateChainFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.pem
-    </IfModule>
+#    <IfModule mod_ssl.c>
+#        SSLEngine On
+#        SSLCertificateFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.crt
+#        SSLCertificateKeyFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.key
+#        SSLCertificateChainFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.pem
+#    </IfModule>
 
     UseCanonicalName Off
 
