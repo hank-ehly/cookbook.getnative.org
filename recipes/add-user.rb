@@ -14,6 +14,14 @@ user node['get-native']['user']['name'] do
     shell node['get-native']['user']['shell']
 end
 
+template '~/.screenrc' do
+    source 'screenrc.erb'
+    path "#{node['get-native']['user']['home']}/.screenrc"
+    mode '0644'
+    owner node['get-native']['user']['name']
+    group node['get-native']['user']['primary_group']
+end
+
 include_recipe 'sudo::default'
 
 sudo node['get-native']['user']['primary_group'] do
@@ -21,3 +29,4 @@ sudo node['get-native']['user']['primary_group'] do
     nopasswd true
     commands node['get-native']['user']['sudo_commands']
 end
+
