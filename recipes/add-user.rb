@@ -14,6 +14,10 @@ user node['get-native']['user']['name'] do
     shell node['get-native']['user']['shell']
 end
 
+%w(git psmisc tree screen).each do |pkg|
+    apt_package pkg
+end
+
 template '~/.screenrc' do
     source 'screenrc.erb'
     path "#{node['get-native']['user']['home']}/.screenrc"
