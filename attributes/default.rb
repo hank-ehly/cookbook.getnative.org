@@ -6,3 +6,4 @@ default['get-native']['user']['home'] = "/home/#{node['get-native']['user']['nam
 default['get-native']['mysql']['version'] = '5.7'
 default['get-native']['mysql']['initial_password'] = 'root'
 default['authorization']['sudo']['include_sudoers_d'] = true
+default['openssh']['server']['password_authentication'] = 'no'
