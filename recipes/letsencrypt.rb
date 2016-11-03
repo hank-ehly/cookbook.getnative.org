@@ -18,7 +18,17 @@ if node['get-native']['environment'] != 'development'
     domains = %W(#{node['get-native']['server_name']} www.#{node['get-native']['server_name']})
 
     bash 'letsencrypt' do
-        code "/usr/bin/letsencrypt -d #{domains.join(' ')} --apache --agree-tos --non-interactive --email #{node['get-native']['contact']}"
+        code <<-EOH
+            /usr/bin/letsencrypt -d #{domains.join(' ')} \
+                                 --apache \
+                                 --agree-tos \
+                                 --non-interactive \
+                                 --email #{node['get-native']['contact']} \
+                                 --cert-path #{node['apache']['dir']}/ssl/#{node['get-native']['server_name']}/cert.pem \
+                                 --key-path #{node['apache']['dir']}/ssl/#{node['get-native']['server_name']}/privkey.pem \
+                                 --chain-path #{node['apache']['dir']}/ssl/#{node['get-native']['server_name']}/chain.pem \
+                                 --config-dir #{node['apache']['dir']}
+        EOH
     end
 end
 
