@@ -45,14 +45,9 @@
         SetOutputFilter DEFLATE
     </IfModule>
 
-#    <IfModule mod_ssl.c>
-#        SSLEngine On
-#        SSLCertificateFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.crt
-#        SSLCertificateKeyFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.key
-#        SSLCertificateChainFile <%= "#{node['apache']['dir']}/ssl/#{node['get-native']['domain']}" %>.pem
-#    </IfModule>
-#
-#    Protocols h2 http/1.1
+    <IfModule mod_ssl.c>
+        Protocols h2 http/1.1
+    </IfModule>
 
     UseCanonicalName Off
 
