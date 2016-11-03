@@ -1,0 +1,13 @@
+general:
+  branches:
+    only:
+      - master
+
+dependencies:
+  cache_directories:
+    - "vendor"
+
+test:
+  override:
+    - /opt/chefdk/embedded/bin/chef --version
+    - /opt/chefdk/embedded/bin/chef exec rspec
