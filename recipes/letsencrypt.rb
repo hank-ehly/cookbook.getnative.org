@@ -25,6 +25,9 @@ if node['get-native']['environment'] != 'development'
                                  --non-interactive \
                                  --email #{node['get-native']['contact']} \
                                  --config-dir #{node['apache']['dir']}/ssl \
+                                 --apache-server-root #{node['apache']['dir']} \
+                                 --apache-vhost-root #{node['apache']['dir']}/sites-available \
+                                 --redirect \
                                  --logs-dir #{node['apache']['log_dir']}
         EOH
         not_if { ! ::File.exists?('/usr/bin/letsencrypt') }
