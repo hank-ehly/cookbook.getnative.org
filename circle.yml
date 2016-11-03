@@ -4,10 +4,25 @@ general:
       - master
 
 dependencies:
+  pre:
+    - if ! chef -v; then
+        if ! [ -f chefdk_0.3.5-1_amd64.deb ]; then
+          wget https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_0.3.5-1_amd64.deb;
+        fi;
+        sudo dpkg -i chefdk_0.3.5-1_amd64.deb;
+      fi
+    - chef gem install specific_install
+    - sudo chef gem install kitchen-vagrant
+    - sudo chef gem uninstall chefspec
+    - chef gem install chefspec:4.0.1
+    - mkdir ~/.chef
+    - cp ~/${CIRCLE_PROJECT_REPONAME}/test/circle/knife.rb ~/.chef/knife.rb
   cache_directories:
-    - "vendor"
+    - vendor
+    - ./chefdk_0.3.5-1_amd64.deb
 
 test:
   override:
-    - /opt/chefdk/embedded/bin/chef --version
-    - /opt/chefdk/embedded/bin/chef exec rspec
+    - chef exec berks install
+    - chef exec rspec -P spec/**/*_spec.rb --tty --color
+    - chef exec kitchen test
