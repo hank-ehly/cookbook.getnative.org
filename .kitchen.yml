@@ -27,7 +27,7 @@ suites:
       - role[web-server]
     attributes:
       get-native:
-        server_name: 'localhost:80'
+        server_name: 'get-native.com.local'
   - name: db
     run_list:
       - role[db-server]

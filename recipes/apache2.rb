@@ -37,10 +37,10 @@ directory '/var/www/get-native.com' do
     mode 0755
 end
 
-vhost_template = node['get-native']['environment'] == 'development' ? 'dev-get-native.com.conf.erb' : "#{node['get-native']['server_name']}.conf.erb"
-
-web_app 'get-native.com' do
-    template vhost_template
-    server_name node['get-native']['server_name']
-    docroot node['get-native']['docroot']
+%W(#{node['get-native']['server_name']} www.#{node['get-native']['server_name']}).each do |domain|
+    web_app domain do
+        template "#{domain}.conf.erb"
+        server_name domain
+        docroot node['get-native']['docroot']
+    end
 end
