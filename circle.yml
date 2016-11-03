@@ -15,8 +15,6 @@ dependencies:
     - sudo chef gem install kitchen-vagrant
     - sudo chef gem uninstall chefspec
     - chef gem install chefspec:4.0.1
-    - mkdir ~/.chef
-    - cp ~/${CIRCLE_PROJECT_REPONAME}/test/circle/knife.rb ~/.chef/knife.rb
   cache_directories:
     - vendor
     - ./chefdk_0.3.5-1_amd64.deb
