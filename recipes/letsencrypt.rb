@@ -27,7 +27,8 @@ if node['get-native']['environment'] != 'development'
                                  --cert-path #{node['apache']['dir']}/ssl/#{node['get-native']['server_name']}/cert.pem \
                                  --key-path #{node['apache']['dir']}/ssl/#{node['get-native']['server_name']}/privkey.pem \
                                  --chain-path #{node['apache']['dir']}/ssl/#{node['get-native']['server_name']}/chain.pem \
-                                 --config-dir #{node['apache']['dir']}
+                                 --config-dir #{node['apache']['dir']} \
+                                 --logs-dir #{node['apache']['log_dir']}
         EOH
     end
 end
