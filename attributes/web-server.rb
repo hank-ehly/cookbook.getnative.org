@@ -3,8 +3,9 @@ default['get-native']['contact'] = 'henry.ehly@gmail.com'
 default['apache']['listen'] =  %w(*:80 *:443)
 default['apache']['version'] = '2.4'
 default['apache']['contact'] = node['get-native']['contact']
+default['apache']['docroot_dir'] = '/var/www'
 
-default['get-native']['docroot'] = "/var/www/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
+default['get-native']['docroot'] = "#{node['apache']['docroot_dir']}/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
 default['get-native']['github']['repo'] = 'hank-ehly/get-native.com'
 default['get-native']['user']['sudo_commands'] = [
         '/usr/sbin/apachectl',
