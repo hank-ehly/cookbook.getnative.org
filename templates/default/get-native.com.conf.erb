@@ -45,8 +45,12 @@
         SetOutputFilter DEFLATE
     </IfModule>
 
+    # Because letsencrypt creates the SSL virtualhost dynamically
+    # we must double check this this virtualhost is the SSL virtualhost
     <IfModule mod_ssl.c>
-        Protocols h2 http/1.1
+        <IfModule http2_module>
+            Protocols h2 http/1.1
+        </IfModule>
     </IfModule>
 
     UseCanonicalName Off
