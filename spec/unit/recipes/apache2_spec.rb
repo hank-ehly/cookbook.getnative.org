@@ -13,8 +13,11 @@ describe 'get-native.com-cookbook::apache2' do
 
     context 'On the ubuntu 16.04 platform' do
         let(:chef_run) do
-            runner = ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04')
-            runner.converge(described_recipe)
+            runner = ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04') do |node|
+                node.normal['get-native']['user']['name'] = 'get-native'
+                node.normal['get-native']['user']['primary_group'] = 'get-native'
+                node.normal['apache2']['group'] = 'www-data'
+            end.converge(described_recipe)
         end
 
         it 'converges successfully' do
@@ -44,5 +47,23 @@ describe 'get-native.com-cookbook::apache2' do
         it 'installs a apt_package with the default action' do
             expect(chef_run).to install_apt_package('libnghttp2-dev')
         end
+
+        it 'creates a directory with attributes' do
+            expect(chef_run).to create_directory('/var/www').with(
+                    user: 'get-native',
+                    group: 'get-native',
+                    mode: 0755
+            )
+        end
+
+        it 'creates the directory /var/www/get-native.com' do
+            expect(chef_run).to create_directory('/var/www').with(
+                    user: 'get-native',
+                    group: 'www-data',
+                    mode: 0755
+            )
+        end
+
+        # /usr/lib/apache2/modules/mod_http2.so
     end
 end
