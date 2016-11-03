@@ -11,7 +11,7 @@ if node['get-native']['environment'] != 'development'
         command 'if [[ `which /usr/bin/letsencrypt` ]]; then /usr/bin/letsencrypt renew --quiet ; fi'
         minute '0'
         hour '0,12'
-        user node['get-native']['user']['name']
+        user 'root'
         mailto node['get-native']['contact']
     end
 
