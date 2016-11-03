@@ -25,7 +25,7 @@ bash 'mod_http2.so' do
     not_if { ::File.exists?("#{node['apache']['libexec_dir']}/mod_http2.so") }
 end
 
-directory '/var/www' do
+directory node['apache']['docroot_dir'] do
     user 'root'
     group 'root'
     mode 0755
