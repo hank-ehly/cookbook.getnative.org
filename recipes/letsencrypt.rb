@@ -30,6 +30,7 @@ if node['get-native']['environment'] != 'development'
                                  --config-dir #{node['apache']['dir']} \
                                  --logs-dir #{node['apache']['log_dir']}
         EOH
+        not_if { ! ::File.exists?('/usr/bin/letsencrypt') }
     end
 end
 
