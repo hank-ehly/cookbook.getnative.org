@@ -37,7 +37,7 @@ directory '/var/www/get-native.com' do
     mode 0755
 end
 
-vhost_template = node['get-native']['environment'] == 'development' ? 'dev-get-native.com.conf.erb' : 'get-native.com.conf.erb'
+vhost_template = node['get-native']['environment'] == 'development' ? 'dev-get-native.com.conf.erb' : "#{node['get-native']['server_name']}.conf.erb"
 
 web_app 'get-native.com' do
     template vhost_template
