@@ -1,5 +1,5 @@
 <VirtualHost *:80>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
-    RedirectPermanent / http://<%= node['get-native']['server_name'] %>
+    RedirectPermanent / https://<%= node['get-native']['server_name'] %>
 </VirtualHost>
