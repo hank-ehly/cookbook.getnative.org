@@ -33,7 +33,7 @@ end
 
 directory '/var/www/get-native.com' do
     user node['get-native']['user']['name']
-    group node['apache2']['group']
+    group node['apache']['group']
     mode 0755
 end
 
