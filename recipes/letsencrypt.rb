@@ -19,7 +19,7 @@ if node['get-native']['environment'] != 'development'
 
     bash 'letsencrypt' do
         code <<-EOH
-            /usr/bin/letsencrypt -d #{domains.join(' ')} \
+            /usr/bin/letsencrypt --domains #{domains.join(',')} \
                                  --apache \
                                  --agree-tos \
                                  --non-interactive \
