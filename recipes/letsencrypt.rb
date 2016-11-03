@@ -5,19 +5,20 @@
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
 if node['get-native']['environment'] != 'development'
-    include_recipe 'acme'
+    apt_package 'python-letsencrypt-apache'
 
-    site = node['get-native']['server_name']
+    cron 'letsencrypt' do
+        command 'if [[ `which /usr/bin/letsencrypt` ]]; then /usr/bin/letsencrypt renew --quiet ; fi'
+        minute '0'
+        hour '0,12'
+        user node['get-native']['user']['name']
+        mailto node['get-native']['contact']
+    end
 
-    acme_certificate node['get-native']['server_name'] do
-        crt "#{node['apache']['dir']}/ssl/#{site}.crt"
-        key "#{node['apache']['dir']}/ssl/#{site}.key"
-        chain "#{node['apache']['dir']}/ssl/#{site}.pem"
-        method 'http'
-        owner 'root'
-        group 'root'
-        wwwroot node['get-native']['docroot']
-        not_if { ::File.exists?("#{node['apache']['dir']}/ssl/#{site}.crt") }
+    domains = %W(#{node['get-native']['server_name']} www.#{node['get-native']['server_name']})
+
+    bash 'letsencrypt' do
+        code "/usr/bin/letsencrypt -d #{domains.join(' ')} --apache --agree-tos --non-interactive --email #{node['get-native']['contact']}"
     end
 end
 
