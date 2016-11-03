@@ -7,7 +7,7 @@
 require 'spec_helper'
 
 describe 'get-native.com-cookbook::bootstrap' do
-    context 'When all attributes are default, on an unspecified platform' do
+    context 'On the ubuntu 16.04 platform' do
         let(:chef_run) do
             runner = ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04')
             runner.converge(described_recipe)
@@ -15,6 +15,18 @@ describe 'get-native.com-cookbook::bootstrap' do
 
         it 'converges successfully' do
             expect { chef_run }.to_not raise_error
+        end
+
+        it 'includes the `apt` recipe' do
+            expect(chef_run).to include_recipe('apt::default')
+        end
+
+        it 'includes the `build-essential` recipe' do
+            expect(chef_run).to include_recipe('build-essential::default')
+        end
+
+        it 'includes the `locale` recipe' do
+            expect(chef_run).to include_recipe('locale::default')
         end
     end
 end

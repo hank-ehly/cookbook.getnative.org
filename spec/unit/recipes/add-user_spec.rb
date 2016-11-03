@@ -12,7 +12,7 @@ describe 'get-native.com-cookbook::add-user' do
     end
 
     context 'On the ubuntu 16.04 platform' do
-        cached(:chef_run) do
+        let(:chef_run) do
             runner = ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04') do |node|
                 node.normal['get-native']['user']['primary_group'] = 'get-native'
             end.converge(described_recipe)
