@@ -15,5 +15,5 @@ default['get-native']['user']['sudo_commands'] = [
 
 default['nodejs']['bin_path'] = '/usr/local/nodejs-binary/bin'
 default['nodejs']['install_method'] = 'binary'
-default['nodejs']['version'] = '6.9.1'
-default['nodejs']['binary']['checksum'] = 'a9d9e6308931fa2a2b0cada070516d45b76d752430c31c9198933c78f8d54b17'
+default['nodejs']['version'] = '6.9.4'
+default['nodejs']['binary']['checksum'] = 'a1faed4afbbdbdddeae17a24b873b5d6b13950c36fabcb86327a001d24316ffb'
