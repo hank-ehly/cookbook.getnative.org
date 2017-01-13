@@ -7,7 +7,7 @@
 mysql_service 'get-native' do
     version node['get-native']['mysql']['version']
     initial_root_password node['get-native']['mysql']['initial_password']
-    bind_address '0.0.0.0'
+    bind_address '*'
     charset 'utf8'
     run_group 'mysql'
     run_user 'mysql'
