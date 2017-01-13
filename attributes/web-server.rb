@@ -1,5 +1,3 @@
-default['get-native']['contact'] = 'henry.ehly@gmail.com'
-
 default['apache']['listen'] =  %w(*:80 *:443)
 default['apache']['version'] = '2.4'
 default['apache']['contact'] = node['get-native']['contact']
