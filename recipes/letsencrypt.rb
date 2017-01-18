@@ -33,4 +33,3 @@ if node['get-native']['environment'] != 'development'
         not_if { ! ::File.exists?('/usr/bin/letsencrypt') }
     end
 end
-
