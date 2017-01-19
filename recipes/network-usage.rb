@@ -15,6 +15,6 @@ cron 'network-usage' do
         /bin/echo \"* `date`\" &&
         iptables -S -Z -v |
         /usr/bin/awk '/^-P/{ print $2, $6 }' |
-        /usr/bin/tr ' ' '\t' > #{node['get-native']['local-log-dir']}/network-usage.log 2>&1
+        /usr/bin/tr ' ' '\t' >> #{node['get-native']['local-log-dir']}/network-usage.log 2>&1
     }.join(' ')
 end
