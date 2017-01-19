@@ -25,10 +25,9 @@ template '/etc/postfix/main.cf' do
     owner 'root'
     group 'root'
     mode 0644
-    notifies :run, 'execute[reload-postfix]', :immediately
 end
 
-execute 'reload-postfix' do
-    command '/etc/init.d/postfix reload'
-    action :nothing
+service 'postfix' do
+    provider Chef::Provider::Service::Systemd
+    action [:enable, :start]
 end
