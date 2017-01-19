@@ -6,15 +6,21 @@
 
 directory node['get-native']['local-log-dir']
 
+directory '/root/bin'
+
+template 'network-usage' do
+    path '/root/bin/network-usage.bash'
+    source 'network-usage.bash.erb'
+    owner 'root'
+    group 'root'
+    mode 0644
+end
+
 cron 'network-usage' do
     minute '0'
     hour '0'
+    day '1'
     user 'root'
     mailto node['get-native']['contact']
-    command %W{
-        /bin/echo \"* `date`\" &&
-        iptables -S -Z -v |
-        /usr/bin/awk '/^-P/{ print $2, $6 }' |
-        /usr/bin/tr ' ' '\t' >> #{node['get-native']['local-log-dir']}/network-usage.log 2>&1
-    }.join(' ')
+    command '/bin/bash root/bin/network-usage.bash'
 end
