@@ -27,6 +27,10 @@ template '/etc/postfix/main.cf' do
     mode 0644
 end
 
+execute 'postalias' do
+    command 'postalias /etc/aliases'
+end
+
 service 'postfix' do
     provider Chef::Provider::Service::Systemd
     action [:enable, :start]
