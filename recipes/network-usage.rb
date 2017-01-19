@@ -13,7 +13,7 @@ template 'network-usage' do
     source 'network-usage.bash.erb'
     owner 'root'
     group 'root'
-    mode 0644
+    mode 0700
 end
 
 cron 'network-usage' do
