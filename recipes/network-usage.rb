@@ -22,5 +22,5 @@ cron 'network-usage' do
     day '1'
     user 'root'
     mailto node['get-native']['contact']
-    command '/bin/bash root/bin/network-usage.bash'
+    command '/bin/bash /root/bin/network-usage.bash'
 end
