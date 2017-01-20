@@ -4,13 +4,14 @@
     DocumentRoot <%= @params[:docroot] %>
 
     <% if @params[:server_aliases] -%>
-    ServerAlias <%= @params[:server_aliases].join " " %>
+    ServerAlias <%= @params[:server_aliases].join ' ' %>
     <% end -%>
 
     <Directory <%= @params[:docroot] %>>
-        Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
-        AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
-        Require all granted
+        Options <%= [@params[:directory_options] || 'FollowSymLinks'].flatten.join ' ' %>
+        AllowOverride <%= [@params[:allow_override] || 'None'].flatten.join ' ' %>
+        Require all denied
+        Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
 
         <IfModule mod_rewrite.c>
             RewriteEngine On
@@ -27,18 +28,13 @@
         AllowOverride None
     </Directory>
 
-    <Location /server-status>
-        SetHandler server-status
-        Require local
-    </Location>
-
     RewriteEngine On
     LogLevel info rewrite:trace1
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
 
     <% if @params[:directory_index] -%>
-    DirectoryIndex <%= [@params[:directory_index]].flatten.join " " %>
+        DirectoryIndex <%= [@params[:directory_index]].flatten.join ' ' %>
     <% end -%>
 
     <IfModule mod_deflate.c>
@@ -48,9 +44,9 @@
     # Because letsencrypt creates the SSL virtualhost dynamically
     # we must double check this this virtualhost is the SSL virtualhost
     <IfModule mod_ssl.c>
-        <IfModule http2_module>
-            Protocols h2 http/1.1
-        </IfModule>
+    <IfModule http2_module>
+        Protocols h2 http/1.1
+    </IfModule>
     </IfModule>
 
     UseCanonicalName Off
