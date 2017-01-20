@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-%w(default mod_ssl mod_deflate mod_rewrite).each do |recipe|
+%w(default mod_ssl mod_deflate mod_rewrite mod_proxy mod_proxy_http).each do |recipe|
     include_recipe "apache2::#{recipe}"
 end
 
