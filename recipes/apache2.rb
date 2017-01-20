@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-%w(default mod_ssl mod_deflate mod_rewrite mod_http2).each do |recipe|
+%w(default mod_ssl mod_deflate mod_rewrite).each do |recipe|
     include_recipe "apache2::#{recipe}"
 end
 
@@ -25,22 +25,5 @@ bash 'mod_http2.so' do
     not_if { ::File.exists?("#{node['apache']['libexec_dir']}/mod_http2.so") }
 end
 
-directory node['apache']['docroot_dir'] do
-    user 'root'
-    group 'root'
-    mode 0755
-end
-
-directory '/var/www/get-native.com' do
-    user node['get-native']['user']['name']
-    group node['apache']['group']
-    mode 0755
-end
-
-%W(#{node['get-native']['server_name']} www.#{node['get-native']['server_name']}).each do |domain|
-    web_app domain do
-        template "#{domain}.conf.erb"
-        server_name domain
-        docroot node['get-native']['docroot']
-    end
-end
+# Use apache2 from http://archive.apache.org/dist/httpd/httpd-2.4.18.tar.gz to get http2. Don't deal with this 'fakeroot' stuff
+# Download mod_proxy_http2.so

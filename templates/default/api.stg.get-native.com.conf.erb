@@ -1,0 +1,33 @@
+<IfModule mod_ssl.c>
+  <VirtualHost *:443>
+    ServerName <%= @params[:server_name] %>
+    ServerAlias www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+
+    ProxyRequests Off
+    SSLProxyEngine On
+
+    <Location />
+        ProxyPass "http://localhost:3000"
+        ProxyPassReverse "http://localhost:3000"
+    </Location>
+
+    ProxyPreserveHost On
+
+    <Proxy *>
+    Require all denied
+    Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
+    </Proxy>
+
+    # Add default response headers
+    # http://httpd.apache.org/docs/current/mod/mod_headers.html
+    # Ex. Header set Content-Type "text/plain"
+
+    ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-error.log
+    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-access.logcombined
+
+    SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/stg.get-native.com/fullchain.pem
+    SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/stg.get-native.com/privkey.pem
+    Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
+  </VirtualHost>
+</IfModule>
