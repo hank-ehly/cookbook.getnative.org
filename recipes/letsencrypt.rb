@@ -8,7 +8,7 @@ if node['get-native']['environment'] != 'development'
     apt_package 'python-letsencrypt-apache'
 
     cron 'letsencrypt' do
-        command "if [[ `which letsencrypt` ]] ; then letsencrypt renew --config-dir #{node['apache']['dir']}/ssl --agree-tos --email #{node['get-native']['contact']} ; fi"
+        command "/usr/bin/letsencrypt renew --config-dir #{node['apache']['dir']}/ssl --agree-tos --email #{node['get-native']['contact']}"
         minute '0'
         hour '0,12'
         user 'root'
