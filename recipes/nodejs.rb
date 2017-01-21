@@ -7,7 +7,7 @@
 include_recipe 'nodejs::nodejs_from_binary'
 include_recipe 'nodejs::npm'
 
-%w(gulp-cli typings node-gyp).each do |pkg|
+%w(gulp-cli typings node-gyp pm2).each do |pkg|
     nodejs_npm pkg
 end
 
