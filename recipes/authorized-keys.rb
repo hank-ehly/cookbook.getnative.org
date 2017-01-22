@@ -24,3 +24,4 @@ file 'authorized_keys' do
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
 end
+

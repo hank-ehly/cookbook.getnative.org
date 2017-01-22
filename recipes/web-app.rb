@@ -34,8 +34,6 @@ deploy 'get-native' do
     restart_command '/usr/local/nodejs-binary/bin/node /var/www/get-native/current/src/server/index.js'
 end
 
-include_recipe 'get-native-cookbook::apache2'
-
 web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
 api_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
 certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path)

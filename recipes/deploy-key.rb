@@ -4,8 +4,6 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-include_recipe 'get-native-cookbook::add-user'
-
 ssh_dir = "#{node['get-native']['user']['home']}/.ssh"
 
 directory ssh_dir do
@@ -40,3 +38,4 @@ template 'github-ssh-config' do
                       identity_file: "#{ssh_dir}/#{node['get-native']['environment']}"
               })
 end
+
