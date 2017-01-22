@@ -24,7 +24,7 @@ suites:
       - recipe[get-native.com-cookbook::default]
   - name: web
     run_list:
-      - role[web-server]
+      - role[web]
     attributes:
       get-native:
         server_name: 'localhost:4444'
