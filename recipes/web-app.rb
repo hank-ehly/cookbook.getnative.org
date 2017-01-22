@@ -53,8 +53,9 @@ deploy 'get-native' do
     end
 
     # Todo: Use pm2
-    restart_command '/usr/local/nodejs-binary/bin/node /var/www/get-native/current/src/server/index.js'
+    restart_command '/usr/local/nodejs-binary/bin/node /var/www/get-native.com/current/src/server/index.js'
     action :deploy
+
     not_if { Dir::exist? "#{node['apache']['docroot_dir']}/get-native.com/current/node_modules" }
 end
 
