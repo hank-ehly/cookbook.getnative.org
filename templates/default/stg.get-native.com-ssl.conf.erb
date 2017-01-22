@@ -1,10 +1,12 @@
-<VirtualHost *:80>
+<% node['apache2']['listen'].each do |port| %>
+<VirtualHost *:<%= port %>>
     ServerName www.<%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
-    RedirectPermanent / http://<%= node['get-native']['server_name'] %>
+    RedirectPermanent / https://<%= node['get-native']['server_name'] %>
 </VirtualHost>
+<% end %>
 
-<VirtualHost *:80>
+<VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
     DocumentRoot <%= @params[:docroot] %>
@@ -35,6 +37,7 @@
     </Directory>
 
     RewriteEngine On
+
     LogLevel info rewrite:trace1
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
@@ -47,6 +50,10 @@
         SetOutputFilter DEFLATE
     </IfModule>
 
+    <IfModule http2_module>
+        Protocols h2 http/1.1
+    </IfModule>
+
     UseCanonicalName Off
 
     RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
@@ -56,4 +63,8 @@
     RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
     RewriteCond %{SCRIPT_FILENAME} !maintenance.html
     RewriteRule ^.*$ /system/maintenance.html [L,R=503]
+
+    SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
+    SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
+    Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
 </VirtualHost>

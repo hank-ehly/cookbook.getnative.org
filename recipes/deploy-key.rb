@@ -4,7 +4,11 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-directory "#{node['get-native']['user']['home']}/.ssh" do
+include_recipe 'get-native-cookbook::add-user'
+
+ssh_dir = "#{node['get-native']['user']['home']}/.ssh"
+
+directory ssh_dir do
     mode '0700'
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
@@ -12,7 +16,7 @@ end
 
 deploy_key node['get-native']['environment'] do
     provider Chef::Provider::DeployKeyGithub
-    path "#{node['get-native']['user']['home']}/.ssh"
+    path ssh_dir
     credentials({
                         user: data_bag_item('github', 'credentials')['username'],
                         password: data_bag_item('github', 'credentials')['password']
@@ -25,7 +29,7 @@ end
 
 template 'github-ssh-config' do
     source 'ssh-config.erb'
-    path "#{node['get-native']['user']['home']}/.ssh/config"
+    path "#{ssh_dir}/config"
     mode 0700
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
@@ -33,6 +37,6 @@ template 'github-ssh-config' do
                       host: 'github.com',
                       user: 'git',
                       hostname: 'github.com',
-                      identity_file: "#{node['get-native']['user']['home']}/.ssh/#{node['get-native']['environment']}"
+                      identity_file: "#{ssh_dir}/#{node['get-native']['environment']}"
               })
 end

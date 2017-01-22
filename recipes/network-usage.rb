@@ -6,10 +6,10 @@
 
 directory node['get-native']['local-log-dir']
 
-directory '/root/bin'
+directory '/root/local/bin'
 
 template 'network-usage' do
-    path '/root/bin/network-usage.bash'
+    path "#{directory}/network-usage.bash"
     source 'network-usage.bash.erb'
     owner 'root'
     group 'root'
@@ -22,5 +22,5 @@ cron 'network-usage' do
     day '1'
     user 'root'
     mailto node['get-native']['contact']
-    command '/bin/bash /root/bin/network-usage.bash'
+    command "/bin/bash #{directory}/network-usage.bash"
 end

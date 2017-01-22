@@ -1,9 +1,10 @@
-<VirtualHost *:80>
+<VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
     ServerAlias www.<%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
 
     ProxyRequests Off
+    SSLProxyEngine On
 
     <Location />
         ProxyPass "http://localhost:3000/"
@@ -23,4 +24,8 @@
 
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-access.log combined
+
+    SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
+    SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
+    Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
 </VirtualHost>
