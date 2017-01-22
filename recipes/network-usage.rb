@@ -6,10 +6,14 @@
 
 directory node['get-native']['local-log-dir']
 
-directory '/root/local/bin'
+root_bin = '/root/local/bin'
+
+directory root_bin do
+    recursive true
+end
 
 template 'network-usage' do
-    path "#{directory}/network-usage.bash"
+    path "#{root_bin}/network-usage.bash"
     source 'network-usage.bash.erb'
     owner 'root'
     group 'root'
@@ -22,5 +26,5 @@ cron 'network-usage' do
     day '1'
     user 'root'
     mailto node['get-native']['contact']
-    command "/bin/bash #{directory}/network-usage.bash"
+    command "/bin/bash #{root_bin}/network-usage.bash"
 end

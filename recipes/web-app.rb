@@ -14,24 +14,47 @@ directory node['apache']['docroot_dir'] do
     mode 0755
 end
 
-directory '/var/www/get-native.com' do
+directory "#{node['apache']['docroot_dir']}/get-native.com" do
     user node['get-native']['user']['name']
     group node['apache']['group']
+    mode 0755
+end
+
+git_ssh_wrapper_path = "#{Chef::Config[:file_cache_path]}/git-ssh-wrapper.bash"
+
+template git_ssh_wrapper_path do
+    source 'git-ssh-wrapper.bash.erb'
+    owner 'root'
+    group 'root'
     mode 0755
 end
 
 deploy 'get-native' do
     user node['get-native']['user']['name']
     group node['apache']['group']
-    branch 'master'
+    branch 'develop'
     repo "git@github.com:#{node['get-native']['github']['repo']}"
-    symlink_before_migrate nil
-    create_dirs_before_symlink []
-    purge_before_symlink []
-    symlinks nil
+    scm_provider Chef::Provider::Git
+    shallow_clone true
+    git_ssh_wrapper git_ssh_wrapper_path
+    deploy_to "#{node['apache']['docroot_dir']}/get-native.com"
+    symlink_before_migrate.clear
+    create_dirs_before_symlink.clear
+    purge_before_symlink.clear
+    symlinks.clear
+
+    before_restart do
+        execute 'npm install' do
+            command "sudo -H -u #{node['get-native']['user']['name']} npm install"
+            cwd "#{node['apache']['docroot_dir']}/get-native.com/current"
+            user node['get-native']['user']['name']
+            group node['apache']['group']
+        end
+    end
 
     # Todo: Use pm2
     restart_command '/usr/local/nodejs-binary/bin/node /var/www/get-native/current/src/server/index.js'
+    action :deploy
 end
 
 web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
@@ -45,3 +68,4 @@ certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path)
         docroot node['get-native']['docroot']
     end
 end
+

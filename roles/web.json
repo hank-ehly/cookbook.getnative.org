@@ -9,7 +9,6 @@
     "recipe[get-native.com-cookbook::authorized-keys]",
     "recipe[get-native.com-cookbook::deploy-key]",
     "recipe[get-native.com-cookbook::apache2]",
-    "recipe[get-native.com-cookbook::mysql-client]",
     "recipe[get-native.com-cookbook::nodejs]",
     "recipe[get-native.com-cookbook::network-usage]",
     "recipe[get-native.com-cookbook::web-app]"
