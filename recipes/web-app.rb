@@ -55,6 +55,7 @@ deploy 'get-native' do
     # Todo: Use pm2
     restart_command '/usr/local/nodejs-binary/bin/node /var/www/get-native/current/src/server/index.js'
     action :deploy
+    not_if { Dir::exist? "#{node['apache']['docroot_dir']}/get-native.com/current/node_modules" }
 end
 
 web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
