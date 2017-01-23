@@ -45,17 +45,23 @@ deploy 'get-native' do
 
     before_restart do
         execute 'npm install' do
-            command "sudo -H -u #{node['get-native']['user']['name']} npm install"
             cwd "#{node['apache']['docroot_dir']}/get-native.com/current"
             user node['get-native']['user']['name']
             group node['apache']['group']
+            environment ({"HOME" => node['get-native']['user']['home']})
         end
     end
 
-    # Todo: Use pm2
-    restart_command '/usr/local/nodejs-binary/bin/node /var/www/get-native.com/current/src/server/index.js'
-    action :deploy
+    restart_command do
+        execute 'pm2' do
+            command '/usr/local/nodejs-binary/bin/pm2 start /var/www/get-native.com/current/src/server/index.js -i max --silent'
+            user node['get-native']['user']['name']
+            group node['apache']['group']
+            environment ({"HOME" => node['get-native']['user']['home']})
+        end
+    end
 
+    action :deploy
     not_if { Dir::exist? "#{node['apache']['docroot_dir']}/get-native.com/current/node_modules" }
 end
 
