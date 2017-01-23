@@ -22,11 +22,13 @@ end
 
 git_ssh_wrapper_path = "#{Chef::Config[:file_cache_path]}/git-ssh-wrapper.bash"
 
-template git_ssh_wrapper_path do
+template 'git_ssh_wrapper' do
+    path git_ssh_wrapper_path
     source 'git-ssh-wrapper.bash.erb'
     owner 'root'
     group 'root'
     mode 0755
+    action :nothing
 end
 
 deploy 'get-native' do
@@ -48,7 +50,7 @@ deploy 'get-native' do
             cwd "#{node['apache']['docroot_dir']}/get-native.com/current"
             user node['get-native']['user']['name']
             group node['apache']['group']
-            environment ({"HOME" => node['get-native']['user']['home']})
+            environment ({:HOME => node['get-native']['user']['home']})
         end
     end
 
@@ -57,12 +59,13 @@ deploy 'get-native' do
             command '/usr/local/nodejs-binary/bin/pm2 start /var/www/get-native.com/current/src/server/index.js -i max --silent'
             user node['get-native']['user']['name']
             group node['apache']['group']
-            environment ({"HOME" => node['get-native']['user']['home']})
+            environment ({:HOME => node['get-native']['user']['home']})
         end
     end
 
     action :deploy
-    not_if { Dir::exist? "#{node['apache']['docroot_dir']}/get-native.com/current/node_modules" }
+    notifies :create, 'template[git_ssh_wrapper]', :before
+    not_if { Dir::exist? "#{node['apache']['docroot_dir']}/get-native.com/current" }
 end
 
 web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
