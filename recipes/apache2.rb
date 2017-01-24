@@ -18,5 +18,3 @@ end
 end
 
 apache_module 'proxy_http2'
-
-# apache2=2.4.25-0.0+deb.sury.org~xenial+1

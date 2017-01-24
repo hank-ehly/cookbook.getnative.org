@@ -1,10 +1,23 @@
-<% node['apache2']['listen'].each do |port| %>
-<VirtualHost *:<%= port %>>
+<VirtualHost *:80>
+    ServerName <%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    RedirectPermanent / https://<%= node['get-native']['server_name'] %>
+</VirtualHost>
+
+<VirtualHost *:80>
     ServerName www.<%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
     RedirectPermanent / https://<%= node['get-native']['server_name'] %>
 </VirtualHost>
-<% end %>
+
+<VirtualHost *:443>
+    ServerName www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    RedirectPermanent / https://<%= node['get-native']['server_name'] %>
+    SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
+    SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
+    Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
+</VirtualHost>
 
 <VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
@@ -37,7 +50,6 @@
     </Directory>
 
     RewriteEngine On
-
     LogLevel info rewrite:trace1
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
@@ -60,11 +72,10 @@
     RewriteCond %{HTTP_HOST}   !^$
     RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
 
-    RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
-    RewriteCond %{SCRIPT_FILENAME} !maintenance.html
-    RewriteRule ^.*$ /system/maintenance.html [L,R=503]
-
     SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
     SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
     Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
+
+    Header always set Strict-Transport-Security "max-age=31536000"
+    Header always set Content-Security-Policy upgrade-insecure-requests
 </VirtualHost>

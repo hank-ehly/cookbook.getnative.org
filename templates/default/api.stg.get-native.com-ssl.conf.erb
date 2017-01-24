@@ -1,3 +1,15 @@
+<VirtualHost *:80>
+    ServerName <%= @params[:server_name] %>
+    ServerAlias www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} =www.<%= @params[:server_name] %> [OR]
+    RewriteCond %{SERVER_NAME} =<%= @params[:server_name] %>
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
+</VirtualHost>
+
+<IfModule mod_ssl.c>
 <VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
     ServerAlias www.<%= @params[:server_name] %>
@@ -25,7 +37,20 @@
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-access.log combined
 
+    <IfModule mod_deflate.c>
+        SetOutputFilter DEFLATE
+    </IfModule>
+
+    # <IfModule http2_module>
+    #     Protocols h2 http/1.1
+    # </IfModule>
+
     SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
     SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
+
     Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
+
+    Header always set Strict-Transport-Security "max-age=31536000"
+    Header always set Content-Security-Policy upgrade-insecure-requests
 </VirtualHost>
+</IfModule>
