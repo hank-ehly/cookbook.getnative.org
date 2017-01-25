@@ -13,20 +13,20 @@
     ServerAlias <%= @params[:server_aliases].join ' ' %>
     <% end -%>
 
+    RewriteEngine On
+
     <Directory <%= @params[:docroot] %>>
         Options <%= [@params[:directory_options] || 'FollowSymLinks'].flatten.join ' ' %>
         AllowOverride <%= [@params[:allow_override] || 'None'].flatten.join ' ' %>
         Require all denied
         Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
 
-        <IfModule mod_rewrite.c>
-            RewriteEngine On
-            RewriteBase /
-            RewriteRule ^index\.html$ - [L]
-            RewriteCond %{REQUEST_FILENAME} !-f
-            RewriteCond %{REQUEST_FILENAME} !-d
-            RewriteRule . /index.html [L]
-        </IfModule>
+        RewriteEngine On
+        RewriteBase /
+        RewriteRule ^index\.html$ - [L]
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule . /index.html [L]
     </Directory>
 
     <Directory />
@@ -34,7 +34,6 @@
         AllowOverride None
     </Directory>
 
-    RewriteEngine On
     LogLevel info rewrite:trace1
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
@@ -43,7 +42,7 @@
     DirectoryIndex <%= [@params[:directory_index]].flatten.join ' ' %>
     <% end -%>
 
-    <IfModule mod_deflate.c>
+    <IfModule deflate_module>
         SetOutputFilter DEFLATE
     </IfModule>
 
@@ -53,7 +52,10 @@
     RewriteCond %{HTTP_HOST}   !^$
     RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
 
-    RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
-    RewriteCond %{SCRIPT_FILENAME} !maintenance.html
-    RewriteRule ^.*$ /system/maintenance.html [L,R=503]
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set X-Content-Type-Options nosniff
+
+    <FilesMatch ".+\.html$">
+        Header always set X-Frame-Options deny
+    </FilesMatch>
 </VirtualHost>

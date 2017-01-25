@@ -2,7 +2,9 @@ default['apache']['listen'] =  %w(*:80 *:443)
 default['apache']['version'] = '2.4'
 default['apache']['contact'] = node['get-native']['contact']
 default['apache']['docroot_dir'] = '/var/www'
-# default['apache']['default_release'] = (Todo: Specify apache2=2.4.25-0.0+deb.sury.org~xenial+1 somehow)
+default['apache']['servertokens'] = 'Prod'
+default['apache']['serversignature'] = 'Off'
+default['apache']['timeout'] = 45
 
 default['get-native']['docroot'] = "#{node['apache']['docroot_dir']}/get-native.com/#{node['get-native']['environment']}/current/dist/prod"
 default['get-native']['github']['repo'] = 'hank-ehly/get-native.com'
