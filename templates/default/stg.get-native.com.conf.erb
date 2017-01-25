@@ -21,7 +21,6 @@
         Require all denied
         Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
 
-        RewriteEngine On
         RewriteBase /
         RewriteRule ^index\.html$ - [L]
         RewriteCond %{REQUEST_FILENAME} !-f
