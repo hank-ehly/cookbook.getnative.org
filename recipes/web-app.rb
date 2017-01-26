@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2017 The Authors, All Rights Reserved.
 
-%w(gulp-cli typings node-gyp pm2).each do |pkg|
+%w(gulp-cli node-gyp pm2).each do |pkg|
     nodejs_npm pkg
 end
 
