@@ -14,6 +14,7 @@
     ServerName www.<%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
     RedirectPermanent / https://<%= node['get-native']['server_name'] %>
+
     SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
     SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
     Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
@@ -24,15 +25,11 @@
     ServerAdmin <%= node[:apache][:contact] %>
     DocumentRoot <%= @params[:docroot] %>
 
-    <% if @params[:server_aliases] -%>
-    ServerAlias <%= @params[:server_aliases].join ' ' %>
-    <% end -%>
-
     RewriteEngine On
 
     <Directory <%= @params[:docroot] %>>
-        Options <%= [@params[:directory_options] || 'FollowSymLinks'].flatten.join ' ' %>
-        AllowOverride <%= [@params[:allow_override] || 'None'].flatten.join ' ' %>
+        Options FollowSymLinks
+        AllowOverride None
         Require all denied
         Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
 
@@ -76,12 +73,38 @@
 
     AddCharset utf-8 .js
 
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-    Header always set Content-Security-Policy upgrade-insecure-requests
-    Header always set X-XSS-Protection "1; mode=block"
-    Header always set X-Content-Type-Options nosniff
+    <IfModule expires_module>
+        ExpiresActive on
+        ExpiresDefault "access plus 1 month"
+        ExpiresByType text/html              "access plus 0 seconds"
+        ExpiresByType text/css               "access plus 1 year"
+        ExpiresByType application/javascript "access plus 1 year"
+        ExpiresByType image/x-icon           "access plus 1 week"
+        ExpiresByType image/jpeg             "access plus 1 month"
+        ExpiresByType image/png              "access plus 1 month"
+        ExpiresByType image/gif              "access plus 1 month"
+        ExpiresByType video/mp4              "access plus 1 month"
+        ExpiresByType image/svg+xml          "access plus 1 month"
+        ExpiresByType video/quicktime        "access plus 1 month"
 
-    <FilesMatch ".+\.html$">
-        Header always set X-Frame-Options deny
-    </FilesMatch>
+        # Fonts
+        # Todo: Check how to include eot|ttf|woff|woff2
+        # ExpiresByType application/font-woff  "access plus 1 month"
+    </IfModule>
+
+    <IfModule headers_module>
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        Header always set Content-Security-Policy upgrade-insecure-requests
+        Header always set X-XSS-Protection "1; mode=block"
+        Header always set X-Content-Type-Options nosniff
+
+        <FilesMatch ".+\.html$">
+            Header always set X-Frame-Options deny
+        </FilesMatch>
+
+        <FilesMatch ".+\.(css|js|png|svg|jpe?g|gif|ico|eot|ttf|woff|woff2)$">
+            # Todo: Check to see if you need to change "public" to ", public"
+            Header append Cache-Control "public"
+        </FilesMatch>
+    </IfModule>
 </VirtualHost>
