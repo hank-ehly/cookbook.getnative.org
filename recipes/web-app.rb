@@ -73,8 +73,10 @@ api_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['ser
 certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path)
 
 %W(#{node['get-native']['server_name']} api.#{node['get-native']['server_name']}).each do |domain|
-    web_app domain do
-        template certs_exist ? "#{domain}-ssl.conf.erb" : "#{domain}.conf.erb"
+    conf_name = certs_exist ? "#{domain}-ssl" : domain
+
+    web_app conf_name do
+        template "#{conf_name}.conf.erb"
         server_name domain
         docroot node['get-native']['docroot']
     end
