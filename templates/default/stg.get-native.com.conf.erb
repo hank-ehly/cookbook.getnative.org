@@ -1,26 +1,15 @@
 <VirtualHost *:80>
-    ServerName www.<%= @params[:server_name] %>
-    ServerAdmin <%= node[:apache][:contact] %>
-    RedirectPermanent / http://<%= node['get-native']['server_name'] %>
-</VirtualHost>
-
-<VirtualHost *:80>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
+    ServerName www.<%= @params[:server_name] %>
     DocumentRoot <%= @params[:docroot] %>
 
-    <% if @params[:server_aliases] -%>
-    ServerAlias <%= @params[:server_aliases].join ' ' %>
-    <% end -%>
-
-    RewriteEngine On
-
     <Directory <%= @params[:docroot] %>>
-        Options <%= [@params[:directory_options] || 'FollowSymLinks'].flatten.join ' ' %>
-        AllowOverride <%= [@params[:allow_override] || 'None'].flatten.join ' ' %>
-        Require all denied
-        Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
 
+        RewriteEngine On
         RewriteBase /
         RewriteRule ^index\.html$ - [L]
         RewriteCond %{REQUEST_FILENAME} !-f
@@ -32,29 +21,4 @@
         Options FollowSymLinks
         AllowOverride None
     </Directory>
-
-    LogLevel info rewrite:trace1
-    ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
-    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
-
-    <% if @params[:directory_index] -%>
-    DirectoryIndex <%= [@params[:directory_index]].flatten.join ' ' %>
-    <% end -%>
-
-    <IfModule deflate_module>
-        SetOutputFilter DEFLATE
-    </IfModule>
-
-    UseCanonicalName Off
-
-    RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
-    RewriteCond %{HTTP_HOST}   !^$
-    RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
-
-    Header always set X-XSS-Protection "1; mode=block"
-    Header always set X-Content-Type-Options nosniff
-
-    <FilesMatch ".+\.html$">
-        Header always set X-Frame-Options deny
-    </FilesMatch>
 </VirtualHost>
