@@ -2,11 +2,7 @@
     ServerName <%= @params[:server_name] %>
     ServerAlias www.<%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
-
-    RewriteEngine on
-    RewriteCond %{SERVER_NAME} =www.<%= @params[:server_name] %> [OR]
-    RewriteCond %{SERVER_NAME} =<%= @params[:server_name] %>
-    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
+    RedirectPermanent / https://<%= @params[:server_name] %>
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -25,8 +21,7 @@
     ProxyPreserveHost On
 
     <Proxy *>
-    Require all denied
-    Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
+        Require all granted
     </Proxy>
 
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-error.log
@@ -38,13 +33,7 @@
 
     SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
     SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
-
     Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
-
-    <IfModule expires_module>
-        ExpiresActive  on
-        ExpiresDefault "access plus 0 seconds"
-    </IfModule>
 
     <IfModule headers_module>
         Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
