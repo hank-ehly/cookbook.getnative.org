@@ -14,7 +14,6 @@
     ServerName www.<%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
     RedirectPermanent / https://<%= node['get-native']['server_name'] %>
-
     SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
     SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
     Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
@@ -30,8 +29,12 @@
     <Directory <%= @params[:docroot] %>>
         Options FollowSymLinks
         AllowOverride None
-        Require all denied
-        Require ip <%= node['get-native']['ip-whitelist'].flatten.join ' ' %>
+
+        AuthUserFile <%= node['apache']['dir'] %>/.htpasswd
+        AuthGroupFile /dev/null
+        AuthName "Please enter your ID and password"
+        AuthType Basic
+        Require valid-user
 
         RewriteBase /
         RewriteRule ^index\.html$ - [L]
@@ -65,7 +68,7 @@
 
     RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
     RewriteCond %{HTTP_HOST}   !^$
-    RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
+    RewriteRule ^/(.*)$        https://<%= @params[:server_name] %>/$1 [L,R=301]
 
     SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
     SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
@@ -75,7 +78,7 @@
 
     <IfModule expires_module>
         ExpiresActive on
-        ExpiresDefault "access plus 1 month"
+        ExpiresDefault                       "access plus 1 month"
         ExpiresByType text/html              "access plus 0 seconds"
         ExpiresByType text/css               "access plus 1 year"
         ExpiresByType application/javascript "access plus 1 year"
@@ -103,7 +106,6 @@
         </FilesMatch>
 
         <FilesMatch ".+\.(css|js|png|svg|jpe?g|gif|ico|eot|ttf|woff|woff2)$">
-            # Todo: Check to see if you need to change "public" to ", public"
             Header append Cache-Control "public"
         </FilesMatch>
     </IfModule>

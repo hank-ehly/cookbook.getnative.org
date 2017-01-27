@@ -68,6 +68,17 @@ deploy 'get-native' do
     not_if { Dir::exist? "#{node['apache']['docroot_dir']}/get-native.com/current" }
 end
 
+data_bag = "#{node['get-native']['environment']}-#{node['get-native']['role']}"
+htpasswd = data_bag_item(data_bag, 'htpasswd')
+
+bash 'htpasswd' do
+    code <<-EOH
+        echo "#{htpasswd['password']}" | htpasswd -iBc #{node['apache']['dir']}/.htpasswd #{htpasswd['user']}
+    EOH
+
+    not_if { File::exists? "#{node['apache']['dir']}/.htpasswd" }
+end
+
 web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
 api_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
 certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path)
