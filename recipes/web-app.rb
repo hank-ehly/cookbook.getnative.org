@@ -20,10 +20,12 @@ directory "#{node['apache']['docroot_dir']}/get-native.com" do
     mode 0755
 end
 
-directory '/var/log/pm2' do
-    user 'root'
-    group 'root'
-    mode 0777
+%w(/var/log/pm2 /run/pm2).each do |d|
+    directory d do
+        user 'root'
+        group 'root'
+        mode 0777
+    end
 end
 
 git_ssh_wrapper_path = "#{Chef::Config[:file_cache_path]}/git-ssh-wrapper.bash"
