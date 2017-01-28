@@ -13,7 +13,7 @@ execute 'add-apt-repository -y ppa:ondrej/apache2' do
     not_if { File::exist? '/etc/apt/sources.list.d/ondrej-ubuntu-apache2-xenial.list' }
 end
 
-%w(default mod_ssl mod_deflate mod_rewrite mod_proxy mod_proxy_http mod_http2 mod_expires).each do |recipe|
+%w(default mod_ssl mod_deflate mod_rewrite mod_proxy mod_proxy_http mod_http2 mod_expires mod_setenvif).each do |recipe|
     include_recipe "apache2::#{recipe}"
 end
 
