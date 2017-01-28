@@ -21,6 +21,10 @@
     ProxyPreserveHost On
 
     <Proxy *>
+        <If "%{HTTP:Origin} != 'https://stg.get-native.com'">
+            Require all denied
+        </If>
+
         Require all granted
     </Proxy>
 
