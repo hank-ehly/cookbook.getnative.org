@@ -64,7 +64,7 @@ deploy 'get-native' do
 
     restart_command do
         execute 'pm2' do
-            command '/usr/local/nodejs-binary/bin/pm2 start /var/www/get-native.com/current/src/server/index.js -i max --silent'
+            command '/usr/local/nodejs-binary/bin/pm2 start /var/www/get-native.com/current/ecosystem.config.js -i max --silent'
             user node['get-native']['user']['name']
             group node['apache']['group']
             environment ({:HOME => node['get-native']['user']['home']})
