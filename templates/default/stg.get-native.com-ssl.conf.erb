@@ -50,7 +50,9 @@
 
     LogLevel info rewrite:trace1
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
-    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
+
+    SetEnvIf DNT 1 DO_NOT_TRACK
+    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined env=!DO_NOT_TRACK
 
     <% if @params[:directory_index] -%>
     DirectoryIndex <%= [@params[:directory_index]].flatten.join ' ' %>

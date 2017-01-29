@@ -28,8 +28,10 @@
         Require all granted
     </Proxy>
 
-    ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-error.log
-    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-access.log combined
+    ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+
+    SetEnvIf DNT 1 DO_NOT_TRACK
+    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined env=!DO_NOT_TRACK
 
     <IfModule deflate_module>
         SetOutputFilter DEFLATE
