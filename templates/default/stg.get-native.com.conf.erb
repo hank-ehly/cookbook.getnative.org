@@ -1,7 +1,7 @@
 <VirtualHost *:80>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
-    ServerName www.<%= @params[:server_name] %>
+    ServerAlias www.<%= @params[:server_name] %>
     DocumentRoot <%= @params[:docroot] %>
 
     <Directory <%= @params[:docroot] %>>
