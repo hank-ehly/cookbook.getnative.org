@@ -39,6 +39,8 @@ template 'git_ssh_wrapper' do
     action :nothing
 end
 
+apt_package 'mkdocs'
+
 deploy 'get-native' do
     user node['get-native']['user']['name']
     group node['apache']['group']
@@ -54,11 +56,13 @@ deploy 'get-native' do
     symlinks.clear
 
     before_restart do
-        execute 'npm install' do
-            cwd "#{node['apache']['docroot_dir']}/get-native.com/current"
-            user node['get-native']['user']['name']
-            group node['apache']['group']
-            environment ({:HOME => node['get-native']['user']['home']})
+        ['npm install', 'mkdocs build'].each do |cmd|
+            execute cmd do
+                cwd "#{node['apache']['docroot_dir']}/get-native.com/current"
+                user node['get-native']['user']['name']
+                group node['apache']['group']
+                environment ({:HOME => node['get-native']['user']['home']})
+            end
         end
     end
 
@@ -89,9 +93,10 @@ end
 
 web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
 api_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
-certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path)
+dev_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
+certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path) && File::exist?(dev_cert_path)
 
-%W(#{node['get-native']['server_name']} api.#{node['get-native']['server_name']}).each do |domain|
+%W(#{node['get-native']['server_name']} api.#{node['get-native']['server_name']} developer.#{node['get-native']['server_name']}).each do |domain|
     conf_name = certs_exist ? "#{domain}-ssl" : domain
 
     web_app conf_name do

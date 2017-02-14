@@ -18,7 +18,8 @@ if node['get-native']['environment'] != 'development'
     domains = %W(#{node['get-native']['server_name']} www.#{node['get-native']['server_name']} api.#{node['get-native']['server_name']})
     web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
     api_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
-    certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path)
+    dev_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
+    certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path) && File::exist?(dev_cert_path)
 
     bash 'letsencrypt' do
         code <<-EOH
