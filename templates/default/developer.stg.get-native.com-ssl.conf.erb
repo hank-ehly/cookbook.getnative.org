@@ -18,6 +18,12 @@
         AllowOverride None
         Require all granted
 
+        AuthUserFile <%= node['apache']['dir'] %>/.htpasswd
+        AuthGroupFile /dev/null
+        AuthName "Please enter your ID and password"
+        AuthType Basic
+        Require valid-user
+
         RewriteBase /
         RewriteRule ^index\.html$ - [L]
         RewriteCond %{REQUEST_FILENAME} !-f
