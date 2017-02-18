@@ -2,7 +2,7 @@
 # Cookbook Name:: get-native.com-cookbook
 # Recipe:: app
 #
-# Copyright (c) 2017 The Authors, All Rights Reserved.
+# Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
 %w(gulp-cli pm2).each do |pkg|
     nodejs_npm pkg
