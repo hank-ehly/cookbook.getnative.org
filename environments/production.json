@@ -2,7 +2,10 @@
   "name": "production",
   "default_attributes": {
     "get-native": {
-      "environment": "production"
+      "environment": "production",
+      "mysql": {
+        "bind-address": "127.0.0.1"
+      }
     }
   },
   "json_class": "Chef::Environment",

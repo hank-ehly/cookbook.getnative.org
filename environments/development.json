@@ -2,7 +2,10 @@
   "name": "development",
   "default_attributes": {
     "get-native": {
-      "environment": "development"
+      "environment": "development",
+      "mysql": {
+        "bind-address": "127.0.0.1"
+      }
     }
   },
   "json_class": "Chef::Environment",
