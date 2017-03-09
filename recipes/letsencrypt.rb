@@ -15,14 +15,17 @@ if node['get-native']['environment'] != 'development'
         mailto node['get-native']['contact']
     end
 
-    domains = %W(#{node['get-native']['server_name']} www.#{node['get-native']['server_name']} api.#{node['get-native']['server_name']})
-    web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
-    api_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
-    dev_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
-    certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path) && File::exist?(dev_cert_path)
+    domains = %W(
+        #{node['get-native']['server_name']}
+        api.#{node['get-native']['server_name']}
+        docs.#{node['get-native']['server_name']}
+    )
 
-    bash 'letsencrypt' do
-        code <<-EOH
+    domains.each do |d|
+        domain_has_cert = File::exist?("#{node['apache']['dir']}/ssl/live/#{d}/fullchain.pem")
+
+        bash 'letsencrypt' do
+            code <<-EOH
             /usr/bin/letsencrypt --domains #{domains.join(',')} \
                                  --apache \
                                  --agree-tos \
@@ -36,7 +39,8 @@ if node['get-native']['environment'] != 'development'
                                  --apache-le-vhost-ext "-ssl.conf" \
                                  --redirect \
                                  --logs-dir #{node['apache']['log_dir']}
-        EOH
-        not_if certs_exist
+            EOH
+            not_if domain_has_cert
+        end
     end
 end
