@@ -91,13 +91,8 @@ bash 'htpasswd' do
     not_if { File::exists? "#{node['apache']['dir']}/.htpasswd" }
 end
 
-web_cert_path = "#{node['apache']['dir']}/ssl/live/#{node['get-native']['server_name']}/fullchain.pem"
-api_cert_path = "#{node['apache']['dir']}/ssl/live/api.#{node['get-native']['server_name']}/fullchain.pem"
-dev_cert_path = "#{node['apache']['dir']}/ssl/live/docs.#{node['get-native']['server_name']}/fullchain.pem"
-certs_exist = File::exist?(web_cert_path) && File::exist?(api_cert_path) && File::exist?(dev_cert_path)
-
 %W(#{node['get-native']['server_name']} api.#{node['get-native']['server_name']} docs.#{node['get-native']['server_name']}).each do |domain|
-    conf_name = certs_exist ? "#{domain}-ssl" : domain
+    conf_name = File::exist? "#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem" ? "#{domain}-ssl" : domain
 
     web_app conf_name do
         template "#{conf_name}.conf.erb"
