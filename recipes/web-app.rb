@@ -92,7 +92,7 @@ bash 'htpasswd' do
 end
 
 %W(#{node['get-native']['server_name']} api.#{node['get-native']['server_name']} docs.#{node['get-native']['server_name']}).each do |domain|
-    conf_name = File::exist? "#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem" ? "#{domain}-ssl" : domain
+    conf_name = File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem") ? "#{domain}-ssl" : domain
 
     web_app conf_name do
         template "#{conf_name}.conf.erb"
