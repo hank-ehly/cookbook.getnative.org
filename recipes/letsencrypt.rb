@@ -22,8 +22,6 @@ if node['get-native']['environment'] != 'development'
     )
 
     domains.each do |d|
-        domain_has_cert = File::exist?("#{node['apache']['dir']}/ssl/live/#{d}/fullchain.pem")
-
         bash 'letsencrypt' do
             code <<-EOH
             /usr/bin/letsencrypt --domains #{domains.join(',')} \
@@ -40,7 +38,7 @@ if node['get-native']['environment'] != 'development'
                                  --redirect \
                                  --logs-dir #{node['apache']['log_dir']}
             EOH
-            not_if domain_has_cert
+            not_if { File::exist?("#{node['apache']['dir']}/ssl/live/#{d}/fullchain.pem") }
         end
     end
 end
