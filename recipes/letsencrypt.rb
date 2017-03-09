@@ -34,7 +34,7 @@ if node['get-native']['environment'] != 'development'
                                  --config-dir #{node['apache']['dir']}/ssl \
                                  --apache-server-root #{node['apache']['dir']} \
                                  --apache-vhost-root #{node['apache']['dir']}/sites-available \
-                                 --apache-le-vhost-ext "-ssl.conf" \
+                                 --apache-le-vhost-ext -ssl.conf \
                                  --redirect \
                                  --logs-dir #{node['apache']['log_dir']}
             EOH
