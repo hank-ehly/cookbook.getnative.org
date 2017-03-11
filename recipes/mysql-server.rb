@@ -18,7 +18,13 @@ mysql_service 'get-native' do
     action [:create, :start]
 end
 
-# This will be used for batch scripting
+mysql_config 'get-native' do
+    source 'max_allowed_packet.erb'
+    notifies :restart, 'mysql_service[get-native]'
+    action :create
+    not_if { node['get-native']['environment'] == 'production' }
+end
+
 ruby_block 'Add db-credentials to deploy user\'s ENV' do
     block do
         f = Chef::Util::FileEdit.new("#{node['get-native']['user']['home']}/.bashrc")
