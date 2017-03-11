@@ -21,6 +21,7 @@ end
 mysql_config 'get-native' do
     source 'max_allowed_packet.erb'
     notifies :restart, 'mysql_service[get-native]'
+    instance 'get-native'
     action :create
     not_if { node['get-native']['environment'] == 'production' }
 end
