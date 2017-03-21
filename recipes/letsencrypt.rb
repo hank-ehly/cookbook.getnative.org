@@ -7,6 +7,14 @@
 if node['get-native']['environment'] != 'development'
     apt_package 'python-letsencrypt-apache'
 
+    template '999-dummy.conf' do
+        path "#{node['apache']['dir']}/sites-available/999-dummy.conf"
+        source '999-dummy.conf.erb'
+        owner 'root'
+        group 'root'
+        mode 0644
+    end
+
     cron 'letsencrypt' do
         command "/usr/bin/letsencrypt renew --config-dir #{node['apache']['dir']}/ssl --agree-tos --email #{node['get-native']['contact']}"
         minute '0'
