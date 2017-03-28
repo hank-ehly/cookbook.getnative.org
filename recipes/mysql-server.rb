@@ -42,8 +42,9 @@ ruby_block 'Add db-credentials to deploy user\'s ENV' do
 end
 
 execute 'Load MySQL Time Zone Data' do
-    command "/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root --password='#{db_credentials['get_native_password']}' mysql"
-    sensitive true
+    user 'root'
+    command "/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root --password='#{db_credentials['root_password']}' -S /var/run/mysql-get-native/mysqld.sock mysql"
+    sensitive node['get-native']['environment'] != 'development'
     notifies :restart, 'mysql_service[get-native]'
     not_if { !Dir::exist?('/usr/share/zoneinfo') }
 end
