@@ -18,9 +18,3 @@ append_dot_mydomain = no
 #delay_warning_time = 4h
 
 readme_directory = no
-
-# todo: The DB role should not have these settings
-myhostname = <%= node['get-native']['server_name'] %>
-mydomain = <%= node['get-native']['server_name'] %>
-inet_interfaces = loopback-only
-smtp_generic_maps = hash:/etc/postfix/generic

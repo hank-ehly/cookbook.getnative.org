@@ -11,12 +11,6 @@ template '/etc/postfix/main.cf' do
     owner 'root'
     group 'root'
     mode 0644
-    notifies :run, 'execute[postmap]'
-end
-
-execute 'postmap' do
-    command 'postmap /etc/postfix/generic'
-    action :nothing
 end
 
 execute 'postalias' do
