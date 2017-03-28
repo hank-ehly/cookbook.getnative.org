@@ -88,7 +88,7 @@ bash 'htpasswd' do
         echo "#{htpasswd['password']}" | htpasswd -iBc #{node['apache']['dir']}/.htpasswd #{htpasswd['user']}
     EOH
 
-    not_if { File::exists? "#{node['apache']['dir']}/.htpasswd" }
+    not_if { File::exist? "#{node['apache']['dir']}/.htpasswd" }
 end
 
 %W(#{node['get-native']['server_name']} api.#{node['get-native']['server_name']} docs.#{node['get-native']['server_name']}).each do |domain|
