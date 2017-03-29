@@ -7,6 +7,7 @@
     "recipe[get-native.com-cookbook::bootstrap]",
     "recipe[get-native.com-cookbook::add-user]",
     "recipe[get-native.com-cookbook::postfix]",
+    "recipe[get-native.com-cookbook::dkim]",
     "recipe[get-native.com-cookbook::authorized-keys]",
     "recipe[get-native.com-cookbook::deploy-key]",
     "recipe[get-native.com-cookbook::apache2]",

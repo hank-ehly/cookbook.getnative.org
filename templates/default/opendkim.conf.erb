@@ -1,0 +1,42 @@
+# This file is managed by Chef. Do not edit directly.
+#
+# This is a basic configuration that can easily be adapted to suit a standard
+# installation. For more advanced options, see opendkim.conf(5) and/or
+# /usr/share/doc/opendkim/examples/opendkim.conf.sample.
+
+# Log to syslog
+Syslog                  yes
+# Required to use local socket with MTAs that access the socket as a non-
+# privileged user (e.g. Postfix)
+UMask                   002
+
+Domain                  <%= node['get-native']['server_name'] %>
+KeyFile                 /etc/dkimkeys/dkim.key
+Selector                mail
+AutoRestart             Yes
+AutoRestartRate         10/1h
+Background              Yes
+Canonicalization        relaxed/simple
+DNSTimeout              5
+Mode                    sv
+PidFile                 /var/run/opendkim/opendkim.pid
+SignatureAlgorithm      rsa-sha256
+SubDomains              no
+X-Header                no
+Statistics              /var/log/dkim-filter/dkim-stats
+
+# Always oversign From (sign using actual From and a null From to prevent
+# malicious signatures header fields (From and/or others) between the signer
+# and the verifier.  From is oversigned by default in the Debian package
+# because it is often the identity key used by reputation systems and thus
+# somewhat security sensitive.
+OversignHeaders         From
+
+##  TrustAnchorFile filename
+##      default (none)
+##
+## Specifies a file from which trust anchor data should be read when doing
+## DNS queries and applying the DNSSEC protocol.  See the Unbound documentation
+## at http://unbound.net for the expected format of this file.
+
+TrustAnchorFile       /usr/share/dns/root.key
