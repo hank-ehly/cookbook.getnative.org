@@ -15,11 +15,6 @@ include_recipe 'get-native.com-cookbook::postfix'
     apt_package pkg
 end
 
-service 'opendkim' do
-    provider Chef::Provider::Service::Systemd
-    action [:enable, :start]
-end
-
 directory dkimkeys_contents_dir do
     recursive true
 end
@@ -64,4 +59,9 @@ template '/etc/default/opendkim' do
     mode 0644
     notifies :restart, 'service[opendkim]', :delayed
     notifies :restart, 'service[postfix]', :delayed
+end
+
+service 'opendkim' do
+    provider Chef::Provider::Service::Systemd
+    action [:enable, :start]
 end
