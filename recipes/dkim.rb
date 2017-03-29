@@ -4,6 +4,11 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
+opendkim_user  = 'opendkim'
+opendkim_group = 'opendkim'
+dkimkeys_root_dir  = '/etc/dkimkeys'
+dkimkeys_contents_dir = "#{dkimkeys_root_dir}/#{node['get-native']['server_name']}"
+
 include_recipe 'get-native.com-cookbook::postfix'
 
 %w(opendkim opendkim-tools).each do |pkg|
@@ -15,33 +20,30 @@ service 'opendkim' do
     action [:enable, :start]
 end
 
-directory "/etc/dkimkeys/#{node['get-native']['server_name']}" do
+directory dkimkeys_contents_dir do
     recursive true
 end
 
 # todo: Extract string to variables or attributes
 execute 'opendkim-genkey' do
-    cwd "/etc/dkimkeys/#{node['get-native']['server_name']}"
+    cwd dkimkeys_contents_dir
     command "opendkim-genkey -t -s mail -d #{node['get-native']['server_name']}"
-    creates "/etc/dkimkeys/#{node['get-native']['server_name']}/mail.private"
+    creates "#{dkimkeys_contents_dir}/mail.private"
 end
 
-# todo: you ONLY want to edit permissions
 file '/etc/dkimkeys/dkim.key' do
     mode 0600
-    owner 'opendkim'
-    group 'opendkim'
+    owner opendkim_user
+    group opendkim_group
 end
 
-# todo: you ONLY want to edit permissions
-file "/etc/dkimkeys/#{node['get-native']['server_name']}/mail.private" do
+file "#{dkimkeys_contents_dir}/mail.private" do
     mode 0600
-    owner 'opendkim'
-    group 'opendkim'
+    owner opendkim_user
+    group opendkim_group
 end
 
-# todo: do you need to restart this much? does chef handle overlapping restart calls?
-template '/etc/dkimkeys/dkim.key' do
+template "#{dkimkeys_root_dir}/dkim.key" do
     source 'dkim.key.erb'
     notifies :restart, 'service[opendkim]', :delayed
     notifies :restart, 'service[postfix]', :delayed
