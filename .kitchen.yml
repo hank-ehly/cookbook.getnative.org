@@ -27,10 +27,10 @@ suites:
       - role[web]
     attributes:
       get-native:
-        server_name: 'stg.get-native.com'
+        server_name: 'local.get-native.com'
   - name: db
     run_list:
       - role[db]
     attributes:
       get-native:
-        server_name: 'stg.get-native.com'
+        server_name: 'local.get-native.com'
