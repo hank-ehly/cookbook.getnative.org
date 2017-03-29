@@ -24,7 +24,6 @@ directory dkimkeys_contents_dir do
     recursive true
 end
 
-# todo: Extract string to variables or attributes
 execute 'opendkim-genkey' do
     cwd dkimkeys_contents_dir
     command "opendkim-genkey -t -s mail -d #{node['get-native']['server_name']}"
