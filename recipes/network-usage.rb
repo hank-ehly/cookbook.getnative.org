@@ -14,7 +14,7 @@ end
 
 template 'network-usage' do
     path "#{root_bin}/network-usage.bash"
-    source 'network-usage.bash.erb'
+    source 'network-usage/network-usage.bash.erb'
     owner 'root'
     group 'root'
     mode 0700

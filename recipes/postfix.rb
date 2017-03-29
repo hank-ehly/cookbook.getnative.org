@@ -7,7 +7,7 @@
 apt_package 'postfix'
 
 template '/etc/postfix/main.cf' do
-    source 'postfix.erb'
+    source 'postfix/postfix.erb'
     owner 'root'
     group 'root'
     mode 0644

@@ -32,7 +32,7 @@ git_ssh_wrapper_path = "#{Chef::Config[:file_cache_path]}/git-ssh-wrapper.bash"
 
 template 'git_ssh_wrapper' do
     path git_ssh_wrapper_path
-    source 'git-ssh-wrapper.bash.erb'
+    source 'web-app/git-ssh-wrapper.bash.erb'
     owner 'root'
     group 'root'
     mode 0755
@@ -95,7 +95,7 @@ end
     conf_name = File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem") ? "#{domain}-ssl" : domain
 
     web_app conf_name do
-        template "#{conf_name}.conf.erb"
+        template "web-app/#{conf_name}.conf.erb"
         server_name domain
         docroot node['get-native']['docroot']
     end

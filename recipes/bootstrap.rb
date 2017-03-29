@@ -18,7 +18,7 @@ execute 'timedatectl set-timezone UTC' do
 end
 
 template '/etc/cron-apt/config' do
-    source 'cron-apt.erb'
+    source 'bootstrap/cron-apt.erb'
     owner 'root'
     group 'root'
     mode 0644

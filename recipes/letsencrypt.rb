@@ -9,7 +9,7 @@ if node['get-native']['environment'] != 'development'
 
     template '999-dummy.conf' do
         path "#{node['apache']['dir']}/sites-available/999-dummy.conf"
-        source '999-dummy.conf.erb'
+        source 'letsencrypt/999-dummy.conf.erb'
         owner 'root'
         group 'root'
         mode 0644

@@ -26,7 +26,7 @@ deploy_key node['get-native']['environment'] do
 end
 
 template 'github-ssh-config' do
-    source 'ssh-config.erb'
+    source 'deploy-key/ssh-config.erb'
     path "#{ssh_dir}/config"
     mode 0700
     owner node['get-native']['user']['name']

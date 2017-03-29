@@ -19,14 +19,14 @@ mysql_service 'get-native' do
 end
 
 mysql_config 'get-native-default-time-zone' do
-    source 'default-time-zone.erb'
+    source 'mysql/default-time-zone.erb'
     notifies :restart, 'mysql_service[get-native]'
     instance 'get-native'
     action :create
 end
 
 mysql_config 'get-native_max_allowed_packet' do
-    source 'max_allowed_packet.erb'
+    source 'mysql/max_allowed_packet.erb'
     notifies :restart, 'mysql_service[get-native]'
     instance 'get-native'
     action :create

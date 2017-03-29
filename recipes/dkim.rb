@@ -43,13 +43,13 @@ file "#{dkimkeys_contents_dir}/mail.private" do
 end
 
 template "#{dkimkeys_root_dir}/dkim.key" do
-    source 'dkim.key.erb'
+    source 'dkim/dkim.key.erb'
     notifies :restart, 'service[opendkim]', :delayed
     notifies :restart, 'service[postfix]', :delayed
 end
 
 template '/etc/opendkim.conf' do
-    source 'opendkim.conf.erb'
+    source 'dkim/opendkim.conf.erb'
     owner 'root'
     group 'root'
     mode 0644
@@ -58,7 +58,7 @@ template '/etc/opendkim.conf' do
 end
 
 template '/etc/default/opendkim' do
-    source 'opendkim.erb'
+    source 'dkim/opendkim.erb'
     owner 'root'
     group 'root'
     mode 0644
