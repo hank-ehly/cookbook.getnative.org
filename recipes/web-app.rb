@@ -36,7 +36,7 @@ template 'git_ssh_wrapper' do
     owner 'root'
     group 'root'
     mode 0755
-    action :nothing
+    action :create
 end
 
 apt_package 'mkdocs'
