@@ -1,4 +1,4 @@
-default['get-native']['contact'] = 'henry.ehly@gmail.com'
+default['get-native']['contact'] = 'admin@get-native.com'
 default['get-native']['local-log-dir'] = '/var/log/local'
 default['get-native']['user']['name'] = 'get-native'
 default['get-native']['user']['primary_group'] = 'get-native'
