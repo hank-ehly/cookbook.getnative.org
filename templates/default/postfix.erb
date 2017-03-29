@@ -18,3 +18,10 @@ append_dot_mydomain = no
 #delay_warning_time = 4h
 
 readme_directory = no
+
+# You can check if these settings are recognized with `postconf -n | grep milter`
+# It should echo back the below settings
+milter_protocol = 6
+milter_default_action = accept
+smtpd_milters = inet:localhost:8891
+non_smtpd_milters = inet:localhost:8891
