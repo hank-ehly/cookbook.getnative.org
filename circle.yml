@@ -5,20 +5,18 @@ general:
 
 dependencies:
   pre:
-    - if ! chef -v; then
-        if ! [ -f chefdk_0.3.5-1_amd64.deb ]; then
-          wget https://packages.chef.io/stable/ubuntu/12.04/chefdk_0.19.6-1_amd64.deb;
-        fi;
-        sudo dpkg -i chefdk_0.19.6-1_amd64.deb;
-      fi
+    - sudo apt-get install virtualbox
+    - sudo apt-get install vagrant
+    - sudo apt-get install virtualbox-dkms
+    - vagrant box add ubuntu/xenial64
+    - wget https://packages.chef.io/files/stable/chefdk/1.2.22/ubuntu/14.04/chefdk_1.2.22-1_amd64.deb
+    - sudo dpkg -i chefdk_1.2.22-1_amd64.deb
     - chef gem install specific_install
     - sudo chef gem install kitchen-vagrant
   cache_directories:
     - vendor
-    - ./chefdk_0.19.6-1_amd64.deb
 
 test:
   override:
     - chef exec berks install
-    - chef exec rspec -P spec/**/*_spec.rb --tty --color
     - chef exec kitchen test
