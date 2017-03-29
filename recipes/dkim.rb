@@ -30,12 +30,6 @@ execute 'opendkim-genkey' do
     creates "#{dkimkeys_contents_dir}/mail.private"
 end
 
-file '/etc/dkimkeys/dkim.key' do
-    mode 0600
-    owner opendkim_user
-    group opendkim_group
-end
-
 file "#{dkimkeys_contents_dir}/mail.private" do
     mode 0600
     owner opendkim_user
@@ -46,6 +40,12 @@ template "#{dkimkeys_root_dir}/dkim.key" do
     source 'dkim/dkim.key.erb'
     notifies :restart, 'service[opendkim]', :delayed
     notifies :restart, 'service[postfix]', :delayed
+end
+
+file '/etc/dkimkeys/dkim.key' do
+    mode 0600
+    owner opendkim_user
+    group opendkim_group
 end
 
 template '/etc/opendkim.conf' do
