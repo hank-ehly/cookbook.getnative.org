@@ -1,0 +1,85 @@
+<VirtualHost *:80>
+    ServerName <%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    ServerAlias www.<%= @params[:server_name] %>
+    RedirectPermanent / https://<%= @params[:server_name] %>
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName <%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    ServerAlias www.<%= @params[:server_name] %>
+    DocumentRoot <%= node['apache']['docroot_dir'] %>/get-native.com/current/dist/docs
+
+    RewriteEngine On
+
+    <Directory <%= node['apache']['docroot_dir'] %>/get-native.com/current/dist/docs>
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+
+        AuthUserFile <%= node['apache']['dir'] %>/.htpasswd
+        AuthGroupFile /dev/null
+        AuthName "Please enter your ID and password"
+        AuthType Basic
+        Require valid-user
+
+        RewriteBase /
+        RewriteRule ^index\.html$ - [L]
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule . /index.html [L]
+    </Directory>
+
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+
+    SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
+    SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
+    Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
+
+    <IfModule deflate_module>
+        SetOutputFilter DEFLATE
+    </IfModule>
+
+    <IfModule http2_module>
+        Protocols h2 http/1.1
+    </IfModule>
+
+    SetEnvIf DNT 1 DO_NOT_TRACK
+    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined env=!DO_NOT_TRACK
+
+    <IfModule expires_module>
+        ExpiresActive on
+        ExpiresDefault                       "access plus 1 month"
+        ExpiresByType text/html              "access plus 0 seconds"
+        ExpiresByType text/css               "access plus 1 year"
+        ExpiresByType application/javascript "access plus 1 year"
+        ExpiresByType image/x-icon           "access plus 1 week"
+        ExpiresByType image/jpeg             "access plus 1 month"
+        ExpiresByType image/png              "access plus 1 month"
+        ExpiresByType image/gif              "access plus 1 month"
+        ExpiresByType image/svg+xml          "access plus 1 month"
+        ExpiresByType application/font-woff2 "access plus 1 month"
+        ExpiresByType video/mp4              "access plus 1 month"
+        ExpiresByType video/quicktime        "access plus 1 month"
+    </IfModule>
+
+    <IfModule headers_module>
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        Header always set Content-Security-Policy upgrade-insecure-requests
+        Header always set X-XSS-Protection "1; mode=block"
+        Header always set X-Content-Type-Options nosniff
+
+        <FilesMatch ".+\.html$">
+            Header always set X-Frame-Options deny
+        </FilesMatch>
+
+        <FilesMatch ".+\.(css|js|png|svg|jpe?g|gif|ico|eot|ttf|woff|woff2)$">
+            Header append Cache-Control "public"
+        </FilesMatch>
+    </IfModule>
+</VirtualHost>
+

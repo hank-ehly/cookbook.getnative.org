@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+    ServerName <%= @params[:server_name] %>
+    ServerAlias www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+
+    ProxyRequests Off
+
+    <Location />
+        ProxyPass "http://localhost:3000/"
+        ProxyPassReverse "http://localhost:3000/"
+    </Location>
+
+    <Proxy *>
+    Require all granted
+    </Proxy>
+</VirtualHost>
