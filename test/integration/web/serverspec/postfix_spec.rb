@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::default' do
+describe 'get-native.com-cookbook::postfix' do
     describe package('postfix') do
         it { should be_installed }
     end
@@ -8,7 +8,7 @@ describe 'get-native.com-cookbook::default' do
     describe file('/etc/postfix/main.cf') do
         it { should be_file }
         it { should exist }
-        it { should be_mode 0644 }
+        it { should be_mode 644 }
         it { should be_owned_by 'root' }
         it { should be_grouped_into 'root' }
         its(:content) { should match /smtpd_milters\s=\sinet:localhost:8891/ }

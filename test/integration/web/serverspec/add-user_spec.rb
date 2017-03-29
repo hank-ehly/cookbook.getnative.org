@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::web' do
+describe 'get-native.com-cookbook::add-user' do
     get_native_user = 'get-native'
     get_native_group = 'get-native'
 
