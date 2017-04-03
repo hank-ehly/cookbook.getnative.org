@@ -2,7 +2,13 @@ general:
   branches:
     only:
       - master
+dependencies:
+  pre:
+    - wget https://packages.chef.io/files/stable/chefdk/1.2.22/ubuntu/14.04/chefdk_1.2.22-1_amd64.deb
+    - sudo dpkg -i chefdk_1.2.22-1_amd64.deb
+    - chef gem install specific_install
 test:
   override:
+    - bundle install -j4
     - chef exec berks install
     - chef exec kitchen test
