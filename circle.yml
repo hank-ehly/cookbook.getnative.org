@@ -13,4 +13,4 @@ dependencies:
 test:
   override:
     - chef exec berks install
-    - chef exec kitchen test
+    - KITCHEN_YAML=".kitchen.docker.yml" chef exec kitchen test
