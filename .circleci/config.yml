@@ -1,7 +1,8 @@
 version: 2
-machine:
-  services:
-    - docker
+jobs:
+  build:
+    docker:
+      - image: buildpack-deps:xenial
 general:
   branches:
     only:
