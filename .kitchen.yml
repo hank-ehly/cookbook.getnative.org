@@ -1,5 +1,6 @@
+---
 driver:
-  name: docker
+  name: vagrant
 
 provisioner:
   name: chef_zero
@@ -9,22 +10,13 @@ provisioner:
   client_rb:
     environment: 'development'
 
-driver_config:
-  socket: <%= ENV['DOCKER_HOST'] %>
-  privileged: true
-  provision_command:
-    - apt-get -y install dbus
-    - echo "SSHD_OPTS='-o UseDNS=no -o UsePAM=no -o PasswordAuthentication=yes -o UsePrivilegeSeparation=no -o PidFile=/tmp/sshd.pid'" > /etc/default/ssh
-    - ln -s /lib/systemd/system/systemd-logind.service /etc/systemd/system/multi-user.target.wants/systemd-logind.service
-    - mkdir /etc/systemd/system/sockets.target.wants/
-    - ln -s /lib/systemd/system/dbus.socket /etc/systemd/system/sockets.target.wants/dbus.socket
-    - systemctl set-default multi-user.target
-  run_command: /sbin/init
-  cap_add:
-    - ALL
-
 platforms:
-- name: ubuntu-16.04
+  - name: ubuntu-16.04
+    driver:
+      box: 'ubuntu/xenial64'
+      customize:
+        memory: 2048
+        cpus: 1
 
 suites:
   - name: default
