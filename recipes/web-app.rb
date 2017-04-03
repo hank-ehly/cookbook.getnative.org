@@ -18,6 +18,7 @@ directory node['apache']['docroot_dir'] do
     mode 0755
 end
 
+# todo: Match directory name to server_name (apache config and other places will also need modification)
 directory "#{node['apache']['docroot_dir']}/get-native.com" do
     user node['get-native']['user']['name']
     group node['apache']['group']
