@@ -1,0 +1,8 @@
+general:
+  branches:
+    only:
+      - master
+test:
+  override:
+    - chef exec berks install
+    - chef exec kitchen test
