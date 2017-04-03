@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: get-native.com-cookbook
-# Recipe:: app
+# Recipe:: web-app
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
