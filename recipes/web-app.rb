@@ -4,6 +4,10 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
+%w(libtool autoconf mkdocs).each do |pkg|
+    apt_package pkg
+end
+
 %w(gulp-cli pm2).each do |pkg|
     nodejs_npm pkg
 end
@@ -38,8 +42,6 @@ template 'git_ssh_wrapper' do
     mode 0755
     action :create
 end
-
-apt_package 'mkdocs'
 
 deploy 'get-native' do
     user node['get-native']['user']['name']
