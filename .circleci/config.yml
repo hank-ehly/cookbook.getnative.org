@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/work
     docker:
       - image: buildpack-deps:xenial
     steps:
