@@ -19,6 +19,12 @@ directory dkimkeys_contents_dir do
     recursive true
 end
 
+directory '/var/log/dkim-filter' do
+    mode 0700
+    owner opendkim_user
+    group opendkim_group
+end
+
 execute 'opendkim-genkey' do
     cwd dkimkeys_contents_dir
     command "opendkim-genkey -t -s mail -d #{node['get-native']['server_name']}"

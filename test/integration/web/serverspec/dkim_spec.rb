@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'get-native.com-cookbook::dkim' do
+    dkim_user = 'opendkim'
+    dkim_group = 'opendkim'
+
     describe package('opendkim') do
         it { should be_installed }
     end
@@ -18,20 +21,27 @@ describe 'get-native.com-cookbook::dkim' do
         it { should be_directory }
     end
 
+    describe file('/var/log/dkim-filter') do
+        it { should be_directory }
+        it { should be_mode 700 }
+        it { should be_owned_by dkim_user }
+        it { should be_grouped_into dkim_group }
+    end
+
     describe file('/etc/dkimkeys/localhost/mail.private') do
         it { should be_file }
         it { should exist }
         it { should be_mode 600 }
-        it { should be_owned_by 'opendkim' }
-        it { should be_grouped_into 'opendkim' }
+        it { should be_owned_by dkim_user }
+        it { should be_grouped_into dkim_group }
     end
 
     describe file('/etc/dkimkeys/dkim.key') do
         it { should be_file }
         it { should exist }
         it { should be_mode 600 }
-        it { should be_owned_by 'opendkim' }
-        it { should be_grouped_into 'opendkim' }
+        it { should be_owned_by dkim_user }
+        it { should be_grouped_into dkim_group }
         its(:content) { should match /^\*@localhost:localhost:\/etc\/dkimkeys\/localhost\/mail.private$/ }
     end
 
