@@ -12,5 +12,5 @@ default['get-native']['user']['sudo_commands'] = %w(/usr/sbin/apachectl /usr/sbi
 
 default['nodejs']['bin_path'] = '/usr/local/nodejs-binary/bin'
 default['nodejs']['install_method'] = 'binary'
-default['nodejs']['version'] = '6.10.1'
-default['nodejs']['binary']['checksum'] = 'e8f100e9ee70eb63216b33cf39666a4dc6c4038f6ee4fbfc7751ab3a825e576c'
+default['nodejs']['version'] = '6.10.2'
+default['nodejs']['binary']['checksum'] = '35accd2d9ccac747eff0f236e2843bc2198ba7765e2340441d6230861bae4e1b'
