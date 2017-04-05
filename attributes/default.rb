@@ -9,3 +9,4 @@ default['get-native']['mysql']['version'] = '5.7'
 default['get-native']['mysql']['initial_password'] = 'root'
 default['authorization']['sudo']['include_sudoers_d'] = true
 default['openssh']['server']['password_authentication'] = 'no'
+default['openssh']['server']['permit_root_login'] = 'no'
