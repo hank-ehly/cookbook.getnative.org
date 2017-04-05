@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe 'get-native.com-cookbook::bootstrap' do
+    describe file('/etc/ssh/sshd_config') do
+        it { should exist }
+        it { should be_file }
+        its(:content) { should match /PasswordAuthentication no/ }
+        its(:content) { should match /PermitRootLogin no/ }
+    end
+
     describe package('ntp') do
         it { should be_installed }
     end

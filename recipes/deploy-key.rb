@@ -38,4 +38,3 @@ template 'github-ssh-config' do
                       identity_file: "#{ssh_dir}/#{node['get-native']['environment']}"
               })
 end
-
