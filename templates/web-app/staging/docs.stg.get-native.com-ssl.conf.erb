@@ -9,11 +9,11 @@
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
     ServerAlias www.<%= @params[:server_name] %>
-    DocumentRoot <%= node['apache']['docroot_dir'] %>/get-native.com/current/dist/docs
+    DocumentRoot <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist
 
     RewriteEngine On
 
-    <Directory <%= node['apache']['docroot_dir'] %>/get-native.com/current/dist/docs>
+    <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist
         Options FollowSymLinks
         AllowOverride None
         Require all granted
