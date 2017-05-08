@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [[ ${#} = 0 ]]; then
     echo "Version not specified. Checking for latest LTS..."
     NODE_VERSION=$(curl https://nodejs.org/en/ -s | grep -E "^\s+v[0-9]\.[0-9]+\.[0-9] LTS" | awk '{print $1}')
