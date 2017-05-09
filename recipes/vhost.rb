@@ -15,7 +15,7 @@ end
     conf_name = File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem") ? "#{domain}-ssl" : domain
 
     web_app conf_name do
-        template "web-app/#{conf_name}.conf.erb"
+        template "web-app/#{node['get-native']['environment']}/#{conf_name}.conf.erb"
         server_name domain
         docroot node['get-native']['docroot']
     end
