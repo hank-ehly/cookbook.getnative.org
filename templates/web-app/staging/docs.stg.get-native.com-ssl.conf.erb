@@ -16,7 +16,6 @@
     <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist>
         Options FollowSymLinks
         AllowOverride None
-        Require all granted
 
         AuthUserFile <%= node['apache']['dir'] %>/.htpasswd
         AuthGroupFile /dev/null
