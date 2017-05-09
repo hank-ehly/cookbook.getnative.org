@@ -13,7 +13,7 @@
 
     RewriteEngine On
 
-    <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist
+    <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist>
         Options FollowSymLinks
         AllowOverride None
         Require all granted
