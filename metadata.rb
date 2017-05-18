@@ -4,7 +4,7 @@ maintainer_email 'henry.ehly@gmail.com'
 license 'all_rights'
 description 'Installs/Configures get-native.com db/web servers'
 long_description 'Installs/Configures get-native.com db/web servers'
-version '0.2.0'
+version '0.2.1'
 
 depends 'mysql', '~> 8.2.0'
 depends 'locale', '~> 2.0.0'
