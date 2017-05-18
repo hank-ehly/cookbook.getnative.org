@@ -20,8 +20,8 @@ end
 
 %w(/var/log/pm2 /run/pm2).each do |d|
     directory d do
-        user 'root'
-        group 'root'
+        user node['get-native']['user']['name']
+        group node['get-native']['user']['primary_group']
         mode 0777
     end
 end
