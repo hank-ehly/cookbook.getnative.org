@@ -1,6 +1,12 @@
 ---
 driver:
-  name: vagrant
+  name: gce
+  project: stg-get-native
+  zone: us-west1-b
+  disk_size: 10
+  machine_type: f1-micro
+  network: default
+  preemptible: false
 
 provisioner:
   name: chef_zero
@@ -13,11 +19,8 @@ provisioner:
 platforms:
   - name: ubuntu-16.04
     driver:
-      image_name: 'ubuntu-1604-xenial-v20170516'
-      box: 'ubuntu/xenial64'
-      customize:
-        memory: 2048
-        cpus: 1
+      image_project: ubuntu-os-cloud
+      image_family: 'ubuntu-1604-lts'
 
 suites:
   - name: default
@@ -35,4 +38,10 @@ suites:
     attributes:
       get-native:
         server_name: 'localhost'
+
+# todo: availability from circle ci
+transport:
+  username: hank
+  ssh_key:
+    - ~/.ssh/gce/id_rsa
 
