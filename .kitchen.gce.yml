@@ -20,7 +20,7 @@ platforms:
   - name: ubuntu-16.04
     driver:
       image_project: ubuntu-os-cloud
-      image_family: 'ubuntu-1604-lts'
+      image_family: ubuntu-1604-lts
 
 suites:
   - name: default
