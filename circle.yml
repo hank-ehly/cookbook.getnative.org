@@ -1,6 +1,3 @@
-dependencies:
-  cache_directories:
-    - "vendor/bundle"
 test:
   override:
-    - bundle exec kitchen test
+    - KITCHEN_YAML=".kitchen.gce.yml" bundle exec kitchen test
