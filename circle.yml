@@ -1,3 +1,8 @@
+dependencies:
+  override:
+    - bundle install -j4 --path vendor/bundle
+    - bundle exec berks vendor vendor/cookbooks
+
 test:
   pre:
     - mkdir -p ${HOME}/.ssh/google-compute-engine
