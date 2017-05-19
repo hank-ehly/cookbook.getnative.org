@@ -15,5 +15,10 @@ fi
 
 CHECKSUM=$(curl https://nodejs.org/dist/${NODE_VERSION}/SHASUMS256.txt.asc -s | grep "node-${NODE_VERSION}-linux-x64.tar.gz" | awk '{print $1}')
 
+if [[ -z ${CHECKSUM} ]]; then
+    echo "Node version ${NODE_VERSION} does not exist."
+    exit 0
+fi
+
 echo ${NODE_VERSION}
 echo ${CHECKSUM}
