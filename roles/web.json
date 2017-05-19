@@ -12,7 +12,6 @@
     "recipe[get-native.com-cookbook::deploy-key]",
     "recipe[get-native.com-cookbook::apache2]",
     "recipe[get-native.com-cookbook::nodejs]",
-    "recipe[get-native.com-cookbook::network-usage]",
     "recipe[get-native.com-cookbook::web-app]",
     "recipe[get-native.com-cookbook::vhost]"
   ],
