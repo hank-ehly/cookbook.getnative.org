@@ -39,9 +39,7 @@ suites:
       get-native:
         server_name: 'localhost'
 
-# todo: availability from circle ci
 transport:
-  username: hank
+  username: chef
   ssh_key:
-    - ~/.ssh/gce/id_rsa
-
+    - ~/.ssh/google-compute-engine/chef

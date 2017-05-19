@@ -1,5 +1,7 @@
 test:
   pre:
+    - mkdir -p ${HOME}/.ssh/google-compute-engine
+    - echo $CHEF_PRIVATE_KEY | base64 --decode > ${HOME}/.ssh/google-compute-engine/chef
     - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
     - echo $GITHUB_CREDENTIALS | base64 --decode > data_bags/github/credentials.json
     - echo $AUTHORIZED_KEYS | base64 --decode > data_bags/development-web/ssh.json
