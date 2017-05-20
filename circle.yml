@@ -12,4 +12,4 @@ test:
     - echo $AUTHORIZED_KEYS | base64 --decode > data_bags/development-web/ssh.json
     - echo $HTPASSED | base64 --decode > data_bags/development-web/htpasswd.json
   override:
-    - KITCHEN_YAML=".kitchen.gce.yml" bundle exec kitchen test web-ubuntu-1604
+    - KITCHEN_YAML=".kitchen.gce.yml" bundle exec kitchen verify web-ubuntu-1604
