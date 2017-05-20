@@ -35,4 +35,3 @@ suites:
     attributes:
       get-native:
         server_name: 'localhost'
-
