@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 gem 'chef', '~> 12.19', '>= 12.19.36'
 gem 'test-kitchen', '~> 1.16'
