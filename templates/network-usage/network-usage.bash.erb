@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# Log network usage to disk
-LOGFILE=<%= node['get-native']['local-log-dir'] %>/network-usage.log
-/bin/echo "* `date`" >> $LOGFILE 2>&1 && /sbin/iptables -S -Z -v | /usr/bin/awk '/^-P/{ print $2, $6 }' | /usr/bin/tr ' ' '\t' >> $LOGFILE 2>&1
-
-# Output network usage to stdout
-/usr/bin/tail -n 4 $LOGFILE
