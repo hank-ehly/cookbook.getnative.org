@@ -16,9 +16,9 @@ deploy_key node['get-native']['environment'] do
     provider Chef::Provider::DeployKeyGithub
     path ssh_dir
     credentials({
-                        user: data_bag_item('github', 'credentials')['username'],
-                        password: data_bag_item('github', 'credentials')['password']
-                })
+        user: data_bag_item('github', 'credentials')['username'],
+        password: data_bag_item('github', 'credentials')['password']
+    })
     repo node['get-native']['github']['repo']
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
@@ -32,9 +32,9 @@ template 'github-ssh-config' do
     owner node['get-native']['user']['name']
     group node['get-native']['user']['primary_group']
     variables({
-                      host: 'github.com',
-                      user: 'git',
-                      hostname: 'github.com',
-                      identity_file: "#{ssh_dir}/#{node['get-native']['environment']}"
-              })
+        host: 'github.com',
+        user: 'git',
+        hostname: 'github.com',
+        identity_file: "#{ssh_dir}/#{node['get-native']['environment']}"
+    })
 end
