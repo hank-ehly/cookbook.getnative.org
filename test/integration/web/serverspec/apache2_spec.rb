@@ -20,7 +20,7 @@ describe 'get-native.com-cookbook::apache2' do
         it { should be_directory }
     end
 
-    describe command('ls -al /') do
+    describe command('/usr/sbin/apachectl -M') do
         its(:exit_status) { should eq 0 }
         its(:stdout) { should match /ssl_module/ }
         its(:stdout) { should match /deflate_module/ }
