@@ -5,7 +5,6 @@ describe 'get-native.com-cookbook::bootstrap' do
         it { should exist }
         it { should be_file }
         its(:content) { should match /PasswordAuthentication no/ }
-        its(:content) { should match /PermitRootLogin no/ }
     end
 
     describe package('ntp') do
