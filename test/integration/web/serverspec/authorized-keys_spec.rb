@@ -4,6 +4,12 @@ describe 'get-native.com-cookbook::authorized-keys' do
     get_native_user = 'get-native'
     get_native_group = 'get-native'
 
+    # Todo: Use have_authorized_key
+
+    # describe user('root') do
+    #     it { should have_authorized_key 'ssh-rsa ABCDEFGHIJKLMNOPQRSTUV... foo@bar.local' }
+    # end
+
     describe file("/home/#{get_native_user}/.ssh") do
         it { should be_directory }
         it { should be_mode 700 }
