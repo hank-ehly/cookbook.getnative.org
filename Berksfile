@@ -9,3 +9,6 @@ cookbook 'mysql', '~> 8.3.1', github: 'chef-cookbooks/mysql'
 cookbook 'nodejs', '~> 3.0.0', github: 'redguide/nodejs'
 cookbook 'openssh', '~> 2.4.0', github: 'chef-cookbooks/openssh'
 cookbook 'sudo', '~> 3.5.0', github: 'chef-cookbooks/sudo'
+
+metadata
+
