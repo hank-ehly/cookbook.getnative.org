@@ -22,7 +22,7 @@ end
     directory d do
         user node['get-native']['user']['name']
         group node['get-native']['user']['primary_group']
-        mode 0777
+        mode 0755
     end
 end
 

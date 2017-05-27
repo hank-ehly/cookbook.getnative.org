@@ -12,7 +12,7 @@ describe 'get-native.com-cookbook::deploy-key' do
     end
 
     describe file("/home/#{get_native_user}/.ssh/config") do
-        it { should be_directory }
+        it { should be_file }
         it { should be_mode 700 }
         it { should be_owned_by get_native_user }
         it { should be_grouped_into get_native_group }

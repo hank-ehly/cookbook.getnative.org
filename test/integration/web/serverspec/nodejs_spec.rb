@@ -1,12 +1,18 @@
 require 'spec_helper'
 
 describe 'get-native.com-cookbook::nodejs' do
-    node_version = '6.10.3'
+    describe command('node --version') do
+        its(:exit_status) { should eq 0 }
+        its(:stdout) { should match /v7.10.0/ }
+    end
 
-    %W{/usr/local/nodejs-binary-#{node_version}/bin/node /usr/local/nodejs-binary-#{node_version}/bin/npm}.each do |f|
+    describe file('/usr/local/nodejs-binary') do
+        it { should be_symlink }
+    end
+
+    %W{/usr/local/nodejs-binary/bin/node /usr/local/nodejs-binary/bin/npm}.each do |f|
         describe file(f) do
-            it { should be_symlink }
-            it { should be_executable.by('get-native') }
+            it { should be_file }
         end
     end
 
