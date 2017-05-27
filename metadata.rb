@@ -4,7 +4,7 @@ maintainer_email 'henry.ehly@gmail.com'
 license 'all_rights'
 description 'Installs/Configures get-native.com db/web servers'
 long_description 'Installs/Configures get-native.com db/web servers'
-version '0.2.1'
+version '0.2.2'
 
 depends 'apache2', '~> 3.3.0'
 depends 'apt', '~> 6.1.0'
