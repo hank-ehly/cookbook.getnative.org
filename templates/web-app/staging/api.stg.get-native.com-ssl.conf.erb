@@ -22,7 +22,9 @@
 
     <Proxy *>
         <If "%{HTTP:Origin} != 'https://stg.get-native.com'">
-            Require all denied
+            <If "! %{REQUEST_URI} =~ /oauth\/(facebook|google|twitter)$/">
+                Require all denied
+            </If>
         </If>
 
         Require all granted
