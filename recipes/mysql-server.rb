@@ -11,7 +11,7 @@ mysql_service 'get-native' do
     version node['get-native']['mysql']['version']
     initial_root_password db_credentials['root_password']
     bind_address node['get-native']['mysql']['bind-address'] || '*' # todo: defaulting to * is insecure
-    charset 'utf8'
+    charset 'utf8mb4'
     run_group 'mysql'
     run_user 'mysql'
     port 3306
