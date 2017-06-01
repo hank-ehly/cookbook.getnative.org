@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
-%w(libtool autoconf mkdocs).each do |pkg|
+%w(libtool autoconf mkdocs libav-tools).each do |pkg|
     apt_package pkg
 end
 

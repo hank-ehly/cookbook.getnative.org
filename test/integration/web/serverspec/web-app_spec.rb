@@ -4,7 +4,7 @@ describe 'get-native.com-cookbook::web-app' do
     get_native_user = 'get-native'
     get_native_group = 'get-native'
 
-    %w(libtool autoconf mkdocs).each do |pkg|
+    %w(libtool autoconf mkdocs libav-tools).each do |pkg|
         describe package(pkg) do
             it { should be_installed }
         end
