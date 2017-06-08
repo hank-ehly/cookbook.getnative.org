@@ -8,9 +8,7 @@
     apt_package pkg
 end
 
-%w(gulp-cli pm2).each do |pkg|
-    nodejs_npm pkg
-end
+nodejs_npm 'pm2'
 
 directory node['apache']['docroot_dir'] do
     user 'root'
