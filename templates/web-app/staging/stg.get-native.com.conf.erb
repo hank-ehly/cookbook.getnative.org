@@ -2,7 +2,7 @@
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
     ServerAlias www.<%= @params[:server_name] %>
-    DocumentRoot <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist/prod
+    DocumentRoot <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist
 
     <Directory <%= @params[:docroot] %>>
         Options FollowSymLinks

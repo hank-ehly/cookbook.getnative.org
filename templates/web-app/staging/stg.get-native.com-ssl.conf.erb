@@ -22,11 +22,11 @@
 <VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
-    DocumentRoot <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist/prod
+    DocumentRoot <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist
 
     RewriteEngine On
 
-    <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist/prod>
+    <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist>
         Options FollowSymLinks
         AllowOverride None
 
