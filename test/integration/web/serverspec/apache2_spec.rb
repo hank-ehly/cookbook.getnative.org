@@ -7,13 +7,9 @@ describe 'get-native.com-cookbook::apache2' do
         end
     end
 
-    describe file('/etc/apt/sources.list.d/ondrej-ubuntu-apache2-xenial.list') do
-        it { should be_file }
+    describe ppa('ondrej/apache2') do
         it { should exist }
-        it { should be_mode 644 }
-        it { should be_owned_by 'root' }
-        it { should be_grouped_into 'root' }
-        its(:size) { should > 0 }
+        it { should be_enabled }
     end
 
     describe file('/etc/apache2') do

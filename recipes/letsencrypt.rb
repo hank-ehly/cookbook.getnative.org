@@ -4,34 +4,31 @@
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
 
-if node['get-native']['environment'] != 'development'
-    apt_package 'python-letsencrypt-apache'
+template '999-dummy.conf' do
+    path "#{node['apache']['dir']}/sites-available/999-dummy.conf"
+    source 'letsencrypt/999-dummy.conf.erb'
+    owner 'root'
+    group 'root'
+    mode 0644
+end
 
-    template '999-dummy.conf' do
-        path "#{node['apache']['dir']}/sites-available/999-dummy.conf"
-        source 'letsencrypt/999-dummy.conf.erb'
-        owner 'root'
-        group 'root'
-        mode 0644
-    end
+cron 'letsencrypt' do
+    command "/usr/bin/letsencrypt renew --config-dir #{node['apache']['dir']}/ssl --agree-tos --email #{node['get-native']['contact']}"
+    minute '0'
+    hour '0,12'
+    user 'root'
+    mailto node['get-native']['contact']
+end
 
-    cron 'letsencrypt' do
-        command "/usr/bin/letsencrypt renew --config-dir #{node['apache']['dir']}/ssl --agree-tos --email #{node['get-native']['contact']}"
-        minute '0'
-        hour '0,12'
-        user 'root'
-        mailto node['get-native']['contact']
-    end
+domains = %W(
+#{node['get-native']['server_name']}
+       api.#{node['get-native']['server_name']}
+       docs.#{node['get-native']['server_name']}
+)
 
-    domains = %W(
-        #{node['get-native']['server_name']}
-        api.#{node['get-native']['server_name']}
-        docs.#{node['get-native']['server_name']}
-    )
-
-    domains.each do |d|
-        bash 'letsencrypt' do
-            code <<-EOH
+domains.each do |d|
+    bash 'letsencrypt' do
+        code <<-EOH
             /usr/bin/letsencrypt --domains #{domains.join(',')} \
                                  --apache \
                                  --agree-tos \
@@ -45,8 +42,7 @@ if node['get-native']['environment'] != 'development'
                                  --apache-le-vhost-ext="-ssl.conf" \
                                  --redirect \
                                  --logs-dir #{node['apache']['log_dir']}
-            EOH
-            not_if { File::exist?("#{node['apache']['dir']}/ssl/live/#{d}/fullchain.pem") }
-        end
+        EOH
+        not_if {File::exist?("#{node['apache']['dir']}/ssl/live/#{d}/fullchain.pem")}
     end
 end

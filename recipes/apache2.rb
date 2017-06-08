@@ -8,9 +8,10 @@
     apt_package pkg
 end
 
-execute 'add-apt-repository -y ppa:ondrej/apache2' do
+apt_repository 'ondrej-apache2' do
+    uri 'ppa:ondrej/apache2'
+    deb_src true
     notifies :run, 'execute[apt-get update]', :immediately
-    not_if { File::exist? '/etc/apt/sources.list.d/ondrej-ubuntu-apache2-xenial.list' }
 end
 
 %w(default mod_ssl mod_deflate mod_rewrite mod_proxy mod_proxy_http mod_http2 mod_expires mod_setenvif mod_log_config).each do |r|
