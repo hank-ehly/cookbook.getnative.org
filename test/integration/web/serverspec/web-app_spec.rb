@@ -10,7 +10,7 @@ describe 'get-native.com-cookbook::web-app' do
         end
     end
 
-    %w(/usr/local/nodejs-binary/bin/gulp /usr/local/nodejs-binary/bin/gulp).each do |f|
+    %w(/usr/local/nodejs-binary/bin/pm2).each do |f|
         describe file(f) do
             it { should be_file }
             it { should be_executable.by_user(get_native_user) }
