@@ -8,7 +8,7 @@
     apt_package pkg
 end
 
-nodejs_npm 'pm2'
+#nodejs_npm 'pm2'
 
 directory node['apache']['docroot_dir'] do
     user 'root'
