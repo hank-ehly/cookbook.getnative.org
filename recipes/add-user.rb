@@ -16,8 +16,7 @@ end
 
 include_recipe 'sudo::default'
 
-sudo node['get-native']['user']['primary_group'] do
-    group node['get-native']['user']['primary_group']
+sudo node['get-native']['user']['name'] do
+    user node['get-native']['user']['name']
     nopasswd true
-    commands node['get-native']['user']['sudo_commands']
 end

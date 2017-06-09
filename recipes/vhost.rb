@@ -16,6 +16,5 @@
     web_app conf_name do
         template "web-app/#{node['get-native']['environment']}/#{conf_name}.conf.erb"
         server_name domain
-        docroot node['get-native']['docroot']
     end
 end

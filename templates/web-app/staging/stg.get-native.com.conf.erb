@@ -4,7 +4,7 @@
     ServerAlias www.<%= @params[:server_name] %>
     DocumentRoot <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist
 
-    <Directory <%= @params[:docroot] %>>
+    <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist>
         Options FollowSymLinks
         AllowOverride None
         Require all granted
