@@ -14,4 +14,9 @@ describe 'get-native.com-cookbook::add-user' do
         it { should have_home_directory "/home/#{get_native_user}" }
         it { should have_login_shell '/bin/bash' }
     end
+
+    describe file("/etc/sudoers.d/#{get_native_user}") do
+        it { should exist }
+        its(:content) { should match /get-native ALL=\(ALL:ALL\) NOPASSWD:ALL/ }
+    end
 end
