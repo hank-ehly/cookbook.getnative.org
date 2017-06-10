@@ -25,8 +25,8 @@ end
 data_bag = "#{node['get-native']['environment']}-#{node['get-native']['role']}"
 db_credentials = data_bag_item(data_bag, 'db-credentials')
 
-template '.bashrc' do
-    source 'add-user/bashrc.erb'
+template 'Get Native user .bashrc' do
+    source 'add-user/get-native-bashrc.erb'
     path "#{node['get-native']['user']['home']}/.bashrc"
     mode 0644
     owner node['get-native']['user']['name']
@@ -34,4 +34,12 @@ template '.bashrc' do
     variables({
         get_native_db_password: db_credentials['get_native_password']
     })
+end
+
+template 'Root user .bashrc' do
+    source 'add-user/root-bashrc.erb'
+    path '/root/.bashrc'
+    mode 0644
+    owner 'root'
+    group 'root'
 end
