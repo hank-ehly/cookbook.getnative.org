@@ -6,7 +6,15 @@
   "run_list": [
     "recipe[get-native.com-cookbook::bootstrap]",
     "recipe[get-native.com-cookbook::add-user]",
+    "recipe[get-native.com-cookbook::authorized-keys]",
+    "recipe[get-native.com-cookbook::deploy-key]",
+    "recipe[get-native.com-cookbook::postfix]",
+    "recipe[get-native.com-cookbook::dkim]",
+    "recipe[get-native.com-cookbook::mysql-client]",
+    "recipe[get-native.com-cookbook::nodejs]",
     "recipe[get-native.com-cookbook::apache2]",
+    "recipe[get-native.com-cookbook::web-app]",
+    "recipe[get-native.com-cookbook::vhost]",
     "recipe[get-native.com-cookbook::certbot]"
   ],
   "default_attributes": {

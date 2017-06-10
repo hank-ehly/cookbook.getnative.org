@@ -9,4 +9,4 @@ default['get-native']['mysql']['initial_password'] = 'root'
 default['openssh']['server']['password_authentication'] = 'no'
 default['openssh']['server']['permit_root_login'] = 'no'
 default['authorization']['sudo']['include_sudoers_d'] = true
-node['authorization']['sudo']['groups'] = []
+default['authorization']['sudo']['groups'] = []
