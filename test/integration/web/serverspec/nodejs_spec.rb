@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'get-native.com-cookbook::nodejs' do
     describe command('node --version') do
         its(:exit_status) { should eq 0 }
-        its(:stdout) { should match /v8.0.0/ }
+        its(:stdout) { should match /v8.1.0/ }
     end
 
     describe file('/usr/local/nodejs-binary') do

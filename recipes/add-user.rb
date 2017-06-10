@@ -18,5 +18,20 @@ include_recipe 'sudo::default'
 
 sudo node['get-native']['user']['name'] do
     user node['get-native']['user']['name']
+    runas 'ALL:ALL'
     nopasswd true
+end
+
+data_bag = "#{node['get-native']['environment']}-#{node['get-native']['role']}"
+db_credentials = data_bag_item(data_bag, 'db-credentials')
+
+template '.bashrc' do
+    source 'add-user/bashrc.erb'
+    path "#{node['get-native']['user']['home']}/.bashrc"
+    mode 0644
+    owner node['get-native']['user']['name']
+    group node['get-native']['user']['primary_group']
+    variables({
+        get_native_db_password: db_credentials['get_native_password']
+    })
 end
