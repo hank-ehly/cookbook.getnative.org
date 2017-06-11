@@ -14,7 +14,13 @@ include_recipe 'openssh::default'
 end
 
 execute 'timedatectl set-timezone UTC' do
+    notifies :restart, 'service[ntp]', :immediately
     not_if "timedatectl status --no-pager | grep 'Time zone: UTC (UTC, +0000)'"
+end
+
+service 'ntp' do
+    action :nothing
+    provider Chef::Provider::Service::Systemd
 end
 
 template '/etc/cron-apt/config' do
