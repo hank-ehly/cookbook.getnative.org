@@ -3,6 +3,7 @@ driver:
   name: docker
 
 driver_config:
+  socket: <%= ENV['DOCKER_HOST'] %>
   privileged: true
 
 provisioner:
