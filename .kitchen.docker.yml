@@ -1,0 +1,30 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  roles_path: './roles'
+  environments_path: './environments'
+  data_bags_path: './data_bags'
+  client_rb:
+    environment: 'development'
+
+platforms:
+  - name: ubuntu-16.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[get-native.com-cookbook::default]
+  - name: web
+    run_list:
+      - role[web]
+    attributes:
+      get-native:
+        server_name: 'localhost'
+  - name: db
+    run_list:
+      - role[db]
+    attributes:
+      get-native:
+        server_name: 'localhost'
