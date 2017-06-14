@@ -22,8 +22,13 @@ sudo node['get-native']['user']['name'] do
     nopasswd true
 end
 
-data_bag = "#{node['get-native']['environment']}-#{node['get-native']['role']}"
-db_credentials = data_bag_item(data_bag, 'db-credentials')
+if ENV['CI']
+    db_credentials = {
+        get_native_password: 'dummy-password'
+    }
+else
+    db_credentials = data_bag_item("#{node['get-native']['environment']}-#{node['get-native']['role']}", 'db-credentials')
+end
 
 template 'Get Native user .bashrc' do
     source 'add-user/get-native-bashrc.erb'
