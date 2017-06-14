@@ -2,7 +2,22 @@
 driver:
   name: docker
 
+driver_config:
+  socket: <%= ENV['DOCKER_HOST'] %>
+  privileged: true
+  provision_command:
+    - apt-get -y install dbus
+    - echo "SSHD_OPTS='-o UseDNS=no -o UsePAM=no -o PasswordAuthentication=yes -o UsePrivilegeSeparation=no -o PidFile=/tmp/sshd.pid'" > /etc/default/ssh
+    - ln -s /lib/systemd/system/systemd-logind.service /etc/systemd/system/multi-user.target.wants/systemd-logind.service
+    - mkdir /etc/systemd/system/sockets.target.wants/
+    - ln -s /lib/systemd/system/dbus.socket /etc/systemd/system/sockets.target.wants/dbus.socket
+    - systemctl set-default multi-user.target
+  run_command: /sbin/init
+  cap_add:
+    - ALL
+
 provisioner:
+  name: chef_zero
   roles_path: './roles'
   environments_path: './environments'
   data_bags_path: './data_bags'
