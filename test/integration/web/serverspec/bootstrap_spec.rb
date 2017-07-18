@@ -7,28 +7,10 @@ describe 'get-native.com-cookbook::bootstrap' do
         its(:content) { should match /PasswordAuthentication no/ }
     end
 
-    describe package('ntp') do
-        it { should be_installed }
-    end
-
-    describe package('git') do
-        it { should be_installed }
-    end
-
-    describe package('psmisc') do
-        it { should be_installed }
-    end
-
-    describe package('tree') do
-        it { should be_installed }
-    end
-
-    describe package('tmux') do
-        it { should be_installed }
-    end
-
-    describe package('cron-apt') do
-        it { should be_installed }
+    %w(ntp git psmisc tree tmux cron-apt).each do |pkg|
+        describe package(pkg) do
+            it { should be_installed }
+        end
     end
 
     describe command('timedatectl status --no-pager') do
