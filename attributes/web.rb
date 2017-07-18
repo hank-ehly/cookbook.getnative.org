@@ -5,7 +5,7 @@ default['apache']['docroot_dir'] = '/var/www'
 default['apache']['servertokens'] = 'Prod'
 default['apache']['serversignature'] = 'Off'
 default['apache']['timeout'] = 45
-default['get-native']['github']['repo'] = 'hank-ehly/get-native.com'
+
 default['nodejs']['bin_path'] = '/usr/local/nodejs-binary/bin'
 default['nodejs']['install_method'] = 'binary'
 default['nodejs']['version'] = '8.1.0'
