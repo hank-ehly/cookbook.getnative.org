@@ -41,7 +41,7 @@
         RewriteRule ^../index\.html$ - [L]
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule (..) /index.html [L]
+        RewriteRule (..) $1/index.html [L]
 
         RewriteCond %{HTTP:Accept-Language} ^ja [NC]
         RewriteRule ^$ /ja/ [R]
@@ -55,7 +55,7 @@
         AllowOverride None
     </Directory>
 
-    LogLevel info rewrite:trace1
+    LogLevel debug rewrite:trace1
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
 
     SetEnvIf DNT 1 DO_NOT_TRACK
@@ -69,9 +69,10 @@
         SetOutputFilter DEFLATE
     </IfModule>
 
-    <IfModule http2_module>
-        Protocols h2 http/1.1
-    </IfModule>
+    # Disabled because of page loading problems
+    #<IfModule http2_module>
+    #    Protocols h2 http/1.1
+    #</IfModule>
 
     UseCanonicalName Off
 
