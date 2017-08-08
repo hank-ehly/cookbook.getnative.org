@@ -4,6 +4,7 @@ driver:
 
 driver_config:
   privileged: true
+  publish_all: true
 
 provisioner:
   name: chef_zero
