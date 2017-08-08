@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: get-native.com-cookbook
+# Cookbook Name:: cookbook.getnativelearning.com
 # Recipe:: certbot
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::web-app' do
-    get_native_user = 'get-native'
-    get_native_group = 'get-native'
+describe 'cookbook.getnativelearning.com::web-app' do
+    get_native_user = 'getnative'
+    get_native_group = 'getnative'
 
     %w(libtool autoconf mkdocs libav-tools).each do |pkg|
         describe package(pkg) do

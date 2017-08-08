@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::add-user' do
-    get_native_user = 'get-native'
-    get_native_group = 'get-native'
+describe 'cookbook.getnativelearning.com::add-user' do
+    get_native_user = 'getnative'
+    get_native_group = 'getnative'
 
     describe group(get_native_group) do
         it { should exist }
@@ -17,7 +17,7 @@ describe 'get-native.com-cookbook::add-user' do
 
     describe file("/etc/sudoers.d/#{get_native_user}") do
         it { should exist }
-        its(:content) { should match /get-native ALL=\(ALL:ALL\) NOPASSWD:ALL/ }
+        its(:content) { should match /getnative ALL=\(ALL:ALL\) NOPASSWD:ALL/ }
     end
 
     describe file("/home/#{get_native_user}/.bashrc") do

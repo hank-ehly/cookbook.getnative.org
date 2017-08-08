@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::default' do
+describe 'cookbook.getnativelearning.com::default' do
   # Serverspec examples can be found at
   # http://serverspec.org/resource_types.html
   it 'does something' do

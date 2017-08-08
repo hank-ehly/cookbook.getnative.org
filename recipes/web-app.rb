@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: get-native.com-cookbook
+# Cookbook Name:: cookbook.getnativelearning.com
 # Recipe:: web-app
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
@@ -18,13 +18,13 @@ end
 
 %w(/var/log/pm2 /run/pm2).each do |d|
     directory d do
-        user node['get-native']['user']['name']
-        group node['get-native']['user']['primary_group']
+        user node['getnative']['user']['name']
+        group node['getnative']['user']['primary_group']
         mode 0755
     end
 end
 
-data_bag = "#{node['get-native']['environment']}-#{node['get-native']['role']}"
+data_bag = "#{node['getnative']['environment']}-#{node['getnative']['role']}"
 htpasswd = data_bag_item(data_bag, 'htpasswd')
 
 bash 'htpasswd' do

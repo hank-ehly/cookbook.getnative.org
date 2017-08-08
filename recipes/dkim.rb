@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: get-native.com-cookbook
+# Cookbook Name:: cookbook.getnativelearning.com
 # Recipe:: dkim
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
@@ -7,9 +7,9 @@
 opendkim_user  = 'opendkim'
 opendkim_group = 'opendkim'
 dkimkeys_root_dir  = '/etc/dkimkeys'
-dkimkeys_contents_dir = "#{dkimkeys_root_dir}/#{node['get-native']['server_name']}"
+dkimkeys_contents_dir = "#{dkimkeys_root_dir}/#{node['getnative']['server_name']}"
 
-include_recipe 'get-native.com-cookbook::postfix'
+include_recipe 'cookbook.getnativelearning.com::postfix'
 
 %w(opendkim opendkim-tools).each do |pkg|
     apt_package pkg
@@ -27,7 +27,7 @@ end
 
 execute 'opendkim-genkey' do
     cwd dkimkeys_contents_dir
-    command "opendkim-genkey -t -s mail -d #{node['get-native']['server_name']}"
+    command "opendkim-genkey -t -s mail -d #{node['getnative']['server_name']}"
     creates "#{dkimkeys_contents_dir}/mail.private"
 end
 

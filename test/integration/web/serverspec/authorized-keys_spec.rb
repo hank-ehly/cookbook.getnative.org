@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::authorized-keys' do
-    get_native_user = 'get-native'
-    get_native_group = 'get-native'
+describe 'cookbook.getnativelearning.com::authorized-keys' do
+    get_native_user = 'getnative'
+    get_native_group = 'getnative'
 
     # Todo: Use have_authorized_key
 

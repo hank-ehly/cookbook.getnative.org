@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::deploy-key' do
-    get_native_user = 'get-native'
-    get_native_group = 'get-native'
+describe 'cookbook.getnativelearning.com::deploy-key' do
+    get_native_user = 'getnative'
+    get_native_group = 'getnative'
 
     describe file("/home/#{get_native_user}/.ssh") do
         it { should be_directory }

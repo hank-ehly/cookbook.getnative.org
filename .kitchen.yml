@@ -22,16 +22,16 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[get-native.com-cookbook::default]
+      - recipe[cookbook.getnativelearning.com::default]
   - name: web
     run_list:
       - role[web]
     attributes:
-      get-native:
+      getnative:
         server_name: 'localhost'
   - name: db
     run_list:
       - role[db]
     attributes:
-      get-native:
+      getnative:
         server_name: 'localhost'

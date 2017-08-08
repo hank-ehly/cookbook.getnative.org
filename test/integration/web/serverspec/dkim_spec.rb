@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::dkim' do
+describe 'cookbook.getnativelearning.com::dkim' do
     dkim_user = 'opendkim'
     dkim_group = 'opendkim'
 

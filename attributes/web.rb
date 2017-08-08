@@ -1,6 +1,6 @@
 default['apache']['listen'] =  %w(*:80 *:443)
 default['apache']['version'] = '2.4'
-default['apache']['contact'] = node['get-native']['contact']
+default['apache']['contact'] = node['getnative']['contact']
 default['apache']['docroot_dir'] = '/var/www'
 default['apache']['servertokens'] = 'Prod'
 default['apache']['serversignature'] = 'Off'

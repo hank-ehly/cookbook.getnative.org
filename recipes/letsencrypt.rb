@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: get-native.com-cookbook
+# Cookbook Name:: cookbook.getnativelearning.com
 # Recipe:: letsencrypt
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
@@ -13,17 +13,17 @@ template '999-dummy.conf' do
 end
 
 cron 'letsencrypt' do
-    command "/usr/bin/letsencrypt renew --config-dir #{node['apache']['dir']}/ssl --agree-tos --email #{node['get-native']['contact']}"
+    command "/usr/bin/letsencrypt renew --config-dir #{node['apache']['dir']}/ssl --agree-tos --email #{node['getnative']['contact']}"
     minute '0'
     hour '0,12'
     user 'root'
-    mailto node['get-native']['contact']
+    mailto node['getnative']['contact']
 end
 
 domains = %W(
-#{node['get-native']['server_name']}
-       api.#{node['get-native']['server_name']}
-       docs.#{node['get-native']['server_name']}
+#{node['getnative']['server_name']}
+       api.#{node['getnative']['server_name']}
+       docs.#{node['getnative']['server_name']}
 )
 
 domains.each do |d|
@@ -35,7 +35,7 @@ domains.each do |d|
                                  --uir \
                                  --hsts \
                                  --non-interactive \
-                                 --email #{node['get-native']['contact']} \
+                                 --email #{node['getnative']['contact']} \
                                  --config-dir #{node['apache']['dir']}/ssl \
                                  --apache-server-root #{node['apache']['dir']} \
                                  --apache-vhost-root #{node['apache']['dir']}/sites-available \

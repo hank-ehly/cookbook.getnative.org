@@ -10,7 +10,7 @@ Syslog                  yes
 # privileged user (e.g. Postfix)
 UMask                   002
 
-Domain                  <%= node['get-native']['server_name'] %>
+Domain                  <%= node['getnative']['server_name'] %>
 KeyFile                 /etc/dkimkeys/dkim.key
 Selector                mail
 AutoRestart             Yes

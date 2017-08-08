@@ -2,23 +2,23 @@
   "name": "web-server",
   "chef_type": "role",
   "json_class": "Chef::Role",
-  "description": "The role used to configure the get-native.com web-server",
+  "description": "The role used to configure the getnativelearning.com web-server",
   "run_list": [
-    "recipe[get-native.com-cookbook::bootstrap]",
-    "recipe[get-native.com-cookbook::add-user]",
-    "recipe[get-native.com-cookbook::authorized-keys]",
-    "recipe[get-native.com-cookbook::deploy-key]",
-    "recipe[get-native.com-cookbook::postfix]",
-    "recipe[get-native.com-cookbook::dkim]",
-    "recipe[get-native.com-cookbook::mysql-client]",
-    "recipe[get-native.com-cookbook::nodejs]",
-    "recipe[get-native.com-cookbook::apache2]",
-    "recipe[get-native.com-cookbook::web-app]",
-    "recipe[get-native.com-cookbook::vhost]",
-    "recipe[get-native.com-cookbook::certbot]"
+    "recipe[cookbook.getnativelearning.com::bootstrap]",
+    "recipe[cookbook.getnativelearning.com::add-user]",
+    "recipe[cookbook.getnativelearning.com::authorized-keys]",
+    "recipe[cookbook.getnativelearning.com::deploy-key]",
+    "recipe[cookbook.getnativelearning.com::postfix]",
+    "recipe[cookbook.getnativelearning.com::dkim]",
+    "recipe[cookbook.getnativelearning.com::mysql-client]",
+    "recipe[cookbook.getnativelearning.com::nodejs]",
+    "recipe[cookbook.getnativelearning.com::apache2]",
+    "recipe[cookbook.getnativelearning.com::web-app]",
+    "recipe[cookbook.getnativelearning.com::vhost]",
+    "recipe[cookbook.getnativelearning.com::certbot]"
   ],
   "default_attributes": {
-    "get-native": {
+    "getnative": {
       "role": "web"
     }
   }

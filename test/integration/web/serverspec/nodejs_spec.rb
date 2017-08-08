@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'get-native.com-cookbook::nodejs' do
+describe 'cookbook.getnativelearning.com::nodejs' do
     describe command('node --version') do
         its(:exit_status) { should eq 0 }
         its(:stdout) { should match /v8.1.0/ }
@@ -16,7 +16,7 @@ describe 'get-native.com-cookbook::nodejs' do
         end
     end
 
-    describe file('/home/get-native/.bashrc') do
+    describe file('/home/getnative/.bashrc') do
         it { should be_file }
         its(:content) { should match /export PATH="\/usr\/local\/nodejs-binary\/bin:\$PATH"/ }
     end

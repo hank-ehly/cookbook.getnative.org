@@ -1,7 +1,7 @@
 {
   "name": "development",
   "default_attributes": {
-    "get-native": {
+    "getnative": {
       "environment": "development",
       "mysql": {
         "bind-address": "127.0.0.1"
