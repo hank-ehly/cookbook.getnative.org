@@ -7,6 +7,11 @@
 data_bag = "#{node['getnative']['environment']}-#{node['getnative']['role']}"
 db_credentials = data_bag_item(data_bag, 'db-credentials')
 
+# delete previous service
+mysql_service 'get-native' do
+    action :delete
+end
+
 mysql_service 'getnative' do
     version node['getnative']['mysql']['version']
     initial_root_password db_credentials['root_password']
