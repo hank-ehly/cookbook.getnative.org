@@ -24,24 +24,24 @@ end
 
 if ENV['CI']
     db_credentials = {
-        get_native_password: 'dummy-password'
+        getnative_password: 'dummy-password'
     }
 else
     db_credentials = data_bag_item("#{node['getnative']['environment']}-#{node['getnative']['role']}", 'db-credentials')
 end
 
-template 'Get Native user .bashrc' do
+template 'getnative user .bashrc' do
     source 'add-user/getnative-bashrc.erb'
     path "#{node['getnative']['user']['home']}/.bashrc"
     mode 0644
     owner node['getnative']['user']['name']
     group node['getnative']['user']['primary_group']
     variables({
-        get_native_db_password: db_credentials['get_native_password']
+        getnative_db_password: db_credentials['getnative_password']
     })
 end
 
-template 'Root user .bashrc' do
+template 'root user .bashrc' do
     source 'add-user/root-bashrc.erb'
     path '/root/.bashrc'
     mode 0644
