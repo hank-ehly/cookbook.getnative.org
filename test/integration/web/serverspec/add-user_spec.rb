@@ -1,31 +1,31 @@
 require 'spec_helper'
 
 describe 'cookbook.getnativelearning.com::add-user' do
-    get_native_user = 'getnative'
-    get_native_group = 'getnative'
+    getnative_user = 'getnative'
+    getnative_group = 'getnative'
 
-    describe group(get_native_group) do
+    describe group(getnative_group) do
         it { should exist }
     end
 
-    describe user(get_native_user) do
+    describe user(getnative_user) do
         it { should exist }
-        it { should belong_to_group get_native_group }
-        it { should have_home_directory "/home/#{get_native_user}" }
+        it { should belong_to_group getnative_group }
+        it { should have_home_directory "/home/#{getnative_user}" }
         it { should have_login_shell '/bin/bash' }
     end
 
-    describe file("/etc/sudoers.d/#{get_native_user}") do
+    describe file("/etc/sudoers.d/#{getnative_user}") do
         it { should exist }
         its(:content) { should match /getnative ALL=\(ALL:ALL\) NOPASSWD:ALL/ }
     end
 
-    describe file("/home/#{get_native_user}/.bashrc") do
+    describe file("/home/#{getnative_user}/.bashrc") do
         it { should exist }
         it { should be_file }
         it { should be_mode 644 }
-        it { should be_owned_by get_native_user }
-        it { should be_grouped_into get_native_group }
+        it { should be_owned_by getnative_user }
+        it { should be_grouped_into getnative_group }
         its(:content) { should match /GET_NATIVE_DB_PASS/ }
     end
 

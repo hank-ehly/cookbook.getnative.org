@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'cookbook.getnativelearning.com::web-app' do
-    get_native_user = 'getnative'
-    get_native_group = 'getnative'
+    getnative_user = 'getnative'
+    getnative_group = 'getnative'
 
     %w(libtool autoconf mkdocs libav-tools).each do |pkg|
         describe package(pkg) do
@@ -13,7 +13,7 @@ describe 'cookbook.getnativelearning.com::web-app' do
     %w(/usr/local/nodejs-binary/bin/pm2).each do |f|
         describe file(f) do
             it { should be_file }
-            it { should be_executable.by_user(get_native_user) }
+            it { should be_executable.by_user(getnative_user) }
         end
     end
 
@@ -28,8 +28,8 @@ describe 'cookbook.getnativelearning.com::web-app' do
         describe file(d) do
             it { should be_directory }
             it { should be_mode 755 }
-            it { should be_owned_by get_native_user }
-            it { should be_grouped_into get_native_group }
+            it { should be_owned_by getnative_user }
+            it { should be_grouped_into getnative_group }
         end
     end
 

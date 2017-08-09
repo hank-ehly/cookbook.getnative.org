@@ -36,7 +36,7 @@ end
 ruby_block 'Add db-credentials to deploy user\'s ENV' do
     block do
         f = Chef::Util::FileEdit.new("#{node['getnative']['user']['home']}/.bashrc")
-        f.insert_line_if_no_match(/GET_NATIVE_DB_PASS/, "export GET_NATIVE_DB_PASS=\"#{db_credentials['get_native_password']}\"")
+        f.insert_line_if_no_match(/GETNATIVE_DB_PASS/, "export GETNATIVE_DB_PASS=\"#{db_credentials['getnative_password']}\"")
         f.write_file
     end
 end
