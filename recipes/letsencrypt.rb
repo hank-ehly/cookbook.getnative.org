@@ -20,11 +20,7 @@ cron 'letsencrypt' do
     mailto node['getnative']['contact']
 end
 
-domains = %W(
-#{node['getnative']['server_name']}
-       api.#{node['getnative']['server_name']}
-       docs.#{node['getnative']['server_name']}
-)
+domains = %W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']})
 
 domains.each do |d|
     bash 'letsencrypt' do

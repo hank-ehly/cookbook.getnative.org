@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
-%W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']} docs.#{node['getnative']['server_name']}).each do |domain|
+%W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']}).each do |domain|
     directory "#{node['apache']['docroot_dir']}/#{domain}" do
         user node['getnative']['user']['name']
         group node['apache']['group']
