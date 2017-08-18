@@ -16,7 +16,7 @@
 
     if File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
         config_name = template_name = "#{domain}-ssl"
-
+    else
         template "#{node['apache']['docroot_dir']}/#{domain}/index.html" do
             source 'web-app/index.html.erb'
             mode 0644
