@@ -42,3 +42,20 @@ domains.each do |d|
         not_if {File::exist?("#{node['apache']['dir']}/ssl/live/#{d}/fullchain.pem")}
     end
 end
+
+#
+# Actual command used:
+#
+# sudo /usr/bin/letsencrypt
+#   --domains docs.stg.getnativelearning.com
+#   --apache
+#   --non-interactive
+#   --agree-tos
+#   --uir
+#   --hsts
+#   --email admin@getnativelearning.com
+#   --config-dir /etc/apache2/ssl
+#   --apache-server-root /etc/apache2
+#   --redirect
+#   --apache-vhost-root /etc/apache2/sites-available
+#
