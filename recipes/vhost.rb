@@ -26,8 +26,7 @@
         end
     end
 
-    web_app domain do
-        name config_name
+    web_app config_name do
         template "web-app/#{node['getnative']['environment']}/#{template_name}.conf.erb"
         server_name domain
     end
