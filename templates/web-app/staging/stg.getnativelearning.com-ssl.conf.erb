@@ -70,10 +70,9 @@
         SetOutputFilter DEFLATE
     </IfModule>
 
-    # Disabled because of page loading problems
-    #<IfModule http2_module>
-    #    Protocols h2 http/1.1
-    #</IfModule>
+    <IfModule http2_module>
+        Protocols h2 http/1.1
+    </IfModule>
 
     UseCanonicalName Off
 
