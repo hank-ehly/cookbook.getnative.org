@@ -22,11 +22,13 @@
 
     <Proxy *>
         <If "%{HTTP:Origin} != 'https://stg.getnativelearning.com'">
-            <If "%{HTTP:Origin} != 'https://admin.stg.getnativelearning.com'">
-                <If "! %{REQUEST_URI} =~ m#oauth/(facebook|google|twitter)#">
-                    Require all denied
-                </If>
+        <If "%{HTTP:Origin} != 'https://admin.stg.getnativelearning.com'">
+            <If "! %{REQUEST_URI} =~ m#oauth/(facebook|google|twitter)#">
+            <If "! %{REQUEST_URI} =~ m#healthcheck#">
+                Require all denied
             </If>
+            </If>
+        </If>
         </If>
 
         Require all granted
