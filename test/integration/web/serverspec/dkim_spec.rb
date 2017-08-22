@@ -37,12 +37,11 @@ describe 'cookbook.getnativelearning.com::dkim' do
     end
 
     describe file('/etc/dkimkeys/dkim.key') do
-        it { should be_file }
+        it { should be_symlink }
+        it { should be_linked_to '/etc/dkimkeys/localhost/mail.private' }
         it { should exist }
-        it { should be_mode 600 }
         it { should be_owned_by dkim_user }
         it { should be_grouped_into dkim_group }
-        its(:content) { should match /^\*@localhost:localhost:\/etc\/dkimkeys\/localhost\/mail.private$/ }
     end
 
     describe file('/etc/opendkim.conf') do

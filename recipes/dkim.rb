@@ -37,16 +37,12 @@ file "#{dkimkeys_contents_dir}/mail.private" do
     group opendkim_group
 end
 
-template "#{dkimkeys_root_dir}/dkim.key" do
-    source 'dkim/dkim.key.erb'
-    notifies :restart, 'service[opendkim]', :delayed
-    notifies :restart, 'service[postfix]', :delayed
-end
-
-file '/etc/dkimkeys/dkim.key' do
-    mode 0600
+link "#{dkimkeys_root_dir}/dkim.key" do
+    to "#{dkimkeys_contents_dir}/mail.private"
     owner opendkim_user
     group opendkim_group
+    notifies :restart, 'service[opendkim]', :delayed
+    notifies :restart, 'service[postfix]', :delayed
 end
 
 template '/etc/opendkim.conf' do
