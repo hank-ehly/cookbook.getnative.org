@@ -3,8 +3,7 @@ driver:
   name: docker
 
 driver_config:
-  privileged: true
-  publish_all: true
+  forward: 22
 
 provisioner:
   name: chef_zero
