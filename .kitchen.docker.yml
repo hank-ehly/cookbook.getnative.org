@@ -16,6 +16,8 @@ provisioner:
 
 platforms:
   - name: ubuntu-16.04
+    driver_config:
+      image: ubuntu:16.04
 
 suites:
   - name: default
