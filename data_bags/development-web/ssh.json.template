@@ -1,6 +1,6 @@
 {
   "id": "ssh",
   "authorized_keys": [
-    ""
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy05Iz+rNcvH754PhqNsZbA4q3DvY9yZeGDuBYTX2DtpnbehscN7S10WIX8wq+58SF1crRTaX3XyMI4Hdb6TnMwxBEWljKhKgfDZnefFOncZIhS26a6dhKTl7XbTsSRWy47pPEtjwI79SXMuCbyPOZI+yRaiPm4LARIlXtjd8WalXJjHAFFcNS+q/tzZd1jNGYzB+AsrkOhW22Gd5bkdDzBAV5aDU6pwc8IbuCWmatOIsdKRIANWQdlPcF0RDXrs8W7hyMEMXnYKHFeMh3B+5M5wYpwm9vqb+b/BUWBb7r893ZKeIQ9TQN3oeJmxf8Gim/yC3Cg6FKoALcRQrPMikx getnative"
   ]
 }

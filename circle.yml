@@ -10,6 +10,10 @@ dependencies:
       timeout: 900
 
 test:
+  pre:
+  - cp -p data_bags/development-web/db-credentials.json{.template,}
+  - cp -p data_bags/development-web/htpasswd.json{.template,}
+  - cp -p data_bags/development-web/ssh.json{.template,}
   override:
   - KITCHEN_LOCAL_YAML=.kitchen.docker.yml bundle exec kitchen test web:
       timeout: 900
