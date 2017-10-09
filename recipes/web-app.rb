@@ -24,13 +24,15 @@ end
     end
 end
 
-data_bag = "#{node['getnative']['environment']}-#{node['getnative']['role']}"
-htpasswd = data_bag_item(data_bag, 'htpasswd')
+if node['getnative']['environment'] != 'production'
+    data_bag = "#{node['getnative']['environment']}-#{node['getnative']['role']}"
+    htpasswd = data_bag_item(data_bag, 'htpasswd')
 
-bash 'htpasswd' do
-    code <<-EOH
-        echo "#{htpasswd['password']}" | htpasswd -iBc #{node['apache']['dir']}/.htpasswd #{htpasswd['user']}
-    EOH
+    bash 'htpasswd' do
+        code <<-EOH
+            echo "#{htpasswd['password']}" | htpasswd -iBc #{node['apache']['dir']}/.htpasswd #{htpasswd['user']}
+        EOH
 
-    not_if { File::exist? "#{node['apache']['dir']}/.htpasswd" }
+        not_if { File::exist? "#{node['apache']['dir']}/.htpasswd" }
+    end
 end
