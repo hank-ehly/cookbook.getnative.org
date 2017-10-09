@@ -1,0 +1,59 @@
+<VirtualHost *:80>
+    ServerName <%= @params[:server_name] %>
+    ServerAlias www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+    RedirectPermanent / https://<%= @params[:server_name] %>
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName <%= @params[:server_name] %>
+    ServerAlias www.<%= @params[:server_name] %>
+    ServerAdmin <%= node[:apache][:contact] %>
+
+    ProxyRequests Off
+    SSLProxyEngine On
+
+    <Location />
+        ProxyPass "http://localhost:3000/"
+        ProxyPassReverse "http://localhost:3000/"
+    </Location>
+
+    ProxyPreserveHost On
+
+    <Proxy *>
+        <If "%{HTTP:Origin} != 'https://stg.getnativelearning.com'">
+        <If "%{HTTP:Origin} != 'https://admin.stg.getnativelearning.com'">
+            <If "! %{REQUEST_URI} =~ m#oauth/(facebook|google|twitter)#">
+            <If "! %{REQUEST_URI} =~ m#healthcheck#">
+                Require all denied
+            </If>
+            </If>
+        </If>
+        </If>
+
+        Require all granted
+    </Proxy>
+
+    ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+
+    SetEnvIf DNT 1 DO_NOT_TRACK
+    CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined env=!DO_NOT_TRACK
+
+    <IfModule deflate_module>
+        SetOutputFilter DEFLATE
+    </IfModule>
+
+    SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
+    SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
+    Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
+
+    <IfModule headers_module>
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        Header always set Content-Security-Policy upgrade-insecure-requests
+        Header always set X-XSS-Protection "1; mode=block"
+        Header always set X-Content-Type-Options nosniff
+        Header always set Cache-Control "no-cache"
+        Header always set Pragma "no-cache"
+        Header set Server "<%= @params[:server_name] %>"
+    </IfModule>
+</VirtualHost>
