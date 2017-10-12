@@ -6,6 +6,9 @@ default['apache']['servertokens'] = 'Prod'
 default['apache']['serversignature'] = 'Off'
 default['apache']['timeout'] = 45
 
+default['getnative']['is_prerelease'] = false
+default['getnative']['prerelease_whitelist_ips'] = ['136.61.59.52']
+
 default['nodejs']['bin_path'] = '/usr/local/nodejs-binary/bin'
 default['nodejs']['install_method'] = 'binary'
 default['nodejs']['version'] = '8.1.0'
