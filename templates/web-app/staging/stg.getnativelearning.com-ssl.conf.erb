@@ -38,6 +38,22 @@
 
         RewriteBase /
 
+        <% if @params[:is_prerelease] && @params[:prerelease_whitelist_ips] -%>
+        RewriteCond %{HTTP:Accept-Language} ^ja [NC]
+        RewriteCond %{REQUEST_FILENAME} !-f
+        <% @params[:prerelease_whitelist_ips].each do |ip| -%>
+        RewriteCond %{REMOTE_ADDR} !=<%= ip %>
+        <% end %>
+        RewriteRule ^.*$ https://<%= @params[:server_name] %>/ja/static/prerelease/ja.html [R=302,L]
+
+        RewriteCond %{HTTP:Accept-Language} !^ja [NC]
+        RewriteCond %{REQUEST_FILENAME} !-f
+        <% @params[:prerelease_whitelist_ips].each do |ip| -%>
+        RewriteCond %{REMOTE_ADDR} !=<%= ip %>
+        <% end %>
+        RewriteRule ^.*$ https://<%= @params[:server_name] %>/en/static/prerelease/en.html [R=302,L]
+        <% end -%>
+
         RewriteRule ^../index\.html$ - [L]
 
         RewriteCond %{REQUEST_FILENAME} !-f

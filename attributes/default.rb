@@ -6,6 +6,8 @@ default['getnative']['user']['shell'] = '/bin/bash'
 default['getnative']['user']['home'] = "/home/#{node['getnative']['user']['name']}"
 default['getnative']['mysql']['version'] = '5.7'
 default['getnative']['mysql']['initial_password'] = 'root'
+default['getnative']['is_prerelease'] = '0'
+default['getnative']['prerelease_whitelist_ips'] = ['136.61.59.52']
 
 default['openssh']['server']['password_authentication'] = 'no'
 default['openssh']['server']['permit_root_login'] = 'no'
