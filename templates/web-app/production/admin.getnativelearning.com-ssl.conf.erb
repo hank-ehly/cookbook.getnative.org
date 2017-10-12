@@ -29,12 +29,6 @@
     <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist>
         Options FollowSymLinks
         AllowOverride None
-
-        AuthUserFile <%= node['apache']['dir'] %>/.htpasswd
-        AuthGroupFile /dev/null
-        AuthName "Please enter your ID and password"
-        AuthType Basic
-        Require valid-user
     </Directory>
 
     <Directory />
