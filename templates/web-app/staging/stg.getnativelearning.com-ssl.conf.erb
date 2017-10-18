@@ -11,7 +11,7 @@
     ServerAdmin <%= node[:apache][:contact] %>
     RewriteEngine on
     RewriteCond %{SERVER_NAME} =www.<%= @params[:server_name] %>
-    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+    RewriteRule ^ https://<%= @params[:server_name] %>%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -24,7 +24,7 @@
     Header always set Content-Security-Policy upgrade-insecure-requests
     RewriteEngine on
     RewriteCond %{SERVER_NAME} =www.<%= @params[:server_name] %>
-    RewriteRule ^ https://<%= node['getnative']['server_name'] %>%{REQUEST_URI} [END,NE,R=permanent]
+    RewriteRule ^ https://<%= @params[:server_name] %>%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
 
 <VirtualHost *:443>
