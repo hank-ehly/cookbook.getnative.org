@@ -6,6 +6,7 @@
   "run_list": [
     "recipe[cookbook.getnativelearning.com::bootstrap]",
     "recipe[cookbook.getnativelearning.com::add-user]",
+    "recipe[cookbook.getnativelearning.com::hostname]",
     "recipe[cookbook.getnativelearning.com::authorized-keys]",
     "recipe[cookbook.getnativelearning.com::deploy-key]",
     "recipe[cookbook.getnativelearning.com::postfix]",
