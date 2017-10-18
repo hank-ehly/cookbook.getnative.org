@@ -16,6 +16,9 @@ include_recipe 'cookbook.getnativelearning.com::postfix'
 end
 
 directory dkimkeys_contents_dir do
+    owner opendkim_user
+    group opendkim_group
+    mode 0755
     recursive true
 end
 
