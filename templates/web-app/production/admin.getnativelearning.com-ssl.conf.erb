@@ -29,6 +29,12 @@
     <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist>
         Options FollowSymLinks
         AllowOverride None
+
+        RewriteBase /
+
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule (.*) index.html [L]
     </Directory>
 
     <Directory />
