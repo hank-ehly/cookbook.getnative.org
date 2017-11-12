@@ -38,7 +38,7 @@ template 'getnative user .bashrc' do
     group node['getnative']['user']['primary_group']
     variables({
         getnative_db_password: db_credentials['getnative_password'],
-        node_env: node['getnative']['node_env'] || 'development'
+        node_env: node['getnative']['environment']
     })
 end
 
@@ -50,6 +50,6 @@ template 'root user .bashrc' do
     group 'root'
     variables({
         getnative_db_password: db_credentials['getnative_password'],
-        node_env: node['getnative']['node_env'] || 'development'
+        node_env: node['getnative']['environment']
     })
 end
