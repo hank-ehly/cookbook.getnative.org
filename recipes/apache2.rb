@@ -20,10 +20,8 @@ end
 
 apache_module 'proxy_http2'
 
-include_recipe 'logrotate::default'
-
-logrotate_app 'getnative' do
-    path node['apache']['log_dir']
+logrotate_app 'apache2' do
+    path "#{node['apache']['log_dir']}/*.log"
     frequency 'daily'
     options %w(missingok compress delaycompress notifempty sharedscripts)
     rotate 14
