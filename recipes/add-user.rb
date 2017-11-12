@@ -37,7 +37,8 @@ template 'getnative user .bashrc' do
     owner node['getnative']['user']['name']
     group node['getnative']['user']['primary_group']
     variables({
-        getnative_db_password: db_credentials['getnative_password']
+        getnative_db_password: db_credentials['getnative_password'],
+        node_env: node['getnative']['node_env'] || 'development'
     })
 end
 
@@ -47,4 +48,8 @@ template 'root user .bashrc' do
     mode 0644
     owner 'root'
     group 'root'
+    variables({
+        getnative_db_password: db_credentials['getnative_password'],
+        node_env: node['getnative']['node_env'] || 'development'
+    })
 end
