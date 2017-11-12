@@ -38,10 +38,10 @@ if node['getnative']['environment'] != 'production'
 end
 
 
-tasks_path = '/var/www/api.getnativelearning.com/current/app/tasks'
+tasks_path = "/var/www/api.#{node['getnative']['server_name']}/current/app/tasks"
 
 cron 'Daily backup-db' do
-    command "if [ -f #{tasks_path}/backup-db.js ]; then /usr/local/nodejs-binary/bin/node #{tasks_path}/backup-db.js; fi"
+    command "if [ -f #{tasks_path}/backup-db.js ]; then /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/backup-db.js\")'; fi"
     minute '0'
     hour '0'
     user 'root'
@@ -49,7 +49,7 @@ cron 'Daily backup-db' do
 end
 
 cron 'Daily update-views' do
-    command "if [ -f #{tasks_path}/update-views.js ]; then /usr/local/nodejs-binary/bin/node #{tasks_path}/update-views.js; fi"
+    command "if [ -f #{tasks_path}/update-views.js ]; then /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/update-views.js\")'; fi"
     minute '0'
     hour '0'
     user 'root'
@@ -57,7 +57,7 @@ cron 'Daily update-views' do
 end
 
 cron 'Daily study-sessions/clean' do
-    command "if [ -f #{tasks_path}/study-sessions/clean.js ]; then /usr/local/nodejs-binary/bin/node #{tasks_path}/study-sessions/clean.js; fi"
+    command "if [ -f #{tasks_path}/study-sessions/clean.js ]; then /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/study-sessions/clean.js\")'; fi"
     minute '0'
     hour '0'
     user 'root'
@@ -65,7 +65,7 @@ cron 'Daily study-sessions/clean' do
 end
 
 cron 'Daily verification-tokens/clean' do
-    command "if [ -f #{tasks_path}/verification-tokens/clean.js ]; then /usr/local/nodejs-binary/bin/node #{tasks_path}/verification-tokens/clean.js; fi"
+    command "if [ -f #{tasks_path}/verification-tokens/clean.js ]; then /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/verification-tokens/clean.js\")'; fi"
     minute '0'
     hour '0'
     user 'root'
