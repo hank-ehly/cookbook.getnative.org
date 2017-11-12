@@ -13,4 +13,5 @@ depends 'locale', '~> 2.0.1'
 depends 'mysql', '~> 8.5.1'
 depends 'nodejs', '~> 4.0.0'
 depends 'openssh', '~> 2.6.0'
-depends 'sudo', '~> 3.5.3'
+depends 'sudo', '~> 3.5.3',
+depends 'logrotate', '~> 2.2.0'

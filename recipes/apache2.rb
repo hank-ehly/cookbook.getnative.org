@@ -19,3 +19,21 @@ end
 end
 
 apache_module 'proxy_http2'
+
+logrotate_app 'getnative' do
+    path '/var/log/apache2/*.log'
+    frequency 'daily'
+    options %w(missingok compress delaycompress notifempty sharedscripts)
+    rotate 14
+    create '644 root adm'
+    postrotate <<-EOF
+        if invoke-rc.d apache2 status > /dev/null 2>&1; then \
+            invoke-rc.d apache2 reload > /dev/null 2>&1; \
+        fi;
+    EOF
+    prerotate <<-EOF
+		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+			run-parts /etc/logrotate.d/httpd-prerotate; \
+		fi;
+    EOF
+end
