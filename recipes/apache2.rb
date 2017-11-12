@@ -20,6 +20,8 @@ end
 
 apache_module 'proxy_http2'
 
+include_recipe 'logrotate::default'
+
 logrotate_app 'getnative' do
     path '/var/log/apache2/*.log'
     frequency 'daily'
