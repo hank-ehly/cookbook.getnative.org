@@ -23,7 +23,7 @@ apache_module 'proxy_http2'
 include_recipe 'logrotate::default'
 
 logrotate_app 'getnative' do
-    path '/var/log/apache2/*.log'
+    path node['apache']['log_dir']
     frequency 'daily'
     options %w(missingok compress delaycompress notifempty sharedscripts)
     rotate 14
@@ -34,8 +34,8 @@ logrotate_app 'getnative' do
         fi;
     EOF
     prerotate <<-EOF
-		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
-			run-parts /etc/logrotate.d/httpd-prerotate; \
-		fi;
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+            run-parts /etc/logrotate.d/httpd-prerotate; \
+        fi;
     EOF
 end
