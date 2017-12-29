@@ -49,15 +49,6 @@ cron 'Daily backup-db' do
     mailto node['getnative']['contact']
 end
 
-access_log_path = "/var/log/apache2/#{node['getnative']['server_name']}-ssl-access.log"
-cron 'Daily update-views' do
-    command "if [ -f #{tasks_path}/update-views.js ]; then NODE_ENV=#{environment} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/update-views.js\")(\"#{access_log_path}\")'; fi"
-    minute '5'
-    hour '0'
-    user 'root'
-    mailto node['getnative']['contact']
-end
-
 cron 'Daily study-sessions/clean' do
     command "if [ -f #{tasks_path}/study-sessions/clean.js ]; then NODE_ENV=#{environment} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/study-sessions/clean.js\")()'; fi"
     minute '10'
