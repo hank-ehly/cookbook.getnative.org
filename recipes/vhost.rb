@@ -13,7 +13,6 @@
 end
 
 %W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']} admin.#{node['getnative']['server_name']}).each do |domain|
-    template_name = 'default'
     config_name = template_name = "#{domain}-ssl"
 
     unless File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
