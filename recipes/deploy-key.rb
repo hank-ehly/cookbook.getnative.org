@@ -22,23 +22,19 @@ template '~/.ssh/config' do
         host: 'github.com',
         user: 'git',
         hostname: 'github.com',
-        identity_file: "#{ssh_dir}/#{node['getnative']['environment']}"
+        identity_file: "#{ssh_dir}/deploy"
     })
 end
 
 execute 'Create deploy key' do
-    command "ssh-keygen -t rsa -q -C '' -f '#{ssh_dir}/#{node['getnative']['environment']}' -P \"\""
-    not_if { File::exist? "#{ssh_dir}/#{node['getnative']['environment']}" and File::exist? "#{ssh_dir}/#{node['getnative']['environment']}.pub" }
+    command "ssh-keygen -t rsa -q -C '' -f '#{ssh_dir}/deploy' -P \"\""
+    not_if { File::exist? "#{ssh_dir}/deploy" and File::exist? "#{ssh_dir}/deploy.pub" }
 end
 
-file "#{ssh_dir}/#{node['getnative']['environment']}" do
-    owner node['getnative']['user']['name']
-    group node['getnative']['user']['primary_group']
-    mode 0600
-end
-
-file "#{ssh_dir}/#{node['getnative']['environment']}.pub" do
-    owner node['getnative']['user']['name']
-    group node['getnative']['user']['primary_group']
-    mode 0600
+%w(deploy deploy.pub).each do |f|
+    file "#{ssh_dir}/#{f}" do
+        owner node['getnative']['user']['name']
+        group node['getnative']['user']['primary_group']
+        mode 0600
+    end
 end
