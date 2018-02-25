@@ -30,55 +30,21 @@
 <VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
-    DocumentRoot <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist
 
+    ProxyPreserveHost On
+    ProxyRequests Off
     RewriteEngine On
+    SSLProxyEngine On
+    UseCanonicalName Off
 
-    <Directory <%= node['apache']['docroot_dir'] %>/<%= @params[:server_name] %>/current/dist>
-        Options FollowSymLinks
-        AllowOverride None
+    <Location />
+        ProxyPass "http://localhost:4000/"
+        ProxyPassReverse "http://localhost:4000/"
+    </Location>
 
-        AuthUserFile <%= node['apache']['dir'] %>/.htpasswd
-        AuthGroupFile /dev/null
-        AuthName "Please enter your ID and password"
-        AuthType Basic
-        Require valid-user
-
-        RewriteBase /
-
-        <% if node[:getnative][:is_prerelease] && node[:getnative][:prerelease_whitelist_ips] -%>
-        RewriteCond %{HTTP:Accept-Language} ^ja [NC]
-        RewriteCond %{REQUEST_FILENAME} !-f
-        <% node[:getnative][:prerelease_whitelist_ips].each do |ip| -%>
-        RewriteCond %{REMOTE_ADDR} !=<%= ip %>
-        <% end %>
-        RewriteRule ^.*$ https://<%= @params[:server_name] %>/ja/static/prerelease/ja.html [R=302,L]
-
-        RewriteCond %{HTTP:Accept-Language} !^ja [NC]
-        RewriteCond %{REQUEST_FILENAME} !-f
-        <% node[:getnative][:prerelease_whitelist_ips].each do |ip| -%>
-        RewriteCond %{REMOTE_ADDR} !=<%= ip %>
-        <% end %>
-        RewriteRule ^.*$ https://<%= @params[:server_name] %>/en/static/prerelease/en.html [R=302,L]
-        <% end -%>
-
-        RewriteRule ^../index\.html$ - [L]
-
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule (..) $1/index.html [L]
-
-        RewriteCond %{HTTP:Accept-Language} ^ja [NC]
-        RewriteRule ^$ /ja/ [R]
-
-        RewriteCond %{HTTP:Accept-Language} !^ja [NC]
-        RewriteRule ^$ /en/ [R]
-    </Directory>
-
-    <Directory />
-        Options FollowSymLinks
-        AllowOverride None
-    </Directory>
+    <Proxy *>
+        Require all granted
+    </Proxy>
 
     LogLevel debug rewrite:trace1
     ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
@@ -86,23 +52,13 @@
     SetEnvIf DNT 1 DO_NOT_TRACK
     CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined env=!DO_NOT_TRACK
 
-    <% if @params[:directory_index] -%>
-    DirectoryIndex <%= [@params[:directory_index]].flatten.join ' ' %>
-    <% end -%>
+    RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
+    RewriteCond %{HTTP_HOST}   !^$
+    RewriteRule ^/(.*)$        https://<%= @params[:server_name] %>/$1 [L,R=301]
 
     <IfModule deflate_module>
         SetOutputFilter DEFLATE
     </IfModule>
-
-    <IfModule http2_module>
-        Protocols h2 http/1.1
-    </IfModule>
-
-    UseCanonicalName Off
-
-    RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
-    RewriteCond %{HTTP_HOST}   !^$
-    RewriteRule ^/(.*)$        https://<%= @params[:server_name] %>/$1 [L,R=301]
 
     SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
     SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem

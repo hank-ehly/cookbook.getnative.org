@@ -4,11 +4,12 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
+stage = node['getnative']['environment']
+tasks_path = "/var/www/api.#{node['getnative']['server_name']}/#{stage}/app/tasks"
+
 %w(libtool autoconf libav-tools).each do |pkg|
     apt_package pkg
 end
-
-execute 'npm install -g pm2'
 
 directory node['apache']['docroot_dir'] do
     user 'root'
@@ -16,15 +17,7 @@ directory node['apache']['docroot_dir'] do
     mode 0755
 end
 
-%w(/var/log/pm2 /run/pm2).each do |d|
-    directory d do
-        user node['getnative']['user']['name']
-        group node['getnative']['user']['primary_group']
-        mode 0755
-    end
-end
-
-if node['getnative']['environment'] != 'production'
+if stage != 'production'
     data_bag = "#{node['getnative']['environment']}-#{node['getnative']['role']}"
     htpasswd = data_bag_item(data_bag, 'htpasswd')
 
@@ -37,28 +30,24 @@ if node['getnative']['environment'] != 'production'
     end
 end
 
-
-tasks_path = "/var/www/api.#{node['getnative']['server_name']}/current/app/tasks"
-environment = node['getnative']['environment']
-
-cron 'Daily backup-db' do
-    command "if [ -f #{tasks_path}/backup-db.js ]; then NODE_ENV=#{environment} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/backup-db.js\")()'; fi"
+cron 'Backup Database' do
+    command "if [ -f #{tasks_path}/backup-db.js ]; then NODE_ENV=#{stage} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/backup-db.js\")()'; fi"
     minute '0'
     hour '0'
     user 'root'
     mailto node['getnative']['contact']
 end
 
-cron 'Daily study-sessions/clean' do
-    command "if [ -f #{tasks_path}/study-sessions/clean.js ]; then NODE_ENV=#{environment} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/study-sessions/clean.js\")()'; fi"
+cron 'Destroy Stale StudySession Records' do
+    command "if [ -f #{tasks_path}/study-sessions/clean.js ]; then NODE_ENV=#{stage} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/study-sessions/clean.js\")()'; fi"
     minute '10'
     hour '0'
     user 'root'
     mailto node['getnative']['contact']
 end
 
-cron 'Daily verification-tokens/clean' do
-    command "if [ -f #{tasks_path}/verification-tokens/clean.js ]; then NODE_ENV=#{environment} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/verification-tokens/clean.js\")()'; fi"
+cron 'Destroy Stale VerificationToken Records' do
+    command "if [ -f #{tasks_path}/verification-tokens/clean.js ]; then NODE_ENV=#{stage} /usr/local/nodejs-binary/bin/node -e 'require(\"#{tasks_path}/verification-tokens/clean.js\")()'; fi"
     minute '15'
     hour '0'
     user 'root'
