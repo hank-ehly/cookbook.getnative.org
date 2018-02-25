@@ -14,15 +14,17 @@
     template_name = 'default'
     config_name = domain
 
-    if File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
-        config_name = template_name = "#{domain}-ssl"
-    else
-        template "#{node['apache']['docroot_dir']}/#{domain}/index.html" do
-            source 'web-app/index.html.erb'
-            mode 0644
-            owner node['getnative']['user']['name']
-            group node['apache']['group']
-            variables({domain: domain})
+    if node['getnative']['environment'] == 'production'
+        if File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
+            config_name = template_name = "#{domain}-ssl"
+        else
+            template "#{node['apache']['docroot_dir']}/#{domain}/index.html" do
+                source 'web-app/index.html.erb'
+                mode 0644
+                owner node['getnative']['user']['name']
+                group node['apache']['group']
+                variables({domain: domain})
+            end
         end
     end
 

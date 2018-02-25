@@ -1,35 +1,6 @@
 <VirtualHost *:80>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
-    RewriteEngine on
-    RewriteCond %{SERVER_NAME} =<%= @params[:server_name] %>
-    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
-</VirtualHost>
-
-<VirtualHost *:80>
-    ServerName www.<%= @params[:server_name] %>
-    ServerAdmin <%= node[:apache][:contact] %>
-    RewriteEngine on
-    RewriteCond %{SERVER_NAME} =www.<%= @params[:server_name] %>
-    RewriteRule ^ https://<%= @params[:server_name] %>%{REQUEST_URI} [END,NE,R=permanent]
-</VirtualHost>
-
-<VirtualHost *:443>
-    ServerName www.<%= @params[:server_name] %>
-    ServerAdmin <%= node[:apache][:contact] %>
-    SSLCertificateFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/fullchain.pem
-    SSLCertificateKeyFile <%= node['apache']['dir'] %>/ssl/live/<%= @params[:server_name] %>/privkey.pem
-    Include <%= node['apache']['dir'] %>/ssl/options-ssl-apache.conf
-    Header always set Strict-Transport-Security "max-age=31536000"
-    Header always set Content-Security-Policy upgrade-insecure-requests
-    RewriteEngine on
-    RewriteCond %{SERVER_NAME} =www.<%= @params[:server_name] %>
-    RewriteRule ^ https://<%= @params[:server_name] %>%{REQUEST_URI} [END,NE,R=permanent]
-</VirtualHost>
-
-<VirtualHost *:443>
-    ServerName <%= @params[:server_name] %>
-    ServerAdmin <%= node[:apache][:contact] %>
 
     ProxyPreserveHost On
     ProxyRequests Off
@@ -38,8 +9,8 @@
     UseCanonicalName Off
 
     <Location />
-        ProxyPass "http://localhost:4000/"
-        ProxyPassReverse "http://localhost:4000/"
+        ProxyPass "http://localhost:4005/"
+        ProxyPassReverse "http://localhost:4005/"
     </Location>
 
     <Proxy *>
