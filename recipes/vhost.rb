@@ -17,7 +17,7 @@ end
 
     unless File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
         template "#{node['apache']['docroot_dir']}/#{domain}/index.html" do
-            source 'web-app/index.html.erb'
+            source 'vhost/index.html.erb'
             mode 0644
             owner node['getnative']['user']['name']
             group node['apache']['group']
