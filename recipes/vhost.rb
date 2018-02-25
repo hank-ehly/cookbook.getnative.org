@@ -4,27 +4,25 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
-%W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']} admin.#{node['getnative']['server_name']}).each do |domain|
+%W(getnativelearning.com api.getnativelearning.com admin.getnativelearning.com).each do |domain|
     directory "#{node['apache']['docroot_dir']}/#{domain}" do
         user node['getnative']['user']['name']
         group node['apache']['group']
         mode 0755
     end
+end
 
+%W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']} admin.#{node['getnative']['server_name']}).each do |domain|
     template_name = 'default'
-    config_name = domain
+    config_name = template_name = "#{domain}-ssl"
 
-    if node['getnative']['environment'] == 'production'
-        if File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
-            config_name = template_name = "#{domain}-ssl"
-        else
-            template "#{node['apache']['docroot_dir']}/#{domain}/index.html" do
-                source 'web-app/index.html.erb'
-                mode 0644
-                owner node['getnative']['user']['name']
-                group node['apache']['group']
-                variables({domain: domain})
-            end
+    unless File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
+        template "#{node['apache']['docroot_dir']}/#{domain}/index.html" do
+            source 'web-app/index.html.erb'
+            mode 0644
+            owner node['getnative']['user']['name']
+            group node['apache']['group']
+            variables({domain: domain})
         end
     end
 
