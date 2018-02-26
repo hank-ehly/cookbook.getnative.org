@@ -5,28 +5,28 @@
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
 %w(getnativelearning.com api.getnativelearning.com admin.getnativelearning.com).each do |domain|
-    directory "#{node['apache']['docroot_dir']}/#{domain}" do
-        user node['getnative']['user']['name']
-        group node['apache']['group']
-        mode 0755
+    parent = "#{node['apache']['docroot_dir']}/#{domain}"
+    child = "#{node['apache']['docroot_dir']}/#{domain}/#{node['getnative']['environment']}"
+
+    [parent, child].each do |dir|
+        directory dir do
+            user node['getnative']['user']['name']
+            group node['apache']['group']
+            mode 0755
+        end
     end
 
-    directory "#{node['apache']['docroot_dir']}/#{domain}/#{node['getnative']['environment']}" do
-        user node['getnative']['user']['name']
-        group node['apache']['group']
-        mode 0755
-        notifies :create, 'template[index.html]', :immediately
-    end
-
-    template 'index.html' do
-        path "#{node['apache']['docroot_dir']}/#{domain}/#{node['getnative']['environment']}/index.html"
-        source 'vhost/index.html.erb'
-        mode 0644
-        owner node['getnative']['user']['name']
-        group node['apache']['group']
-        variables({domain: domain})
-        action :nothing
-    end
+    # Add template manually
+    # template 'index.html' do
+    #     path "#{node['apache']['docroot_dir']}/#{domain}/#{node['getnative']['environment']}/index.html"
+    #     source 'vhost/index.html.erb'
+    #     retries 1
+    #     mode 0644
+    #     owner node['getnative']['user']['name']
+    #     group node['apache']['group']
+    #     variables({domain: domain})
+    #     action :nothing
+    # end
 end
 
 %W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']} admin.#{node['getnative']['server_name']}).each do |domain|
