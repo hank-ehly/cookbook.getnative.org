@@ -5,7 +5,7 @@
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
 file '/etc/hostname' do
-    content node['getnative']['server_name']
+    content node['getnative']['domain']
     group 'root'
     owner 'root'
     mode 0644
