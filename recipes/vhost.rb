@@ -4,11 +4,11 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
-%w(getnativelearning.com api.getnativelearning.com admin.getnativelearning.com).each do |domain|
-    parent = "#{node['apache']['docroot_dir']}/#{domain}"
-    child = "#{node['apache']['docroot_dir']}/#{domain}/#{node['getnative']['environment']}"
+%w(client api admin).each do |platform|
+    project_root = platform_to_project_root(platform)
+    stage_root = "#{project_root}/#{node['getnative']['environment']}"
 
-    [parent, child].each do |dir|
+    [project_root, stage_root].each do |dir|
         directory dir do
             user node['getnative']['user']['name']
             group node['apache']['group']
@@ -16,20 +16,7 @@
         end
     end
 
-    # Add template manually
-    # template 'index.html' do
-    #     path "#{node['apache']['docroot_dir']}/#{domain}/#{node['getnative']['environment']}/index.html"
-    #     source 'vhost/index.html.erb'
-    #     retries 1
-    #     mode 0644
-    #     owner node['getnative']['user']['name']
-    #     group node['apache']['group']
-    #     variables({domain: domain})
-    #     action :nothing
-    # end
-end
-
-%W(#{node['getnative']['server_name']} api.#{node['getnative']['server_name']} admin.#{node['getnative']['server_name']}).each do |domain|
+    domain = platform_to_domain(platform)
     tls_cert_exists = File::exist?("#{node['apache']['dir']}/ssl/live/#{domain}/fullchain.pem")
     template_name = tls_cert_exists ? "#{domain}-ssl" : 'default'
     web_app_name = tls_cert_exists ? "#{domain}-ssl" : domain
@@ -37,5 +24,28 @@ end
     web_app web_app_name do
         template "vhost/#{node['getnative']['environment']}/#{template_name}.conf.erb"
         server_name domain
+        docroot stage_root
+    end
+end
+
+def platform_to_domain(platform)
+    case platform
+        when 'client' then
+            node['getnative']['server_name']
+        when 'api', 'admin' then
+            "#{platform}.#{node['getnative']['server_name']}"
+        else
+            raise "Invalid platform: #{platform}"
+    end
+end
+
+def platform_to_project_root(platform)
+    case platform
+        when 'client' then
+            "#{node['apache']['docroot_dir']}/#{node['getnative']['domain']}"
+        when 'api', 'admin' then
+            "#{node['apache']['docroot_dir']}/#{platform}.#{node['getnative']['domain']}"
+        else
+            raise "Invalid platform: #{platform}"
     end
 end

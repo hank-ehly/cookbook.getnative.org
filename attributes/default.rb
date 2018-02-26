@@ -1,4 +1,5 @@
 default['getnative']['contact'] = 'admin@getnativelearning.com'
+default['getnative']['domain'] = 'getnativelearning.com'
 default['getnative']['user']['name'] = 'getnative'
 default['getnative']['user']['primary_group'] = 'getnative'
 default['getnative']['user']['initial_password'] = 'getnative'
