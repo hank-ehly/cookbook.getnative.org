@@ -4,6 +4,28 @@
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
 
+def platform_to_domain(platform)
+    case platform
+        when 'client' then
+            node['getnative']['server_name']
+        when 'api', 'admin' then
+            "#{platform}.#{node['getnative']['server_name']}"
+        else
+            raise "Invalid platform: #{platform}"
+    end
+end
+
+def platform_to_project_root(platform)
+    case platform
+        when 'client' then
+            "#{node['apache']['docroot_dir']}/#{node['getnative']['domain']}"
+        when 'api', 'admin' then
+            "#{node['apache']['docroot_dir']}/#{platform}.#{node['getnative']['domain']}"
+        else
+            raise "Invalid platform: #{platform}"
+    end
+end
+
 %w(client api admin).each do |platform|
     project_root = platform_to_project_root(platform)
     stage_root = "#{project_root}/#{node['getnative']['environment']}"
@@ -25,27 +47,5 @@
         template "vhost/#{node['getnative']['environment']}/#{template_name}.conf.erb"
         server_name domain
         docroot stage_root
-    end
-end
-
-def platform_to_domain(platform)
-    case platform
-        when 'client' then
-            node['getnative']['server_name']
-        when 'api', 'admin' then
-            "#{platform}.#{node['getnative']['server_name']}"
-        else
-            raise "Invalid platform: #{platform}"
-    end
-end
-
-def platform_to_project_root(platform)
-    case platform
-        when 'client' then
-            "#{node['apache']['docroot_dir']}/#{node['getnative']['domain']}"
-        when 'api', 'admin' then
-            "#{node['apache']['docroot_dir']}/#{platform}.#{node['getnative']['domain']}"
-        else
-            raise "Invalid platform: #{platform}"
     end
 end
