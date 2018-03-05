@@ -27,7 +27,7 @@
     RewriteRule ^ https://<%= @params[:server_name] %>%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
 
-<VirtualHost *:80>
+<VirtualHost *:443>
     ServerName <%= @params[:server_name] %>
     ServerAdmin <%= node[:apache][:contact] %>
 
