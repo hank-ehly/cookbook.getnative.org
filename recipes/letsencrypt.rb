@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cookbook.getnativelearning.com
+# Cookbook Name:: cookbook.getnative.org
 # Recipe:: letsencrypt
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.
@@ -16,13 +16,13 @@ end
 # Obtain TLS Certificate Manually:
 #
 # sudo /usr/bin/letsencrypt
-#   --domains stg.getnativelearning.com,www.stg.getnativelearning.com
+#   --domains stg.getnative.org,www.stg.getnative.org
 #   --apache
 #   --non-interactive
 #   --agree-tos
 #   --uir
 #   --hsts
-#   --email admin@getnativelearning.com
+#   --email admin@getnative.org
 #   --config-dir /etc/apache2/ssl
 #   --apache-server-root /etc/apache2
 #   --redirect

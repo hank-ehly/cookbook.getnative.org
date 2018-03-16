@@ -1,9 +1,9 @@
-name 'cookbook.getnativelearning.com'
+name 'cookbook.getnative.org'
 maintainer 'Hank Ehly'
 maintainer_email 'henry.ehly@gmail.com'
 license 'all_rights'
-description 'Installs/Configures getnativelearning.com db/web servers'
-long_description 'Installs/Configures getnativelearning.com db/web servers'
+description 'Installs/Configures getnative.org db/web servers'
+long_description 'Installs/Configures getnative.org db/web servers'
 version '0.2.6'
 
 depends 'apache2', '~> 5.0.1'

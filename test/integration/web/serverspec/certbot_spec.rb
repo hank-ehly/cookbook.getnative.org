@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cookbook.getnativelearning.com::certbot' do
+describe 'cookbook.getnative.org::certbot' do
     describe package('software-properties-common') do
         it {should be_installed}
     end

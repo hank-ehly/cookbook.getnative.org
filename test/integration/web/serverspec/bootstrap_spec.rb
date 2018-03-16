@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cookbook.getnativelearning.com::bootstrap' do
+describe 'cookbook.getnative.org::bootstrap' do
     describe file('/etc/ssh/sshd_config') do
         it { should exist }
         it { should be_file }

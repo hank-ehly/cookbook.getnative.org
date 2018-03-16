@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cookbook.getnativelearning.com::add-user' do
+describe 'cookbook.getnative.org::add-user' do
     getnative_user = 'getnative'
     getnative_group = 'getnative'
 

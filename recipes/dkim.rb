@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cookbook.getnativelearning.com
+# Cookbook Name:: cookbook.getnative.org
 # Recipe:: dkim
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.
@@ -9,7 +9,7 @@ opendkim_group = 'opendkim'
 dkimkeys_root_dir  = '/etc/dkimkeys'
 dkimkeys_contents_dir = "#{dkimkeys_root_dir}/#{node['getnative']['server_name']}"
 
-include_recipe 'cookbook.getnativelearning.com::postfix'
+include_recipe 'cookbook.getnative.org::postfix'
 
 %w(opendkim opendkim-tools).each do |pkg|
     apt_package pkg

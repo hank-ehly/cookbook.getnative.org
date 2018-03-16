@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cookbook.getnativelearning.com::apache2' do
+describe 'cookbook.getnative.org::apache2' do
     %w(software-properties-common python-software-properties libnghttp2-dev).each do |pkg|
         describe package(pkg) do
             it { should be_installed }

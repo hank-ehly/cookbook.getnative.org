@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cookbook.getnativelearning.com
+# Cookbook Name:: cookbook.getnative.org
 # Recipe:: hostname
 #
 # Copyright (c) 2017 Hank Ehly, All Rights Reserved.

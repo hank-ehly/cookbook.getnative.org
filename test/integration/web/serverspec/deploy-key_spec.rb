@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cookbook.getnativelearning.com::deploy-key' do
+describe 'cookbook.getnative.org::deploy-key' do
     getnative_user = 'getnative'
     getnative_group = 'getnative'
 

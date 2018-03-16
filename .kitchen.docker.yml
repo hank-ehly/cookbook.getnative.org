@@ -21,7 +21,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[cookbook.getnativelearning.com::default]
+      - recipe[cookbook.getnative.org::default]
   - name: web
     run_list:
       - role[web]

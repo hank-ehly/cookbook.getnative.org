@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cookbook.getnativelearning.com
+# Cookbook Name:: cookbook.getnative.org
 # Recipe:: authorized-keys
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.

@@ -21,8 +21,8 @@
     ProxyPreserveHost On
 
     <Proxy *>
-        <If "%{HTTP:Origin} != 'https://stg.getnativelearning.com'">
-        <If "%{HTTP:Origin} != 'https://admin.stg.getnativelearning.com'">
+        <If "%{HTTP:Origin} != 'https://stg.getnative.org'">
+        <If "%{HTTP:Origin} != 'https://admin.stg.getnative.org'">
             <If "! %{REQUEST_URI} =~ m#oauth/(facebook|google|twitter)#">
             <If "! %{REQUEST_URI} =~ m#healthcheck#">
                 Require all denied

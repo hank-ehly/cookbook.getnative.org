@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cookbook.getnativelearning.com
+# Cookbook Name:: cookbook.getnative.org
 # Recipe:: apache2
 #
 # Copyright (c) 2016 Hank Ehly, All Rights Reserved.

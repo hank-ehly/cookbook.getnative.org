@@ -11,5 +11,5 @@ default['getnative']['prerelease_whitelist_ips'] = ['136.61.59.52']
 
 default['nodejs']['bin_path'] = '/usr/local/nodejs-binary/bin'
 default['nodejs']['install_method'] = 'binary'
-default['nodejs']['version'] = '8.9.4'
-default['nodejs']['binary']['checksum'] = '21fb4690e349f82d708ae766def01d7fec1b085ce1f5ab30d9bda8ee126ca8fc'
+default['nodejs']['version'] = '8.10.0'
+default['nodejs']['binary']['checksum'] = 'c1302439aee9791d70d3ab4194a612e6131d37fa0e3452072e847e212ed77867'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cookbook.getnativelearning.com::postfix' do
+describe 'cookbook.getnative.org::postfix' do
     describe package('postfix') do
         it { should be_installed }
     end

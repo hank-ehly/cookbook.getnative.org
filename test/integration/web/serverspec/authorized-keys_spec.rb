@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cookbook.getnativelearning.com::authorized-keys' do
+describe 'cookbook.getnative.org::authorized-keys' do
     getnative_user = 'getnative'
     getnative_group = 'getnative'
 
