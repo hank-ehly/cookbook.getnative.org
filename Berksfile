@@ -7,7 +7,7 @@ cookbook 'locale', '~> 2.0.1', github: 'chef-cookbooks/locale'
 cookbook 'mysql', '~> 8.5.1', github: 'chef-cookbooks/mysql'
 cookbook 'nodejs', '~> 5.0.0', github: 'redguide/nodejs'
 cookbook 'openssh', '~> 2.6.1', github: 'chef-cookbooks/openssh'
-cookbook 'sudo', '~> 4.0.1', github: 'chef-cookbooks/sudo'
+cookbook 'sudo', '~> 5.3.1', github: 'chef-cookbooks/sudo'
 cookbook 'logrotate', '~> 2.2.0', github: 'stevendanna/logrotate'
 
 metadata
