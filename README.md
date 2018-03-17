@@ -29,7 +29,7 @@ sudo visudo
 3. Copy your local ssh-key to the getnative users authenticated_keys list
 
 ```bash
-ssh-copy-id -i ~/.ssh/stg.getnative.org/getnativelearning.web getnative@12.34.56.78
+ssh-copy-id -i ~/.ssh/stg.getnative.org/getnative getnative@12.34.56.78
 ```
 
 4. Update the IP address of your local stg.getnative.org ssh config
@@ -45,7 +45,7 @@ Host stg.getnative.org
 
 ```bash
 cd provision
-bundle exec knife solo prepare getnative@stg.getnative.org -i ~/.ssh/stg.getnative.org/getnativelearning.web
+bundle exec knife solo prepare getnative@stg.getnative.org -i ~/.ssh/stg.getnative.org/getnative
 ./bin/stg-dev-cook.bash
 ```
 
