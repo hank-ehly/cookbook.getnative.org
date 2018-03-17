@@ -1,0 +1,9 @@
+{
+  "environment": "production",
+  "run_list": [
+    "role[web]"
+  ],
+  "automatic": {
+    "ipaddress": "getnative.org"
+  }
+}

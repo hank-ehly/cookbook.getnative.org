@@ -1,0 +1,26 @@
+{
+  "name": "web-server",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The role used to configure the getnative.org web-server",
+  "run_list": [
+    "recipe[cookbook.getnative.org::bootstrap]",
+    "recipe[cookbook.getnative.org::add-user]",
+    "recipe[cookbook.getnative.org::hostname]",
+    "recipe[cookbook.getnative.org::authorized-keys]",
+    "recipe[cookbook.getnative.org::deploy-key]",
+    "recipe[cookbook.getnative.org::postfix]",
+    "recipe[cookbook.getnative.org::dkim]",
+    "recipe[cookbook.getnative.org::mysql-client]",
+    "recipe[cookbook.getnative.org::nodejs]",
+    "recipe[cookbook.getnative.org::apache2]",
+    "recipe[cookbook.getnative.org::web-app]",
+    "recipe[cookbook.getnative.org::vhost]",
+    "recipe[cookbook.getnative.org::certbot]"
+  ],
+  "default_attributes": {
+    "getnative": {
+      "role": "web"
+    }
+  }
+}

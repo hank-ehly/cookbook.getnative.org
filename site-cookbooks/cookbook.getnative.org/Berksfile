@@ -1,4 +1,4 @@
-source 'https://api.berkshelf.com'
+source 'https://supermarket.chef.io'
 
 cookbook 'apache2', '~> 5.0.1', github: 'sous-chefs/apache2'
 cookbook 'apt', '~> 6.1.4', github: 'chef-cookbooks/apt'
@@ -9,4 +9,5 @@ cookbook 'nodejs', '~> 5.0.0', github: 'redguide/nodejs'
 cookbook 'openssh', '~> 2.6.1', github: 'chef-cookbooks/openssh'
 cookbook 'sudo', '~> 5.3.1', github: 'chef-cookbooks/sudo'
 cookbook 'logrotate', '~> 2.2.0', github: 'stevendanna/logrotate'
-cookbook 'cookbook.getnative.org', git: 'git@github.com:hank-ehly/cookbook.getnative.org.git'
+
+metadata

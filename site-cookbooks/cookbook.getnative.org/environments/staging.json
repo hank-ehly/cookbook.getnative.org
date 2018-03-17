@@ -1,14 +1,14 @@
 {
-  "name": "development",
+  "name": "staging",
   "default_attributes": {
     "getnative": {
-      "environment": "development",
+      "environment": "staging",
       "mysql": {
         "bind-address": "*"
       }
     }
   },
   "json_class": "Chef::Environment",
-  "description": "The development environment",
+  "description": "The staging environment",
   "chef_type": "environment"
 }

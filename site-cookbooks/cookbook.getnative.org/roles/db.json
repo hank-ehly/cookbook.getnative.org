@@ -1,0 +1,17 @@
+{
+  "name": "db",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The role used to configure the getnative.org database server",
+  "run_list": [
+    "recipe[cookbook.getnative.org::bootstrap]",
+    "recipe[cookbook.getnative.org::add-user]",
+    "recipe[cookbook.getnative.org::authorized-keys]",
+    "recipe[cookbook.getnative.org::mysql-server]"
+  ],
+  "default_attributes": {
+    "getnative": {
+      "role": "db"
+    }
+  }
+}

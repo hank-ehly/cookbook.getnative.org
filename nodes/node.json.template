@@ -1,0 +1,13 @@
+{
+  "normal": {
+    "getnative": {
+      "server_name": "The ServerName directive used by Apache"
+    }
+  },
+  "run_list": [
+    "role[(web/db)-server]"
+  ],
+  "automatic": {
+    "ipaddress": "The hostname of the node to which you will connect via SSH"
+  }
+}

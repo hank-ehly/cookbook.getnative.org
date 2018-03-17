@@ -3,6 +3,9 @@
   "default_attributes": {
     "getnative": {
       "environment": "staging",
+      "server_name": "stg.getnative.org",
+      "prerelease_whitelist_ips": [],
+      "is_prerelease": false,
       "mysql": {
         "bind-address": "*"
       }

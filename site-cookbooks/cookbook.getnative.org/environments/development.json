@@ -4,7 +4,7 @@
     "getnative": {
       "environment": "development",
       "mysql": {
-        "bind-address": "*"
+        "bind-address": "127.0.0.1"
       }
     }
   },

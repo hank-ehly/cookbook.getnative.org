@@ -10,10 +10,10 @@ Berksfile.lock
 # Bundler
 Gemfile.lock
 .bundle/*
-
 .kitchen/
 .kitchen.local.yml
 .idea/
 vendor/
 files/default/authorized_keys
 data_bags/*/*.json
+/cookbooks/
